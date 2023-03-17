@@ -1,6 +1,5 @@
-        # Traditional-finance-Assistant
-
-        ## Description of the project
+# Traditional-finance-Assistant
+## Description of the project
         
 The Traditional Finance Assistant is a mobile app based system that helps in, not replacing but, facilitating the traditional financial institutions
 Like EKUB and EDER in an efficient manner.
