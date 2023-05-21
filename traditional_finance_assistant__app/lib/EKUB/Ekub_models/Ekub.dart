@@ -23,3 +23,4 @@ class Ekub {
         schedule: json['schedule']);
   }
 }
+

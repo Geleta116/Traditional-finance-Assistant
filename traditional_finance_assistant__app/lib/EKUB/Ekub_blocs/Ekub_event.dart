@@ -22,7 +22,7 @@ class EkubCreate extends EkubEvent {
   List<Object> get props => [ekub];
 
   @override
-  String toString() => 'Course Created {course Id: ${ekub.id}}';
+  String toString() => 'Ekub Created {ekub Id: ${ekub.id}}';
 }
 
 class EkubUpdate extends EkubEvent {

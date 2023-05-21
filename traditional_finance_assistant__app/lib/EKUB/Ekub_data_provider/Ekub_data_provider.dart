@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 
 import '../Ekub_models/Ekub.dart';
 
+
+
 class EkubDataProvider {
   static const String _baseUrl = "tofik api";
 
@@ -37,6 +39,8 @@ class EkubDataProvider {
   //   }
   // }
 
+
+
   Future<List<Ekub>> fetchAll() async {
     final response = await http.get(Uri.parse(_baseUrl));
     if (response.statusCode == 200) {
@@ -46,6 +50,9 @@ class EkubDataProvider {
       throw Exception("Could not fetch Ekubs");
     }
   }
+
+
+
 
   Future<Ekub> update(int id, Ekub ekub) async {
     final response = await http.put(Uri.parse("$_baseUrl/$id"),
@@ -64,6 +71,8 @@ class EkubDataProvider {
       throw Exception("Could not update the Ekub");
     }
   }
+
+
 
   Future<void> delete(int id) async {
     final response = await http.delete(Uri.parse("$_baseUrl/$id"));

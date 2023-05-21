@@ -17,6 +17,8 @@ class EkubBloc extends Bloc<EkubEvent, EkubState> {
       }
     });
 
+
+
     on<EkubCreate>((event, emit) async {
       try {
         await ekubRepository.create(event.ekub);
@@ -27,6 +29,8 @@ class EkubBloc extends Bloc<EkubEvent, EkubState> {
       }
     });
 
+
+
     on<EkubUpdate>((event, emit) async {
       try {
         await ekubRepository.update(event.id, event.ekub);
@@ -36,6 +40,9 @@ class EkubBloc extends Bloc<EkubEvent, EkubState> {
         emit(EkubOperationFailure(error));
       }
     });
+
+
+
 
     on<EkubDelete>((event, emit) async {
       try {
