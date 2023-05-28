@@ -21,7 +21,7 @@ export declare class EqubService {
     joinEqub(equbName: any, code: any, username: any): Promise<EqubMembers>;
     deleteEqub(equbId: any): Promise<import("typeorm").DeleteResult>;
     updateEqub(equbId: any, equbdata: any): Promise<import("typeorm").UpdateResult>;
-    deleteMember(username: any, equbId: any): Promise<import("typeorm").DeleteResult | "cannot delete active equbs member">;
+    deleteMember(username: any, equbId: any): Promise<import("typeorm").DeleteResult>;
     getAllEqubs(username: string): Promise<any[]>;
     getDataAboutEqub(equbId: any): Promise<Equb>;
     getMembersOfEqub(equbid: any): Promise<EqubMembers[]>;
@@ -32,6 +32,7 @@ export declare class EqubService {
         username: string;
     }>;
     payEqub(username: any, equbId: any): Promise<void>;
+    canPay(username: any, equbId: any): Promise<boolean>;
     addToBlackList(equbId: any): Promise<void>;
     blackListMembers(equbid: any): Promise<BlackList[]>;
     determineTheWinner(equbId: any): Promise<import("typeorm").DeleteResult>;

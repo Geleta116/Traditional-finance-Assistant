@@ -9,6 +9,11 @@ import { DeleteDTO } from '../DTO/Equb_DTO/deleteMemberDTO/deleteDTO.dto';
 import { EqubChatDTO } from '../DTO/Equb_DTO/chatDTO/chatdto.dto';
 
 
+// "name": "employee equb",
+//     "amount": 1000,
+//     "creator": "abebe",
+//     "code": "EKOYOPOT",
+
 @Controller('equb')
 export class EqubController {
     constructor(private readonly equbService: EqubService){}

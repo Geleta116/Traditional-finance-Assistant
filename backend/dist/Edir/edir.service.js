@@ -44,12 +44,7 @@ let EdirService = class EdirService {
         const name = edirdata.name.toLowerCase();
         const newEdirData = Object.assign(Object.assign({}, edirdata), { name: name, creator: creator, code: code });
         const edir = await this.edirRepository.create(newEdirData);
-        try {
-            await this.edirRepository.save(edir);
-        }
-        catch (err) {
-            console.log(err);
-        }
+        await this.edirRepository.save(edir);
         await this.joinEdir(name, code, creator);
         return edir;
     }

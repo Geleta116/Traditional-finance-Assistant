@@ -43,12 +43,7 @@ export class EdirService {
         }
             
         const edir = await this.edirRepository.create(newEdirData)
-        try {
-            await this.edirRepository.save(edir)
-        }
-        catch (err){
-            console.log(err)
-        }
+        await this.edirRepository.save(edir)
         await this.joinEdir(name,code,creator)
         return edir
     }

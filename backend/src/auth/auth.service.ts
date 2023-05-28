@@ -53,9 +53,10 @@ export class AuthService {
 
     
 
+    
+
   async logIn(username: string, pass: string): Promise<any> {
     const user = await this.userRepository.findOneBy({username})
-    
     
     if (! user){
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED)

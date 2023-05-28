@@ -20,7 +20,7 @@ export declare class EqubController {
     deleteNotification(id: number): Promise<import("typeorm").DeleteResult>;
     getMembersInBlackList(id: number, req: Request): Promise<import("../typeorm/entities/blackList.entity").BlackList[]>;
     updateEqub(id: number, equbdto: EqubDTO, req: Request): Promise<import("typeorm").UpdateResult>;
-    deleteMember(deletedto: DeleteDTO): Promise<import("typeorm").DeleteResult | "cannot delete active equbs member">;
+    deleteMember(deletedto: DeleteDTO): Promise<import("typeorm").DeleteResult>;
     sendMessage(id: number, equbChatDTO: EqubChatDTO, req: Request): Promise<import("../typeorm/entities/equb.chatroom.entity").Equbchatroom>;
     getMessage(id: number): Promise<import("../typeorm/entities/equb.chatroom.entity").Equbchatroom[]>;
 }

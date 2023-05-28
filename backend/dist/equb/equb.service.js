@@ -20,11 +20,11 @@ const user_entity_1 = require("../typeorm/entities/user.entity");
 const typeorm_2 = require("typeorm");
 const equb_entity_1 = require("../typeorm/entities/equb.entity");
 const notification_entity_1 = require("../typeorm/entities/notification.entity");
-const schedule_1 = require("@nestjs/schedule");
 const common_1 = require("@nestjs/common");
 const blackList_entity_1 = require("../typeorm/entities/blackList.entity");
 const user_service_1 = require("../user/user.service");
 const equb_chatroom_entity_1 = require("../typeorm/entities/equb.chatroom.entity");
+const common_2 = require("@nestjs/common");
 let EqubService = EqubService_1 = class EqubService {
     constructor(memebersRepository, equbRepository, userRepository, notificationRepository, blacklistRepository, equbchatroomRepository, userService) {
         this.memebersRepository = memebersRepository;
@@ -50,22 +50,24 @@ let EqubService = EqubService_1 = class EqubService {
         const name = equb.name.toLowerCase();
         const newEqubData = Object.assign(Object.assign({}, equb), { name: name, creator: usr, code: code });
         const newEqub = await this.equbRepository.create(newEqubData);
-        try {
-            await this.equbRepository.save(newEqub);
-        }
-        catch (err) {
-            console.log(err);
-        }
+        await this.equbRepository.save(newEqub);
         await this.joinEqub(equb.name, code, usr);
         return newEqub;
     }
     async joinEqub(equbName, code, username) {
         const equb = await this.equbRepository.findOne({ where: { code: code, name: equbName } });
         if (!equb) {
-            throw new Error('Equb not found');
+            throw new common_2.HttpException('Equb not found', common_1.HttpStatus.CONFLICT);
         }
         if (equb.active) {
-            throw new Error('Equb is already active, It is not permissible to join active equb');
+            throw new common_2.HttpException('Equb is already active, It is not permissible to join active equb', common_1.HttpStatus.CONFLICT);
+        }
+        const isJoinedAlready = await this.memebersRepository.findOneBy({
+            username: username,
+            equb: equb
+        });
+        if (isJoinedAlready) {
+            throw new common_2.HttpException('you have already joined the equb', common_1.HttpStatus.CONFLICT);
         }
         const user = await this.userRepository.findOne({ where: { username: username } });
         user.balance += (equb.amount * equb.minMembers * 3);
@@ -82,14 +84,14 @@ let EqubService = EqubService_1 = class EqubService {
         if (!equb.active) {
             return await this.equbRepository.delete({ id: equbId });
         }
-        throw new Error('Cannot delete an active equb');
+        throw new common_2.HttpException('Cannot delete an active equb', common_1.HttpStatus.CONFLICT);
     }
     async updateEqub(equbId, equbdata) {
         const equb = await this.equbRepository.findOneBy(equbId);
         if (!equb.active) {
             return await this.equbRepository.update({ id: equbId }, equbdata);
         }
-        throw new Error('Cannot update an active equb');
+        throw new common_2.HttpException('Cannot update an active equb', common_1.HttpStatus.CONFLICT);
     }
     async deleteMember(username, equbId) {
         const equb = await this.equbRepository.findOne({ where: { id: equbId } });
@@ -97,14 +99,19 @@ let EqubService = EqubService_1 = class EqubService {
             return await this.memebersRepository.delete({ equb, username });
         }
         else {
-            return "cannot delete active equbs member";
+            throw new common_2.HttpException('cannot delete active equbs member', common_1.HttpStatus.CONFLICT);
         }
     }
     async getAllEqubs(username) {
         const listOfEqubs = [];
         const created_equbs = await this.equbRepository.find({ where: { creator: username } });
         for (let equb of created_equbs) {
-            listOfEqubs.push({ equb: equb, creator: true, no_members: (await this.getMembersOfEqub(equb.id)).length });
+            listOfEqubs.push({
+                equb: equb,
+                creator: true,
+                no_members: (await this.getMembersOfEqub(equb.id)).length,
+                canPay: await this.canPay(username, equb.id)
+            });
         }
         const joined_equbs = await this.memebersRepository.find({
             where: { username: username },
@@ -112,7 +119,12 @@ let EqubService = EqubService_1 = class EqubService {
         });
         for (let data of joined_equbs) {
             if (!created_equbs.includes(data.equb)) {
-                listOfEqubs.push({ equb: data.equb, creator: false, no_members: (await this.getMembersOfEqub(data.equb.id)).length });
+                listOfEqubs.push({
+                    equb: data.equb,
+                    creator: false,
+                    no_members: (await this.getMembersOfEqub(data.equb.id)).length,
+                    canPay: await this.canPay(username, data.equb.id)
+                });
             }
         }
         return listOfEqubs;
@@ -142,22 +154,44 @@ let EqubService = EqubService_1 = class EqubService {
         const winner = await this.memebersRepository.findOne({
             where: { equb: equbId, won: true, currentWinner: true },
         });
-        const winnersData = await this.userRepository.findOne({
-            where: {
-                username: winner.username
-            }
-        });
-        return {
-            name: winnersData.fullName,
-            username: winnersData.username
-        };
+        if (winner) {
+            const winnersData = await this.userRepository.findOne({
+                where: {
+                    username: winner.username
+                }
+            });
+            return {
+                name: winnersData.fullName,
+                username: winnersData.username
+            };
+        }
+        throw new common_2.HttpException('there is no winner in this month', common_1.HttpStatus.CONFLICT);
     }
     async payEqub(username, equbId) {
         const user = await this.userRepository.findOneBy({ username });
-        const equb = await this.equbRepository.findOne({ where: { id: equbId } });
+        const equb = await this.equbRepository.findOneBy(equbId);
         user.balance = user.balance - equb.amount;
         await this.userRepository.save(user);
         await this.memebersRepository.update({ equb: equbId, username: username }, { paid: true });
+    }
+    async canPay(username, equbId) {
+        const underBlacklist = await this.blacklistRepository.findOne({
+            where: {
+                username: username,
+                equb: equbId
+            }
+        });
+        const equb = await this.memebersRepository.findOne({
+            where: {
+                username: username,
+                equb: equbId
+            }
+        });
+        const isPaid = equb.paid;
+        if (underBlacklist || isPaid) {
+            return false;
+        }
+        return true;
     }
     async addToBlackList(equbId) {
         const unpaidMembers = await this.memebersRepository.find({ where: { equb: equbId, paid: false } });
@@ -236,10 +270,11 @@ let EqubService = EqubService_1 = class EqubService {
     }
     async notifyUnpaidUsers(equbId) {
         const unpaidMembers = await this.memebersRepository.find({ where: { equb: equbId, paid: false } });
+        const equb = await this.getDataAboutEqub(equbId);
         for (let member of unpaidMembers) {
             const data = {
                 username: member.username,
-                notification: "payment is required"
+                notification: `payment is required for ${equb.name}`
             };
             const notification = await this.notificationRepository.create(data);
             await this.notificationRepository.save(notification);
@@ -308,12 +343,6 @@ let EqubService = EqubService_1 = class EqubService {
         }
     }
 };
-__decorate([
-    (0, schedule_1.Cron)('* * * * * *'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], EqubService.prototype, "dailyFunction", null);
 EqubService = EqubService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(members_entity_1.EqubMembers)),

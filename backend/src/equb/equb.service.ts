@@ -5,11 +5,12 @@ import { Repository } from 'typeorm';
 import { Equb } from '../typeorm/entities/equb.entity';
 import { EqubNotification } from '../typeorm/entities/notification.entity';
 import { Cron } from '@nestjs/schedule';
-import { Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { BlackList } from '../typeorm/entities/blackList.entity';
 import { UserService } from '../user/user.service'
 import { Equbchatroom } from '../typeorm/entities/equb.chatroom.entity';
-
+// import { join } from 'path';
+import { HttpException } from '@nestjs/common';
 
 @Injectable()
 export class EqubService {
@@ -55,12 +56,7 @@ export class EqubService {
         }
             
         const newEqub = await this.equbRepository.create(newEqubData)
-        try {
-            await this.equbRepository.save(newEqub)
-        }
-        catch (err){
-            console.log(err)
-        }
+        await this.equbRepository.save(newEqub)
         await this.joinEqub(equb.name,code,usr)
         return newEqub
     }
@@ -72,10 +68,22 @@ export class EqubService {
         const equb = await this.equbRepository.findOne({where : {code:code, name:equbName}}) 
         
         if (!equb){
-            throw new Error('Equb not found')
+            // throw new Error()
+            throw new HttpException('Equb not found', HttpStatus.CONFLICT);
         }
         if (equb.active){
-            throw new Error('Equb is already active, It is not permissible to join active equb')
+            throw new HttpException('Equb is already active, It is not permissible to join active equb', HttpStatus.CONFLICT);
+            // throw new Error('')
+        }
+
+        const isJoinedAlready = await this.memebersRepository.findOneBy({
+            username : username,
+            equb : equb
+        })
+
+
+        if (isJoinedAlready){
+            throw new HttpException('you have already joined the equb', HttpStatus.CONFLICT);
         }
 
 
@@ -100,7 +108,8 @@ export class EqubService {
         if (!equb.active){
             return await this.equbRepository.delete({id: equbId})
         }
-        throw new Error('Cannot delete an active equb')
+        // throw new Error('')
+        throw new HttpException('Cannot delete an active equb', HttpStatus.CONFLICT);
     }
 
 
@@ -109,7 +118,9 @@ export class EqubService {
         if (!equb.active){
             return await this.equbRepository.update({id: equbId},equbdata)
         }
-        throw new Error('Cannot update an active equb')
+        // throw new Error('')
+        throw new HttpException('Cannot update an active equb', HttpStatus.CONFLICT);
+
     }
 
 
@@ -120,19 +131,26 @@ export class EqubService {
             return await this.memebersRepository.delete({equb, username})
         }
         else {
-            return "cannot delete active equbs member"
+            // return ""
+            throw new HttpException('cannot delete active equbs member', HttpStatus.CONFLICT);
+
         }
     }
 
 
     async getAllEqubs(username:string){
+
         const listOfEqubs = []
 
         const created_equbs = await this.equbRepository.find({ where: { creator:username } })
         for (let equb of created_equbs){
-            listOfEqubs.push({equb: equb, creator: true,no_members : (await this.getMembersOfEqub(equb.id)).length})
+            listOfEqubs.push({
+                equb: equb,
+                creator: true,
+                no_members : (await this.getMembersOfEqub(equb.id)).length ,
+                canPay : await this.canPay(username, equb.id)
+            })
         }
-
 
         const joined_equbs = await this.memebersRepository.find({
             where: {username : username},
@@ -140,9 +158,17 @@ export class EqubService {
         })
         for (let data of joined_equbs){
             if (!created_equbs.includes(data.equb)) {
-                listOfEqubs.push({equb : data.equb, creator : false, no_members : (await this.getMembersOfEqub(data.equb.id)).length})
+                listOfEqubs.push({
+                    equb : data.equb, 
+                    creator : false, 
+                    no_members : (await this.getMembersOfEqub(data.equb.id)).length,
+                    canPay : await this.canPay(username, data.equb.id)
+                
+                })
             }
         }
+
+
         return listOfEqubs
     }
 
@@ -184,16 +210,21 @@ export class EqubService {
             where : {equb :equbId, won: true, currentWinner: true },
         })
 
-        const winnersData = await this.userRepository.findOne({
-            where : {
-                username : winner.username
+        if (winner){
+            const winnersData = await this.userRepository.findOne({
+                where : {
+                    username : winner.username
+                }
+            })
+    
+            return {
+                name: winnersData.fullName,
+                username : winnersData.username
             }
-        })
-
-        return {
-            name: winnersData.fullName,
-            username : winnersData.username
         }
+        throw new HttpException('there is no winner in this month', HttpStatus.CONFLICT);
+
+        
     }
 
 
@@ -201,13 +232,36 @@ export class EqubService {
 
     async payEqub(username, equbId){
         const user = await this.userRepository.findOneBy({username})
-        const equb = await this.equbRepository.findOne({where : {id :equbId}})
+        const equb = await this.equbRepository.findOneBy(equbId)
 
         user.balance = user.balance - equb.amount
         await this.userRepository.save(user)
 
 
         await this.memebersRepository.update({equb:equbId, username: username},{paid: true });
+    }
+
+    async canPay(username, equbId){
+        const underBlacklist = await this.blacklistRepository.findOne({
+            where : {
+                username : username,
+                equb : equbId
+            }
+        })
+        
+        const equb = await this.memebersRepository.findOne({
+            where : {
+                username : username,
+                equb : equbId
+            }
+        })
+
+        const isPaid = equb.paid
+
+        if (underBlacklist || isPaid){
+            return false
+        }
+        return true
     }
 
 
@@ -324,11 +378,12 @@ export class EqubService {
 
     async notifyUnpaidUsers(equbId){ // make notification for all members, who didn't pay until 3 days
         const unpaidMembers = await this.memebersRepository.find({ where : {equb :equbId,paid:false }})
-        
+        const equb = await this.getDataAboutEqub(equbId)
+
         for (let member of unpaidMembers){
             const data =  {
                 username :member.username,
-                notification: "payment is required"
+                notification: `payment is required for ${equb.name}`
             }
             const notification = await this.notificationRepository.create(data);
             await this.notificationRepository.save(notification)
@@ -365,6 +420,8 @@ export class EqubService {
         })
     }
 
+    
+
 
 
     //  function that runs daily
@@ -373,7 +430,7 @@ export class EqubService {
     // 3. else:
     // 4.  update the date controlling 
 
-    @Cron('* * * * * *')
+    // @Cron('* * * * * *')
     async  dailyFunction(){ 
         // check to begin running an equb
         const not_beginned_equbs = await this.equbRepository.find({where : {active : false}})
