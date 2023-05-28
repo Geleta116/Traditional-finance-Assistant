@@ -1,0 +1,45 @@
+import { EqubMembers } from 'src/typeorm/entities/members.entity';
+import { User } from 'src/typeorm/entities/user.entity';
+import { Repository } from 'typeorm';
+import { Equb } from '../typeorm/entities/equb.entity';
+import { EqubNotification } from '../typeorm/entities/notification.entity';
+import { BlackList } from '../typeorm/entities/blackList.entity';
+import { UserService } from '../user/user.service';
+import { Equbchatroom } from '../typeorm/entities/equb.chatroom.entity';
+export declare class EqubService {
+    private memebersRepository;
+    private equbRepository;
+    private userRepository;
+    private notificationRepository;
+    private blacklistRepository;
+    private equbchatroomRepository;
+    private readonly userService;
+    constructor(memebersRepository: Repository<EqubMembers>, equbRepository: Repository<Equb>, userRepository: Repository<User>, notificationRepository: Repository<EqubNotification>, blacklistRepository: Repository<BlackList>, equbchatroomRepository: Repository<Equbchatroom>, userService: UserService);
+    private readonly logger;
+    generateRandomString(length: number): string;
+    createEqub(equb: any, usr: any): Promise<any>;
+    joinEqub(equbName: any, code: any, username: any): Promise<EqubMembers>;
+    deleteEqub(equbId: any): Promise<import("typeorm").DeleteResult>;
+    updateEqub(equbId: any, equbdata: any): Promise<import("typeorm").UpdateResult>;
+    deleteMember(username: any, equbId: any): Promise<import("typeorm").DeleteResult | "cannot delete active equbs member">;
+    getAllEqubs(username: string): Promise<any[]>;
+    getDataAboutEqub(equbId: any): Promise<Equb>;
+    getMembersOfEqub(equbid: any): Promise<EqubMembers[]>;
+    getSingleMemberOfEqub(equbid: any, username: any): Promise<EqubMembers>;
+    getUnwonMembers(equbId: any): Promise<EqubMembers[]>;
+    getCurrentWinner(equbId: any): Promise<{
+        name: string;
+        username: string;
+    }>;
+    payEqub(username: any, equbId: any): Promise<void>;
+    addToBlackList(equbId: any): Promise<void>;
+    blackListMembers(equbid: any): Promise<BlackList[]>;
+    determineTheWinner(equbId: any): Promise<import("typeorm").DeleteResult>;
+    notification(message: string, equbId: any): Promise<void>;
+    notifyUnpaidUsers(equbId: any): Promise<void>;
+    getNotification(username: any): Promise<EqubNotification[]>;
+    deleteNotification(id: any): Promise<import("typeorm").DeleteResult>;
+    sendMessage(username: any, message: any, equbId: any): Promise<Equbchatroom>;
+    getChat(equbId: any): Promise<Equbchatroom[]>;
+    dailyFunction(): Promise<void>;
+}
