@@ -16,12 +16,11 @@ exports.EdirService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const edir_entity_1 = require("./typeorm_entities/edir.entity");
-const edir_members_entity_1 = require("./typeorm_entities/edir_members.entity");
-const edir_notification_entity_1 = require("./typeorm_entities/edir_notification.entity");
-const nestjs_schedule_1 = require("nestjs-schedule");
+const edir_entity_1 = require("../eddir/typeorm_entities/edir.entity");
+const edir_members_entity_1 = require("../eddir/typeorm_entities/edir_members.entity");
+const edir_notification_entity_1 = require("../eddir/typeorm_entities/edir_notification.entity");
 const user_entity_1 = require("../typeorm/entities/user.entity");
-const edir_chatroom_entity_1 = require("./typeorm_entities/edir_chatroom.entity");
+const edir_chatroom_entity_1 = require("../eddir/typeorm_entities/edir_chatroom.entity");
 let EdirService = class EdirService {
     constructor(edirRepository, edirMembersRepository, userRepository, notificationRepository, edirchatroomRepository) {
         this.edirRepository = edirRepository;
@@ -222,12 +221,6 @@ let EdirService = class EdirService {
         }
     }
 };
-__decorate([
-    (0, nestjs_schedule_1.Cron)('* * * * * *'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], EdirService.prototype, "dailyFunction", null);
 EdirService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(edir_entity_1.Edir)),

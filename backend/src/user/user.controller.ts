@@ -8,6 +8,7 @@ import {Response,Request} from 'express'
 import { AuthService } from '../auth/auth.service';
 import { SignUpDTO } from '../DTO/userDTO/signUpDTO/signUp.dto';
 import { changePasswordDTO } from '../DTO/userDTO/updateDTO/changepassword.dto';
+import { DepositDTO } from '../DTO/userDTO/depositDTO/deposition.dto';
 
 @Controller('user')
 export class UserController {
@@ -39,6 +40,12 @@ export class UserController {
         }
 
 
+        @Post('deposit')
+        @UseGuards(Authenticate)
+        async makeDeposit(@Body() depositdto: DepositDTO, @Req() req:Request){
+            const usernam = req.user["username"]
+            return await this.userService.makeDeposit(usernam, depositdto.amount)
+        }
  
 
     // @Get('info/:username')

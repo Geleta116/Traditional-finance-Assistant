@@ -6,4 +6,5 @@ export declare class UserService {
     signUp(userdata: any): Promise<User[]>;
     getUserInfo(username: any): Promise<User>;
     changePassword(username: any, oldpassword: any, newpassword: any): Promise<User>;
+    makeDeposit(username: any, amount: any): Promise<User>;
 }

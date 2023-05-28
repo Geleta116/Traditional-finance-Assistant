@@ -2,17 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } fro
 import { EqubService } from './equb.service';
 import { Request } from 'express';
 import { Authenticate } from '../auth/guards/authenticate.guard';
-import { Authorize } from '../auth/guards/authorise.guard';
+import { EqubAuthorize } from '../auth/guards/EqubAuthorise.guard';
 import { EqubDTO } from '../DTO/Equb_DTO/createEqubDTO/equb.dto';
 import { EnrollDTO } from '../DTO/Equb_DTO/enrollDTO/enrollDTO.dto';
 import { DeleteDTO } from '../DTO/Equb_DTO/deleteMemberDTO/deleteDTO.dto';
 import { EqubChatDTO } from '../DTO/Equb_DTO/chatDTO/chatdto.dto';
 
-
-// "name": "employee equb",
-//     "amount": 1000,
-//     "creator": "abebe",
-//     "code": "EKOYOPOT",
 
 @Controller('equb')
 export class EqubController {
@@ -79,19 +74,19 @@ export class EqubController {
 
     
     @Get('blacklist/:id')
-    @UseGuards(Authenticate, Authorize)
+    @UseGuards(Authenticate, EqubAuthorize)
     getMembersInBlackList(@Param() id: number, @Req() req:Request){
         return this.equbService.blackListMembers(id)
     }
 
     @Patch('update/:id')
-    @UseGuards(Authenticate, Authorize)
+    @UseGuards(Authenticate, EqubAuthorize)
     updateEqub(@Param() id: number, @Body() equbdto: EqubDTO, @Req() req:Request){
         return this.equbService.updateEqub(id, equbdto)
     }
 
     @Delete('deleteMember')
-    @UseGuards(Authenticate, Authorize)
+    @UseGuards(Authenticate, EqubAuthorize)
     deleteMember(@Body() deletedto: DeleteDTO){
         return this.equbService.deleteMember(deletedto.username, deletedto.equbId)
     }

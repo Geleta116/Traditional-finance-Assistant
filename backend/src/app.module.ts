@@ -11,11 +11,12 @@ import { UserModule } from './user/user.module';
 import { User } from './typeorm/entities/user.entity';
 import { ScheduleModule } from '@nestjs/schedule';
 import { BlackList } from './typeorm/entities/blackList.entity';
-import { Edir } from './Edir/typeorm_entities/edir.entity';
-import { EdirNotifications } from './Edir/typeorm_entities/edir_notification.entity';
-import { Edirmembers } from './Edir/typeorm_entities/edir_members.entity';
-import { Edirchatroom } from './Edir/typeorm_entities/edir_chatroom.entity';
+import { Edir } from './eddir/typeorm_entities/edir.entity';
+import { EdirNotifications } from './eddir/typeorm_entities/edir_notification.entity';
+import { Edirmembers } from './eddir/typeorm_entities/edir_members.entity';
+import { Edirchatroom } from './eddir/typeorm_entities/edir_chatroom.entity';
 import { Equbchatroom } from './typeorm/entities/equb.chatroom.entity';
+import { EddirModule } from './eddir/eddir.module';
 
 
 
@@ -36,7 +37,7 @@ import { Equbchatroom } from './typeorm/entities/equb.chatroom.entity';
       Edir, EdirNotifications, Edirmembers,Edirchatroom
     ],
     synchronize: true
-  }), EqubModule, AuthModule, UserModule, ScheduleModule.forRoot()],
+  }), EqubModule, AuthModule, UserModule, ScheduleModule.forRoot(), EddirModule],
   
   controllers: [AppController],
   providers: [AppService],

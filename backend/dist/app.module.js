@@ -20,11 +20,12 @@ const user_module_1 = require("./user/user.module");
 const user_entity_1 = require("./typeorm/entities/user.entity");
 const schedule_1 = require("@nestjs/schedule");
 const blackList_entity_1 = require("./typeorm/entities/blackList.entity");
-const edir_entity_1 = require("./Edir/typeorm_entities/edir.entity");
-const edir_notification_entity_1 = require("./Edir/typeorm_entities/edir_notification.entity");
-const edir_members_entity_1 = require("./Edir/typeorm_entities/edir_members.entity");
-const edir_chatroom_entity_1 = require("./Edir/typeorm_entities/edir_chatroom.entity");
+const edir_entity_1 = require("./eddir/typeorm_entities/edir.entity");
+const edir_notification_entity_1 = require("./eddir/typeorm_entities/edir_notification.entity");
+const edir_members_entity_1 = require("./eddir/typeorm_entities/edir_members.entity");
+const edir_chatroom_entity_1 = require("./eddir/typeorm_entities/edir_chatroom.entity");
 const equb_chatroom_entity_1 = require("./typeorm/entities/equb.chatroom.entity");
+const eddir_module_1 = require("./eddir/eddir.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -42,7 +43,7 @@ AppModule = __decorate([
                     edir_entity_1.Edir, edir_notification_entity_1.EdirNotifications, edir_members_entity_1.Edirmembers, edir_chatroom_entity_1.Edirchatroom
                 ],
                 synchronize: true
-            }), equb_module_1.EqubModule, auth_module_1.AuthModule, user_module_1.UserModule, schedule_1.ScheduleModule.forRoot()],
+            }), equb_module_1.EqubModule, auth_module_1.AuthModule, user_module_1.UserModule, schedule_1.ScheduleModule.forRoot(), eddir_module_1.EddirModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

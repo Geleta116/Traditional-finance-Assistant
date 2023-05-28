@@ -19,6 +19,7 @@ const authenticate_guard_1 = require("../auth/guards/authenticate.guard");
 const auth_service_1 = require("../auth/auth.service");
 const signUp_dto_1 = require("../DTO/userDTO/signUpDTO/signUp.dto");
 const changepassword_dto_1 = require("../DTO/userDTO/updateDTO/changepassword.dto");
+const deposition_dto_1 = require("../DTO/userDTO/depositDTO/deposition.dto");
 let UserController = class UserController {
     constructor(userService, authService) {
         this.userService = userService;
@@ -33,6 +34,10 @@ let UserController = class UserController {
     }
     getUserInfo(username) {
         return this.userService.getUserInfo(username);
+    }
+    async makeDeposit(depositdto, req) {
+        const usernam = req.user["username"];
+        return await this.userService.makeDeposit(usernam, depositdto.amount);
     }
 };
 __decorate([
@@ -60,6 +65,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getUserInfo", null);
+__decorate([
+    (0, common_1.Post)('deposit'),
+    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [deposition_dto_1.DepositDTO, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "makeDeposit", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService,

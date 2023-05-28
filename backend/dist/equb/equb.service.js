@@ -46,38 +46,45 @@ let EqubService = EqubService_1 = class EqubService {
         return result;
     }
     async createEqub(equb, usr) {
-        const code = await this.generateRandomString(8);
-        const name = equb.name.toLowerCase();
-        const newEqubData = Object.assign(Object.assign({}, equb), { name: name, creator: usr, code: code });
-        const newEqub = await this.equbRepository.create(newEqubData);
-        await this.equbRepository.save(newEqub);
-        await this.joinEqub(equb.name, code, usr);
-        return newEqub;
+        if (await this.checkRedundency(usr, equb.name)) {
+            throw new common_2.HttpException('You are already a member of an equb', common_1.HttpStatus.CONFLICT);
+        }
+        else {
+            const code = await this.generateRandomString(8);
+            const name = equb.name.toLowerCase();
+            const newEqubData = Object.assign(Object.assign({}, equb), { name: name, creator: usr, code: code });
+            const newEqub = await this.equbRepository.create(newEqubData);
+            await this.equbRepository.save(newEqub);
+            await this.joinEqub(equb.name, code, usr);
+            return newEqub;
+        }
     }
     async joinEqub(equbName, code, username) {
-        const equb = await this.equbRepository.findOne({ where: { code: code, name: equbName } });
-        if (!equb) {
-            throw new common_2.HttpException('Equb not found', common_1.HttpStatus.CONFLICT);
+        if (await this.checkRedundency(username, equbName)) {
+            throw new common_2.HttpException('You are already a member of an equb', common_1.HttpStatus.CONFLICT);
         }
-        if (equb.active) {
-            throw new common_2.HttpException('Equb is already active, It is not permissible to join active equb', common_1.HttpStatus.CONFLICT);
+        else {
+            const equb = await this.equbRepository.findOne({ where: { code: code, name: equbName } });
+            if (!equb) {
+                throw new common_2.HttpException('Equb not found', common_1.HttpStatus.CONFLICT);
+            }
+            if (equb.active) {
+                throw new common_2.HttpException('Equb is already active, It is not permissible to join active equb', common_1.HttpStatus.CONFLICT);
+            }
+            const isJoinedAlready = await this.memebersRepository.findOneBy({
+                username: username,
+                equb: equb
+            });
+            if (isJoinedAlready) {
+                throw new common_2.HttpException('you have already joined the equb', common_1.HttpStatus.CONFLICT);
+            }
+            const data = {
+                username: username,
+                equb: equb
+            };
+            const member = await this.memebersRepository.create(data);
+            return await this.memebersRepository.save(member);
         }
-        const isJoinedAlready = await this.memebersRepository.findOneBy({
-            username: username,
-            equb: equb
-        });
-        if (isJoinedAlready) {
-            throw new common_2.HttpException('you have already joined the equb', common_1.HttpStatus.CONFLICT);
-        }
-        const user = await this.userRepository.findOne({ where: { username: username } });
-        user.balance += (equb.amount * equb.minMembers * 3);
-        await this.userRepository.save(user);
-        const data = {
-            username: username,
-            equb: equb
-        };
-        const member = await this.memebersRepository.create(data);
-        return await this.memebersRepository.save(member);
     }
     async deleteEqub(equbId) {
         const equb = await this.equbRepository.findOne({ where: { id: equbId } });
@@ -129,6 +136,16 @@ let EqubService = EqubService_1 = class EqubService {
         }
         return listOfEqubs;
     }
+    async checkRedundency(username, name) {
+        const allequbs = await this.getAllEqubs(username);
+        let equbname = name.toLowerCase();
+        for (let equb of allequbs) {
+            if (equb.name == equbname) {
+                return true;
+            }
+        }
+        return false;
+    }
     getDataAboutEqub(equbId) {
         return this.equbRepository.findOne({ where: { id: equbId } });
     }
@@ -170,9 +187,14 @@ let EqubService = EqubService_1 = class EqubService {
     async payEqub(username, equbId) {
         const user = await this.userRepository.findOneBy({ username });
         const equb = await this.equbRepository.findOneBy(equbId);
-        user.balance = user.balance - equb.amount;
-        await this.userRepository.save(user);
-        await this.memebersRepository.update({ equb: equbId, username: username }, { paid: true });
+        if (user.balance < equb.amount) {
+            throw new common_2.HttpException('insufficient balance', common_1.HttpStatus.CONFLICT);
+        }
+        else {
+            user.balance = user.balance - equb.amount;
+            await this.userRepository.save(user);
+            await this.memebersRepository.update({ equb: equbId, username: username }, { paid: true });
+        }
     }
     async canPay(username, equbId) {
         const underBlacklist = await this.blacklistRepository.findOne({

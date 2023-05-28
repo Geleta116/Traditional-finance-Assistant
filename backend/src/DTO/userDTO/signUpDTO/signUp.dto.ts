@@ -5,7 +5,3 @@ export class SignUpDTO {
     email : string;
 }
 
-// "name": "employee equb",
-//             "amount": 1000,
-//             "creator": "abebe",
-//             "code": "EKOYOPOT

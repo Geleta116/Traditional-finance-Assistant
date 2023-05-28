@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EdirController } from './edir.controller';
+import { EddirController } from './eddir.controller';
 
-describe('EdirController', () => {
-  let controller: EdirController;
+describe('EddirController', () => {
+  let controller: EddirController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [EdirController],
+      controllers: [EddirController],
     }).compile();
 
-    controller = module.get<EdirController>(EdirController);
+    controller = module.get<EddirController>(EddirController);
   });
 
   it('should be defined', () => {

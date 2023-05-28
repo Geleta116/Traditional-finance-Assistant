@@ -60,4 +60,11 @@ export class UserService {
             return user
         }
     }
+
+    async makeDeposit(username, amount){
+        const user = await this.getUserInfo(username)
+        user.balance += amount
+        await this.userRepository.save(user)
+        return user
+    }
 }

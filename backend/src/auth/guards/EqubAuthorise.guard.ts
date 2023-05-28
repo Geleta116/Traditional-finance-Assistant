@@ -3,7 +3,7 @@ import { AuthService } from '../auth.service';
 import { EqubService } from '../../equb/equb.service';
 
 @Injectable()
-export class Authorize {
+export class EqubAuthorize {
   constructor(
     private readonly authService: AuthService,
     private readonly equbService: EqubService

@@ -23,6 +23,7 @@ export declare class EqubService {
     updateEqub(equbId: any, equbdata: any): Promise<import("typeorm").UpdateResult>;
     deleteMember(username: any, equbId: any): Promise<import("typeorm").DeleteResult>;
     getAllEqubs(username: string): Promise<any[]>;
+    checkRedundency(username: any, name: any): Promise<boolean>;
     getDataAboutEqub(equbId: any): Promise<Equb>;
     getMembersOfEqub(equbid: any): Promise<EqubMembers[]>;
     getSingleMemberOfEqub(equbid: any, username: any): Promise<EqubMembers>;

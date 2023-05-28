@@ -1,15 +1,15 @@
-import { Injectable, Logger} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Cron } from 'nestjs-schedule';
+import { User } from '../typeorm/entities/user.entity';
 import { Edir } from './typeorm_entities/edir.entity';
 import { Edirmembers } from './typeorm_entities/edir_members.entity';
 import { EdirNotifications } from './typeorm_entities/edir_notification.entity';
-import { Cron } from 'nestjs-schedule';
-import { User } from '../typeorm/entities/user.entity';
 import { Edirchatroom } from './typeorm_entities/edir_chatroom.entity';
 
 @Injectable()
-export class EdirService {
+export class EddirService {
     constructor(
         @InjectRepository(Edir) private edirRepository: Repository<Edir>,
         @InjectRepository(Edirmembers) private edirMembersRepository: Repository<Edirmembers>,
@@ -73,7 +73,21 @@ export class EdirService {
     }
 
 
-    // DELETE AN EQUB
+    async leaveEdir(id, username){
+        const member = await this.edirMembersRepository.findOne({
+            where : {
+                edir : id,
+                username : username
+            }
+        }
+        )
+        
+        return await this.edirMembersRepository.delete({id : member.id})
+        
+    }
+
+
+    // DELETE AN EDIR
     async deleteEdir(edirId){
         const edir = await this.edirRepository.findOne({where : {id: edirId}})
         if (edir){
@@ -149,19 +163,24 @@ export class EdirService {
 
     async payEdir(username, edirId){
         const user = await this.userRepository.findOneBy({username})
+        
         const edir = await this.edirRepository.findOne({where : {id :edirId}})
         const penality = await (await this.getSingleMemberOfEdir(edirId, username)).penality
-
-
-        const payment_money = user.balance - edir.amount - penality
-
-        user.balance -= payment_money
-        edir.balance += payment_money
-        await this.userRepository.save(user)
-        await this.edirRepository.save(edir)
-
-
-        await this.edirMembersRepository.update({edir:edirId, username: username},{paid: true });
+        
+        if (user.balance < edir.amount + penality){
+            throw new HttpException('Your balance is insufficient', HttpStatus.CONFLICT);
+        }
+        else{
+            const payment_money = user.balance - edir.amount - penality
+    
+            user.balance -= payment_money
+            edir.balance += payment_money
+            await this.userRepository.save(user)
+            await this.edirRepository.save(edir)
+    
+    
+            await this.edirMembersRepository.update({edir:edirId, username: username},{paid: true });
+        }
     }
 
 
@@ -244,7 +263,7 @@ export class EdirService {
 
 
 
-    @Cron('* * * * * *')
+    // @Cron('* * * * * *')
     async  dailyFunction(){ 
         // check to begin running an edir
         const not_acive_edirs = await this.edirRepository.find({where : {active : false}})
@@ -295,9 +314,4 @@ export class EdirService {
             }
         }
     }
-
 }
-
-
-
-

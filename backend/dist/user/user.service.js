@@ -54,6 +54,12 @@ let UserService = class UserService {
             return user;
         }
     }
+    async makeDeposit(username, amount) {
+        const user = await this.getUserInfo(username);
+        user.balance += amount;
+        await this.userRepository.save(user);
+        return user;
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),

@@ -11,13 +11,13 @@ const common_1 = require("@nestjs/common");
 const edir_service_1 = require("./edir.service");
 const edir_controller_1 = require("./edir.controller");
 const typeorm_1 = require("@nestjs/typeorm");
-const edir_entity_1 = require("./typeorm_entities/edir.entity");
-const edir_members_entity_1 = require("./typeorm_entities/edir_members.entity");
-const edir_notification_entity_1 = require("./typeorm_entities/edir_notification.entity");
+const edir_entity_1 = require("../eddir/typeorm_entities/edir.entity");
+const edir_members_entity_1 = require("../eddir/typeorm_entities/edir_members.entity");
+const edir_notification_entity_1 = require("../eddir/typeorm_entities/edir_notification.entity");
 const user_module_1 = require("../User/user.module");
 const user_entity_1 = require("../typeorm/entities/user.entity");
 const auth_module_1 = require("../auth/auth.module");
-const edir_chatroom_entity_1 = require("./typeorm_entities/edir_chatroom.entity");
+const edir_chatroom_entity_1 = require("../eddir/typeorm_entities/edir_chatroom.entity");
 let EdirModule = class EdirModule {
 };
 EdirModule = __decorate([

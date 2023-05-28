@@ -24,6 +24,8 @@ let EdirController = class EdirController {
         this.edirService = edirService;
     }
     async createEdir(data, req) {
+        console.log(data);
+        console.log("hello");
         const creator = req.user['username'];
         return this.edirService.createEdir(data, creator);
     }
@@ -83,7 +85,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EdirController.prototype, "joinEdir", null);
 __decorate([
-    (0, common_1.Post)('deleteedir/:id'),
+    (0, common_1.Post)('delete/:id'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
@@ -106,7 +108,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EdirController.prototype, "deleteMember", null);
 __decorate([
-    (0, common_1.Get)('alledirs'),
+    (0, common_1.Get)('all'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

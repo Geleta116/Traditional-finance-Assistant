@@ -16,7 +16,7 @@ exports.EqubController = void 0;
 const common_1 = require("@nestjs/common");
 const equb_service_1 = require("./equb.service");
 const authenticate_guard_1 = require("../auth/guards/authenticate.guard");
-const authorise_guard_1 = require("../auth/guards/authorise.guard");
+const EqubAuthorise_guard_1 = require("../auth/guards/EqubAuthorise.guard");
 const equb_dto_1 = require("../DTO/Equb_DTO/createEqubDTO/equb.dto");
 const enrollDTO_dto_1 = require("../DTO/Equb_DTO/enrollDTO/enrollDTO.dto");
 const deleteDTO_dto_1 = require("../DTO/Equb_DTO/deleteMemberDTO/deleteDTO.dto");
@@ -142,7 +142,7 @@ __decorate([
 ], EqubController.prototype, "deleteNotification", null);
 __decorate([
     (0, common_1.Get)('blacklist/:id'),
-    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, authorise_guard_1.Authorize),
+    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, EqubAuthorise_guard_1.EqubAuthorize),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -151,7 +151,7 @@ __decorate([
 ], EqubController.prototype, "getMembersInBlackList", null);
 __decorate([
     (0, common_1.Patch)('update/:id'),
-    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, authorise_guard_1.Authorize),
+    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, EqubAuthorise_guard_1.EqubAuthorize),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
@@ -161,7 +161,7 @@ __decorate([
 ], EqubController.prototype, "updateEqub", null);
 __decorate([
     (0, common_1.Delete)('deleteMember'),
-    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, authorise_guard_1.Authorize),
+    (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, EqubAuthorise_guard_1.EqubAuthorize),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [deleteDTO_dto_1.DeleteDTO]),
