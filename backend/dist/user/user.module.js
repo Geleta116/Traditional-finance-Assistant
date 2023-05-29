@@ -17,6 +17,8 @@ const members_entity_1 = require("../typeorm/entities/members.entity");
 const user_entity_1 = require("../typeorm/entities/user.entity");
 const blackList_entity_1 = require("../typeorm/entities/blackList.entity");
 const auth_module_1 = require("../auth/auth.module");
+const edir_entity_1 = require("../eddir/typeorm_entities/edir.entity");
+const edir_members_entity_1 = require("../eddir/typeorm_entities/edir_members.entity");
 let UserModule = class UserModule {
 };
 UserModule = __decorate([
@@ -24,7 +26,7 @@ UserModule = __decorate([
         providers: [user_service_1.UserService],
         exports: [user_service_1.UserService],
         controllers: [user_controller_1.UserController],
-        imports: [auth_module_1.AuthModule, jwt_1.JwtModule, typeorm_1.TypeOrmModule.forFeature([equb_entity_1.Equb, members_entity_1.EqubMembers, user_entity_1.User, blackList_entity_1.BlackList])]
+        imports: [auth_module_1.AuthModule, jwt_1.JwtModule, typeorm_1.TypeOrmModule.forFeature([equb_entity_1.Equb, members_entity_1.EqubMembers, user_entity_1.User, blackList_entity_1.BlackList, edir_entity_1.Edir, edir_members_entity_1.Edirmembers])]
     })
 ], UserModule);
 exports.UserModule = UserModule;

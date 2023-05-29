@@ -31,6 +31,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Edirmembers.prototype, "penality", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Date)
+], Edirmembers.prototype, "date", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => edir_entity_1.Edir, (edir) => edir.members, { onDelete: 'CASCADE' }),
     __metadata("design:type", edir_entity_1.Edir)
 ], Edirmembers.prototype, "edir", void 0);

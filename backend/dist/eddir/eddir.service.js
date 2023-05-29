@@ -54,6 +54,7 @@ let EddirService = class EddirService {
         }
         const data = {
             username: username,
+            date: new Date(),
             edir: edir
         };
         const member = await this.edirMembersRepository.create(data);
@@ -115,6 +116,16 @@ let EddirService = class EddirService {
         const members = await this.edirMembersRepository.find({
             where: { edir: edirId },
         });
+        const listofmembers = [];
+        for (let member of members) {
+            const user = await this.userRepository.findOne({ where: { username: member.username } });
+            const data = {
+                name: user.fullName,
+                username: user.username,
+                date: member.date
+            };
+            listofmembers.push(data);
+        }
         return members;
     }
     async getSingleMemberOfEdir(edirId, username) {

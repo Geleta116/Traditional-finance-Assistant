@@ -25,7 +25,7 @@ export declare class EqubService {
     getAllEqubs(username: string): Promise<any[]>;
     checkRedundency(username: any, name: any): Promise<boolean>;
     getDataAboutEqub(equbId: any): Promise<Equb>;
-    getMembersOfEqub(equbid: any): Promise<EqubMembers[]>;
+    getMembersOfEqub(equbid: any): Promise<any[]>;
     getSingleMemberOfEqub(equbid: any, username: any): Promise<EqubMembers>;
     getUnwonMembers(equbId: any): Promise<EqubMembers[]>;
     getCurrentWinner(equbId: any): Promise<{

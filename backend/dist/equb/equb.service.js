@@ -121,8 +121,9 @@ let EqubService = EqubService_1 = class EqubService {
             });
         }
         const joined_equbs = await this.memebersRepository.find({
-            where: { username: username },
-            relations: ['equb']
+            where: {
+                username: username
+            }
         });
         for (let data of joined_equbs) {
             if (!created_equbs.includes(data.equb)) {
@@ -153,7 +154,17 @@ let EqubService = EqubService_1 = class EqubService {
         const memebers = await this.memebersRepository.find({
             where: { equb: equbid },
         });
-        return memebers;
+        const listofmembers = [];
+        for (let member of memebers) {
+            const user = await this.userService.getUserInfo(member.username);
+            const data = {
+                name: user.fullName,
+                username: user.username,
+                won: member.won,
+            };
+            listofmembers.push(data);
+        }
+        return listofmembers;
     }
     async getSingleMemberOfEqub(equbid, username) {
         const member = await this.memebersRepository.findOne({
@@ -209,6 +220,9 @@ let EqubService = EqubService_1 = class EqubService {
                 equb: equbId
             }
         });
+        if (!equb) {
+            return true;
+        }
         const isPaid = equb.paid;
         if (underBlacklist || isPaid) {
             return false;
