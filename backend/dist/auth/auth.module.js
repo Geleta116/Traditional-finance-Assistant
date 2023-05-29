@@ -12,11 +12,11 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const jwt_1 = require("@nestjs/jwt");
 const typeorm_1 = require("@nestjs/typeorm");
-const members_entity_1 = require("../typeorm/entities/members.entity");
-const user_entity_1 = require("../typeorm/entities/user.entity");
-const equb_entity_1 = require("../typeorm/entities/equb.entity");
-const edir_entity_1 = require("../eddir/typeorm_entities/edir.entity");
-const edir_members_entity_1 = require("../eddir/typeorm_entities/edir_members.entity");
+const equb_entity_1 = require("../typeorm/equb entities/equb.entity");
+const members_entity_1 = require("../typeorm/equb entities/members.entity");
+const user_entity_1 = require("../typeorm/user entities/user.entity");
+const edir_entity_1 = require("../typeorm/edir entities/edir.entity");
+const edir_members_entity_1 = require("../typeorm/edir entities/edir_members.entity");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([

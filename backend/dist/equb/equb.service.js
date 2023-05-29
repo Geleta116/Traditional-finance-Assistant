@@ -14,17 +14,17 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var EqubService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EqubService = void 0;
-const members_entity_1 = require("../typeorm/entities/members.entity");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("../typeorm/entities/user.entity");
 const typeorm_2 = require("typeorm");
-const equb_entity_1 = require("../typeorm/entities/equb.entity");
-const notification_entity_1 = require("../typeorm/entities/notification.entity");
 const common_1 = require("@nestjs/common");
-const blackList_entity_1 = require("../typeorm/entities/blackList.entity");
 const user_service_1 = require("../user/user.service");
-const equb_chatroom_entity_1 = require("../typeorm/entities/equb.chatroom.entity");
 const common_2 = require("@nestjs/common");
+const members_entity_1 = require("../typeorm/equb entities/members.entity");
+const equb_entity_1 = require("../typeorm/equb entities/equb.entity");
+const user_entity_1 = require("../typeorm/user entities/user.entity");
+const notification_entity_1 = require("../typeorm/equb entities/notification.entity");
+const blackList_entity_1 = require("../typeorm/equb entities/blackList.entity");
+const equb_chatroom_entity_1 = require("../typeorm/equb entities/equb.chatroom.entity");
 let EqubService = EqubService_1 = class EqubService {
     constructor(memebersRepository, equbRepository, userRepository, notificationRepository, blacklistRepository, equbchatroomRepository, userService) {
         this.memebersRepository = memebersRepository;
@@ -121,8 +121,9 @@ let EqubService = EqubService_1 = class EqubService {
             });
         }
         const joined_equbs = await this.memebersRepository.find({
-            where: { username: username },
-            relations: ['equb']
+            where: {
+                username: username
+            }
         });
         for (let data of joined_equbs) {
             if (!created_equbs.includes(data.equb)) {
@@ -153,7 +154,17 @@ let EqubService = EqubService_1 = class EqubService {
         const memebers = await this.memebersRepository.find({
             where: { equb: equbid },
         });
-        return memebers;
+        const listofmembers = [];
+        for (let member of memebers) {
+            const user = await this.userService.getUserInfo(member.username);
+            const data = {
+                name: user.fullName,
+                username: user.username,
+                won: member.won,
+            };
+            listofmembers.push(data);
+        }
+        return listofmembers;
     }
     async getSingleMemberOfEqub(equbid, username) {
         const member = await this.memebersRepository.findOne({
@@ -209,6 +220,9 @@ let EqubService = EqubService_1 = class EqubService {
                 equb: equbId
             }
         });
+        if (!equb) {
+            return true;
+        }
         const isPaid = equb.paid;
         if (underBlacklist || isPaid) {
             return false;

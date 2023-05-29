@@ -4,5 +4,6 @@ export declare class Edirmembers {
     username: string;
     paid: boolean;
     penality: number;
+    date: Date;
     edir: Edir;
 }
