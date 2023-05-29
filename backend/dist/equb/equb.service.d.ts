@@ -1,11 +1,11 @@
-import { EqubMembers } from 'src/typeorm/entities/members.entity';
-import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
-import { Equb } from '../typeorm/entities/equb.entity';
-import { EqubNotification } from '../typeorm/entities/notification.entity';
-import { BlackList } from '../typeorm/entities/blackList.entity';
 import { UserService } from '../user/user.service';
-import { Equbchatroom } from '../typeorm/entities/equb.chatroom.entity';
+import { EqubMembers } from '../typeorm/equb entities/members.entity';
+import { Equb } from '../typeorm/equb entities/equb.entity';
+import { User } from '../typeorm/user entities/user.entity';
+import { EqubNotification } from '../typeorm/equb entities/notification.entity';
+import { BlackList } from '../typeorm/equb entities/blackList.entity';
+import { Equbchatroom } from '../typeorm/equb entities/equb.chatroom.entity';
 export declare class EqubService {
     private memebersRepository;
     private equbRepository;
@@ -25,7 +25,7 @@ export declare class EqubService {
     getAllEqubs(username: string): Promise<any[]>;
     checkRedundency(username: any, name: any): Promise<boolean>;
     getDataAboutEqub(equbId: any): Promise<Equb>;
-    getMembersOfEqub(equbid: any): Promise<EqubMembers[]>;
+    getMembersOfEqub(equbid: any): Promise<any[]>;
     getSingleMemberOfEqub(equbid: any, username: any): Promise<EqubMembers>;
     getUnwonMembers(equbId: any): Promise<EqubMembers[]>;
     getCurrentWinner(equbId: any): Promise<{

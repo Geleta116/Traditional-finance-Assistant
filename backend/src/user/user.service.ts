@@ -1,10 +1,9 @@
 import { AuthService } from './../auth/auth.service';
 import { HttpException, HttpStatus, Injectable, Res } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/typeorm/entities/user.entity';
-// import { CreateUserParams } from 'src/utils/types';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { User } from '../typeorm/user entities/user.entity';
 
 
 

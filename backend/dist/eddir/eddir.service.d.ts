@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
-import { User } from '../typeorm/entities/user.entity';
-import { Edir } from './typeorm_entities/edir.entity';
-import { Edirmembers } from './typeorm_entities/edir_members.entity';
-import { EdirNotifications } from './typeorm_entities/edir_notification.entity';
-import { Edirchatroom } from './typeorm_entities/edir_chatroom.entity';
+import { Edir } from '../typeorm/edir entities/edir.entity';
+import { Edirmembers } from '../typeorm/edir entities/edir_members.entity';
+import { User } from '../typeorm/user entities/user.entity';
+import { EdirNotifications } from '../typeorm/edir entities/edir_notification.entity';
+import { Edirchatroom } from '../typeorm/edir entities/edir_chatroom.entity';
 export declare class EddirService {
     private edirRepository;
     private edirMembersRepository;

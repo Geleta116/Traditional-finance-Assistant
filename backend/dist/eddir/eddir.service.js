@@ -16,11 +16,11 @@ exports.EddirService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const user_entity_1 = require("../typeorm/entities/user.entity");
-const edir_entity_1 = require("./typeorm_entities/edir.entity");
-const edir_members_entity_1 = require("./typeorm_entities/edir_members.entity");
-const edir_notification_entity_1 = require("./typeorm_entities/edir_notification.entity");
-const edir_chatroom_entity_1 = require("./typeorm_entities/edir_chatroom.entity");
+const edir_entity_1 = require("../typeorm/edir entities/edir.entity");
+const edir_members_entity_1 = require("../typeorm/edir entities/edir_members.entity");
+const user_entity_1 = require("../typeorm/user entities/user.entity");
+const edir_notification_entity_1 = require("../typeorm/edir entities/edir_notification.entity");
+const edir_chatroom_entity_1 = require("../typeorm/edir entities/edir_chatroom.entity");
 let EddirService = class EddirService {
     constructor(edirRepository, edirMembersRepository, userRepository, notificationRepository, edirchatroomRepository) {
         this.edirRepository = edirRepository;
@@ -54,6 +54,7 @@ let EddirService = class EddirService {
         }
         const data = {
             username: username,
+            date: new Date(),
             edir: edir
         };
         const member = await this.edirMembersRepository.create(data);
@@ -115,6 +116,16 @@ let EddirService = class EddirService {
         const members = await this.edirMembersRepository.find({
             where: { edir: edirId },
         });
+        const listofmembers = [];
+        for (let member of members) {
+            const user = await this.userRepository.findOne({ where: { username: member.username } });
+            const data = {
+                name: user.fullName,
+                username: user.username,
+                date: member.date
+            };
+            listofmembers.push(data);
+        }
         return members;
     }
     async getSingleMemberOfEdir(edirId, username) {
