@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utilities/block_button.dart';
+import '../../utilities/block_button.dart';
 
 
 class Welcome extends StatelessWidget {
@@ -34,7 +34,7 @@ class Welcome extends StatelessWidget {
                 
                 Container(
                   
-                  child: Image.asset('images/welcome.png'),
+                  child: Image.asset('lib/presentation/images/welcome.png'),
                   height: 185,
                   width: 250,
                 ),

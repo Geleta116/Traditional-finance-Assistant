@@ -1,43 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intl/intl.dart';
-import '../../utilities/curve_button.dart';
 
 import '../../utilities/curve_button.dart';
-class Equb{
+class Edir{
   String name;
   int amount;
   int duration;
   int countdown;
-  String description;
-  int minMembers; 
   bool paid;
 
-  Equb({
+  Edir({
     required this.paid,
     required this.name,
     required this.amount,
     required this.duration,
     required this.countdown,
-    required this.description,
-    required this.minMembers,
+
   });
 
 
 }
 
-List<Equb> equbs = 
-[Equb(name: 'equb1',amount: 1000,duration: 3,countdown: 2,description: 'equb1 description',minMembers: 5, paid:false),
-Equb(name: 'equb2',amount: 2000,duration: 4,countdown: 3,description: 'equb2 description',minMembers: 5, paid:true),
+List<Edir> edirs = 
+[Edir(name: 'edir1',amount: 1000,duration: 3,countdown: 2, paid:false),
+Edir(name: 'edir2',amount: 2000,duration: 4,countdown: 3, paid:true),
 ];
-class EqubLandingPage extends StatelessWidget {
-  const EqubLandingPage({super.key});
+class EdirLandingPage extends StatefulWidget {
+  const EdirLandingPage({super.key});
 
+  @override
+  State<EdirLandingPage> createState() => _EdirLandingPageState();
+}
+
+class _EdirLandingPageState extends State<EdirLandingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Equb'),
+        title: Text('Edir'),
         
       ),
       body: Container(
@@ -48,32 +48,27 @@ class EqubLandingPage extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Start Your Equb Today',
+                'Become a member of an Edir or create one',
                 style: TextStyle(
                 fontSize: 18.0,
-                fontWeight: FontWeight.w400
+                fontWeight: FontWeight.bold
         
                 ),
               ),
-              Text(
-                'join a group and start your equb',
-                style: TextStyle(
-                fontSize: 16.0,
-                )),
                 SizedBox(height:30.0),
       
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   
-                  CurveButton(text: 'join Equb', onPressed: () => {}, color:Color(0xff6D968F) ,),
-                  CurveButton(text: 'create Equb' , onPressed: () => {}, color: Color(0xff6D968F),),
+                  CurveButton(text: 'join Edir', onPressed: () => {}, color:Color(0xff6D968F) ,),
+                  CurveButton(text: 'create Edir' , onPressed: () => {}, color: Color(0xff6D968F),),
       
                 ],),
                 SizedBox(height:30.0),
       
                 Flexible(
-                  child: EqubList(equbs: equbs,),
+                  child: EdirList(edirs: edirs,),
                 ),
              
       
@@ -86,19 +81,19 @@ class EqubLandingPage extends StatelessWidget {
   }
 }
 
-class EqubList extends StatefulWidget {
-  List<Equb> equbs;
-  EqubList({super.key, required this.equbs});
+class EdirList extends StatefulWidget {
+  List<Edir> edirs;
+  EdirList({super.key, required this.edirs});
 
   @override
-  State<EqubList> createState() => _EqubListState();
+  State<EdirList> createState() => _EdirListState();
 }
 
-class _EqubListState extends State<EqubList> {
+class _EdirListState extends State<EdirList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-                  itemCount: equbs.length,
+                  itemCount: edirs.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: (){print('tapped $index');},
@@ -106,7 +101,6 @@ class _EqubListState extends State<EqubList> {
                     
                         margin: EdgeInsets.only(top:10.0, bottom: 10.0),
                         padding: EdgeInsets.all(10.0),
-              
                         decoration: BoxDecoration(
                           color: Color(0xff94B297),
                           border: Border.all(
@@ -122,24 +116,32 @@ class _EqubListState extends State<EqubList> {
                         
                          
                           Center(child: Text(
-                            widget.equbs[index].name,
+                            widget.edirs[index].name,
                             style: TextStyle(
                               fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
                             )),
-                          EqubListTextDetail(boldText: 'amount', normalText: NumberFormat.currency(
+                          EdirListTextDetail(boldText: 'amount', normalText: NumberFormat.currency(
                             symbol:'ETB',
-                          ).format(equbs[index].amount)),
-                          EqubListTextDetail(boldText: 'Duration', normalText: ToDuration(widget.equbs[index].duration)),
-                          EqubListTextDetail(boldText: 'Description', normalText: '${widget.equbs[index].description}'),
-                          EqubListTextDetail(boldText: 'Start Date', normalText: calculateStartDate(widget.equbs[index].countdown)),
-                          EqubListTextDetail(boldText: 'minMembers', normalText: '${widget.equbs[index].minMembers.toString()}'),
-                          Center(
-                            child: Visibility(
-                              visible: equbs[index].paid,
+                          ).format(edirs[index].amount)),
+                          EdirListTextDetail(boldText: 'Duration', normalText: ToDuration(widget.edirs[index].duration)),
+                          
+                          EdirListTextDetail(boldText: 'Start Date', normalText: calculateStartDate(widget.edirs[index].countdown)),
+                          SizedBox(height: 20.0,),
+                          Row(
+                            mainAxisAlignment: edirs[index].paid?  MainAxisAlignment.spaceEvenly: MainAxisAlignment.start,
+                            children: [
+                              CurveButton(text: 'leave group', onPressed: (){
+                                showConfirmationDialog(context);
+                              }, color: Colors.redAccent,),
 
-                              child: CurveButton(text: 'proceed payement', onPressed:() => {showModal(context,equbs[index].amount )},color: Colors.indigoAccent,)))
+                              Visibility(
+                                visible: edirs[index].paid,
+
+                                child: CurveButton(text: 'pay', onPressed:() => {showModal(context,edirs[index].amount )},color: Colors.indigoAccent,)),
+                            ],
+                          )
                         ]),
                       ),
                     );
@@ -147,11 +149,36 @@ class _EqubListState extends State<EqubList> {
                           );
   }
 }
-
-class EqubListTextDetail extends StatelessWidget {
+ void showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text('Are you sure you want to Leave?'),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Leave'),
+              onPressed: () {
+               
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+class EdirListTextDetail extends StatelessWidget {
   String boldText;
   String normalText;
-  EqubListTextDetail({super.key, required this.boldText, required this.normalText});
+  EdirListTextDetail({super.key, required this.boldText, required this.normalText});
 
   @override
   Widget build(BuildContext context) {

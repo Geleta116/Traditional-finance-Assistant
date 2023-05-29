@@ -3,14 +3,14 @@ import '../../utilities/block_button.dart';
 
 import '../../utilities/Input.dart';
 
-class JoinEqubScreen extends StatelessWidget {
-  const JoinEqubScreen({super.key});
+class JoinEdirScreen extends StatelessWidget {
+  const JoinEdirScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text('Join Equb'),
+        title:Text('Join Edir'),
         centerTitle: true,
 
       ),
@@ -33,12 +33,12 @@ class JoinEqubScreen extends StatelessWidget {
                 
                 SizedBox(
                   width: 300.0,
-                  child: InputFields(placeholder: 'Equb Name', controller: null, textInputType: TextInputType.text,)),
+                  child: InputFields(placeholder: 'Edir Name', controller: null, textInputType: TextInputType.text,)),
                 SizedBox(height:15.0,),
                 
                  SizedBox(
                   width: 300.0,
-                  child: InputFields(placeholder: 'Equb Code', controller: null, textInputType: TextInputType.text,)),
+                  child: InputFields(placeholder: 'Edir Code', controller: null, textInputType: TextInputType.text,)),
                 SizedBox(height:15.0,),
 
                 BlockButton(text: 'Join', onPressed: (){},),

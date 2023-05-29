@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../utilities/User.dart';
 
 
-class MembersScreen extends StatelessWidget {
-  const MembersScreen({super.key});
+class EdirMembersScreen extends StatelessWidget {
+  const EdirMembersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class MembersScreen extends StatelessWidget {
 }
 
 
-List<User> Users = [User(name: 'user1', username: 'user1', haveWon: true), 
-                   User(name: 'user2', username:'user2', haveWon: false)];
+List<User> Users = [User(name: 'user1', username: 'user1', joinedAt: DateTime.now().toString()), 
+                   User(name: 'user2', username:'user2', joinedAt: DateTime.now().toString( ))];
 
 
 Widget buildTable() {
@@ -52,7 +53,7 @@ Widget buildTable() {
       ),
       DataColumn(
         label: Text(
-          'haveWon',
+          'Joined at',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -67,7 +68,7 @@ Widget buildTable() {
           DataCell(Text(Users[index].name)),
           DataCell(
             Text(Users[index].username.toString())),
-          DataCell(Text(Users[index].haveWon? 'yes': 'no')),
+          DataCell(Text(DateFormat('MMMM d, yyyy').format(DateTime.parse(Users[index].joinedAt)))),
         ],
         color: MaterialStateColor.resolveWith((states) {
 
@@ -77,3 +78,4 @@ Widget buildTable() {
     ),
   );
 }
+ 

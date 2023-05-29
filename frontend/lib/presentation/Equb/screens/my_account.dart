@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../utilities/Input.dart';
-import '../utilities/curve_button.dart';
+import '../../utilities/Input.dart';
+import '../../utilities/curve_button.dart';
 
 
 class MyAccount extends StatefulWidget {
@@ -45,7 +45,7 @@ class _MyAccountState extends State<MyAccount> {
 
                  Container(
                   
-                  child: Image.asset('images/profile.png'),
+                  child: Image.asset('lib/presentation/images/profile.png'),
                   height: 185,
                   width: 250,
                 ),

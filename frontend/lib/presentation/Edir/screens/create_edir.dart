@@ -4,19 +4,19 @@ import 'package:flutter/services.dart';
 import '../../utilities/Input.dart';
 import '../../utilities/block_button.dart';
 
-class CreateEqubScreen extends StatefulWidget {
-  const CreateEqubScreen({super.key});
+class CreateEdirScreen extends StatefulWidget {
+  const CreateEdirScreen({super.key});
 
   @override
-  State<CreateEqubScreen> createState() => _CreateEqubScreenState();
+  State<CreateEdirScreen> createState() => _CreateEdirScreenState();
 }
 
-class _CreateEqubScreenState extends State<CreateEqubScreen> {
+class _CreateEdirScreenState extends State<CreateEdirScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text('Create Equb'),
+        title:Text('Create Edir'),
         centerTitle: true,
 
       ),
@@ -27,7 +27,7 @@ class _CreateEqubScreenState extends State<CreateEqubScreen> {
             child:Column(
               children: [
                 SizedBox(height:10.0),
-                Text('Create new Equb', 
+                Text('Create new Edir', 
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class _CreateEqubScreenState extends State<CreateEqubScreen> {
                 SizedBox(
                   height:40.0,
                   width: 300.0,
-                  child: InputFields(placeholder: 'Equb Name', controller: null, textInputType: TextInputType.text,)),
+                  child: InputFields(placeholder: 'Edir Name', controller: null, textInputType: TextInputType.text,)),
                 SizedBox(height:10.0,),
                 
                  SizedBox(
@@ -55,41 +55,6 @@ class _CreateEqubScreenState extends State<CreateEqubScreen> {
                   height:40.0,
                   width: 300.0,
                   child: InputFields(placeholder: 'countdown', controller: null, textInputType: TextInputType.number,)),
-                SizedBox(height:10.0,),
-                SizedBox(
-                  width: 300.0,
-                child: TextField(
-                maxLines: null, 
-                decoration: InputDecoration(
-                  labelText: 'description',
-                  border: OutlineInputBorder(
-                  
-                
-
-                  ), 
-                ))),
-                SizedBox(height:10.0,),
-                SizedBox(
-                  height:40.0,
-                  width:300.0,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: 'minMembers',
-                      border: OutlineInputBorder(
-
-                      borderSide: BorderSide(
-                      color: Colors.white, // Set the border color here
-                    ),
-                    borderRadius: BorderRadius.circular(100.0),
-                      )
-                    ),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))],),
-                ),
-  // Other properties and configurations for the input field
-
-
-
                 SizedBox(height:40.0,),
 
                 BlockButton(text: 'Create', onPressed: (){},),
