@@ -10,7 +10,7 @@ export declare class EqubController {
     createEqub(equbdto: EqubDTO, req: Request): Promise<any>;
     joinEqub(enrolldto: EnrollDTO, req: Request): Promise<import("../typeorm/entities/members.entity").EqubMembers>;
     getAllEnrolledEqubs(req: Request): Promise<any[]>;
-    getMembersOfEqub(id: number): Promise<import("../typeorm/entities/members.entity").EqubMembers[]>;
+    getMembersOfEqub(id: number): Promise<any[]>;
     getCurrentwinner(id: number): Promise<{
         name: string;
         username: string;

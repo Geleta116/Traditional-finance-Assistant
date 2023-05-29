@@ -3,4 +3,5 @@ export declare class EdirDTO {
     readonly amount: number;
     readonly duration: number;
     readonly countdown: number;
+    readonly description: string;
 }
