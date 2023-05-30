@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 
-import '../User_models/User.dart';
-import '../User_data_provider/User_data_provider.dart';
-import '../User_models/Notifications.dart';
+import '../../domain/ekub/models/Notifications.dart';
+// import '../User_models/User.dart';
+// import '../User_data_provider/User_data_provider.dart';
+// import '../User_models/Notifications.dart';
 import 'User_data_provider.dart';
 
 
