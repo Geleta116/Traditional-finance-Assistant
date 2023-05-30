@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/auth/accessToken.Dto.dart';
+import 'package:traditional_financial_asistant/infrastructure/auth/accessToken.Dto.dart';
 import '../../domain/auth/AuthFailure.dart';
 import '../../domain/auth/User.dart';
 import 'authentication_provider.dart';
-import 'package:traditional_finance_assistant__app/domain/auth/authenticationRepositoryInterface.dart';
-import 'package:traditional_finance_assistant__app/local_storage/local_storage.dart';
+import 'package:traditional_financial_asistant/domain/auth/authenticationRepositoryInterface.dart';
+import 'package:traditional_financial_asistant/local_storage/local_storage.dart';
 
 class AuthenticationRepository implements AuthenticationRepositroyInterface {
   AuthenticationProvider? authProvider;

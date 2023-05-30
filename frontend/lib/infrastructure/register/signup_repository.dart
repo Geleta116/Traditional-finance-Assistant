@@ -1,10 +1,10 @@
-import 'package:traditional_finance_assistant__app/domain/auth/User.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/register/user.DTO.dart';
+import 'package:traditional_financial_asistant/domain/auth/User.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.dart';
 
 import '../../infrastructure/register/signup_provider.dart';
 import '../../domain/register/User.dart';
-import 'package:traditional_finance_assistant__app/domain/register/signUpRepositoryInterface.dart';
-import 'package:traditional_finance_assistant__app/local_storage/local_storage.dart';
+import 'package:traditional_financial_asistant/domain/register/signUpRepositoryInterface.dart';
+import 'package:traditional_financial_asistant/local_storage/local_storage.dart';
 
 class SignUpRepository implements SignUpRepositoryInterface {
   final SignUpDataProvider dataProvider;

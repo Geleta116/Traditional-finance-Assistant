@@ -3,7 +3,7 @@
 import 'dart:convert';
   
 import 'package:http/http.dart' as http;
-import 'package:traditional_finance_assistant__app/infrastructure/register/user.DTO.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.dart';
 
 import '../../domain/register/User.dart';
 

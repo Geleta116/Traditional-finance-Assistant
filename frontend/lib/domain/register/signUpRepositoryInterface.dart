@@ -1,5 +1,5 @@
 
-import 'package:traditional_finance_assistant__app/domain/register/User.dart';
+import 'package:traditional_financial_asistant/domain/register/User.dart';
 
 abstract class SignUpRepositoryInterface {
   Future<Users> signUp(Users user);
