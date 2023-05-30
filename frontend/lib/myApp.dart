@@ -2,9 +2,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
 import 'package:traditional_financial_asistant/application/register/signup_bloc.dart';
 import 'package:traditional_financial_asistant/domain/auth/authenticationRepositoryInterface.dart';
+import 'package:traditional_financial_asistant/domain/edir/edirRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/domain/register/signUpRepositoryInterface.dart';
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_data_provider.dart';
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_repository.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
 import 'package:traditional_financial_asistant/infrastructure/join/join_data_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/join/join_repository.dart';
@@ -17,6 +21,7 @@ import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_pro
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
 import 'package:go_router/go_router.dart';
+import 'package:traditional_financial_asistant/presentation/Edir/screens/create_edir.dart';
 import 'package:traditional_financial_asistant/presentation/equb/screens/EqubLandingPage.dart';
 import 'package:traditional_financial_asistant/presentation/equb/screens/joinEqub.dart';
 import 'package:traditional_financial_asistant/waiting_screen.dart';
@@ -30,7 +35,6 @@ import 'package:traditional_financial_asistant/presentation/auth/login.dart';
 import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
 import 'package:traditional_financial_asistant/welcome.dart';
 
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -39,22 +43,18 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-
   final appRouting = GoRouter(routes: [
     GoRoute(
       path: '/',
       name: 'waiting',
-
       builder: (context, state) => WaitingScreen(),
     ),
     GoRoute(
         path: "/login", name: "login", builder: (context, state) => Login()),
-
     GoRoute(
         path: "/signup",
         name: "signup",
         builder: (context, state) => SignupScreen()),
-
     GoRoute(
         path: "/createEkub",
         name: "createEkub",
@@ -70,7 +70,11 @@ class MyAppState extends State<MyApp> {
     GoRoute(
         path: "/landing",
         name: "landing",
-        builder: (context, state) => Welcome())
+        builder: (context, state) => Welcome()),
+    GoRoute(
+        path: "/createEdir",
+        name: "createEdir",
+        builder: (context, state) => CreateEdirScreen())
   ]);
 
   AuthenticationRepositroyInterface _authRepository =
@@ -78,9 +82,8 @@ class MyAppState extends State<MyApp> {
   SignUpRepositoryInterface _signUPRepository =
       SignUpRepository(SignUpDataProvider());
   EkubRepositoryInterface _ekubRepository = EkubRepository(EkubDataProvider());
-  JoinRepositoryInterface _joinRepository =
-      JoinRepository(JoinDataProvider());
-
+  JoinRepositoryInterface _joinRepository = JoinRepository(JoinDataProvider());
+  EdirRepositoryInterface _edirRepository = EdirRepository(EdirDataProvider());
 
   @override
   Widget build(BuildContext context) {
@@ -95,24 +98,20 @@ class MyAppState extends State<MyApp> {
         RepositoryProvider<EkubRepositoryInterface>(
           create: (context) => _ekubRepository,
         ),
-
         RepositoryProvider<JoinRepositoryInterface>(
           create: (context) => _joinRepository,
         ),
-
+        RepositoryProvider<EdirRepositoryInterface>(
+            create: (context) => _edirRepository),
       ],
       child: MultiBlocProvider(
           providers: [
             BlocProvider<AuthenticationBloc>(
               create: (context) => AuthenticationBloc(_authRepository),
             ),
-
-
             BlocProvider<JoinBloc>(
-              create: (context) => JoinBloc(
-                joinRepository: _joinRepository),
+              create: (context) => JoinBloc(joinRepository: _joinRepository),
             ),
-
             BlocProvider<SignupBloc>(
               create: (context) => SignupBloc(
                 signupRepository: _signUPRepository,
@@ -123,6 +122,12 @@ class MyAppState extends State<MyApp> {
                 ekubRepository: _ekubRepository,
               ),
             ),
+            BlocProvider<EdirBloc>(
+              create: (context) => EdirBloc(
+                edirRepository: _edirRepository,
+              ),
+            ),
+
           ],
           child: MaterialApp.router(
             title: 'Traditional Finance Assistant',

@@ -8,9 +8,11 @@ class AccessTokenDto {
   AccessTokenDto({this.token});
 
   AccessTokenDto.fromJson(Map<String, dynamic> json) {
+    print(json);
+    // print(json['token']);
+    // print(json['user']);
     token = json['token'];
     user = UserDto.fromJson(json['user']);
-    
   }
 
   Map<String, dynamic> toJson() {

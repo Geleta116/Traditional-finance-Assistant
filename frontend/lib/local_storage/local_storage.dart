@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
+import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/ekub/ekub_barel.dart';
 
 class DbHelper {
@@ -18,6 +19,9 @@ class DbHelper {
           database.execute(
             "CREATE TABLE ekub(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT NULL,name TEXT, amount INTEGER NULL, countdown INTEGER, minMembers INTEGER NULL,duration INTEGER NULL)",
           );
+          database.execute(
+            "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL)",
+          );
         },
         version: version,
       );
@@ -26,14 +30,14 @@ class DbHelper {
   }
 
   Future<int> insertUser(Map<String, dynamic> accessToken) async {
-  
+    print("accessToken");
     Database db = await openDb();
-  
+
     // Map<String, dynamic> row =
     //     accessToken['user']['accessToken'] = accessToken['accessToken'];
     Map<String, dynamic> row = accessToken['user'];
     row['accessToken'] = accessToken['token'];
- 
+
     final result = await db.rawQuery('SELECT COUNT(*) FROM users');
     final count = Sqflite.firstIntValue(result);
 
@@ -75,7 +79,7 @@ class DbHelper {
     Database db = await openDb();
     Map<String, dynamic> queryResult = (await db.query('users')).first;
     Map<String, dynamic> existingRow = Map.from(queryResult);
-  
+
     if (existingRow.isNotEmpty) {
       if (existingRow['accessToken'] != null) {
         return existingRow['accessToken'];
@@ -104,15 +108,40 @@ class DbHelper {
     return 1;
   }
 
+  Future<int> insertEdir(List<Edir> edirList) async {
+    // add edir to local storage
+    
+    Database db = await openDb();
+    final batch = db.batch();
+    for (var entity in edirList) {
+      batch.insert('edir', entity.toJson());
+    }
+    
+    await batch.commit();
+
+    return 1;
+  }
+
   Future<List<Map<String, dynamic>>> getEkub() async {
     Database db = await openDb();
     return await db.query('ekub');
+  }
+
+  Future<List<Map<String, dynamic>>> getEdir() async {
+    Database db = await openDb();
+    return await db.query('edir');
   }
 
   Future<int> updateEkub(Map<String, dynamic> row) async {
     Database db = await openDb();
     int id = row['id'];
     return await db.update('ekub', row, where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> updateEdir(Map<String, dynamic> row) async {
+    Database db = await openDb();
+    int id = row['id'];
+    return await db.update('edir', row, where: 'id = ?', whereArgs: [id]);
   }
 
   Future<void> dropDatabase() async {
