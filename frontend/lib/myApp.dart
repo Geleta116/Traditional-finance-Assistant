@@ -19,10 +19,10 @@ import 'package:traditional_financial_asistant/waiting_screen.dart';
 import 'application/auth/authentication_bloc.dart';
 import 'application/ekub/ekub_bloc.dart';
 import 'routing.dart';
-// import 'package:traditional_financial_asistant/presentation/ekub/createEqub.dart';
-// import 'package:traditional_financial_asistant/presentation/auth/login.dart';
-// import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
-// import 'package:traditional_financial_asistant/welcome.dart';
+import 'package:traditional_financial_asistant/presentation/ekub/createEqub.dart';
+import 'package:traditional_financial_asistant/presentation/auth/login.dart';
+import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
+import 'package:traditional_financial_asistant/welcome.dart';
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
