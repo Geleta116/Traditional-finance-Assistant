@@ -30,6 +30,7 @@ import 'package:traditional_financial_asistant/presentation/auth/login.dart';
 import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
 import 'package:traditional_financial_asistant/welcome.dart';
 
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -38,18 +39,22 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+
   final appRouting = GoRouter(routes: [
     GoRoute(
       path: '/',
       name: 'waiting',
+
       builder: (context, state) => WaitingScreen(),
     ),
     GoRoute(
         path: "/login", name: "login", builder: (context, state) => Login()),
+
     GoRoute(
         path: "/signup",
         name: "signup",
         builder: (context, state) => SignupScreen()),
+
     GoRoute(
         path: "/createEkub",
         name: "createEkub",
@@ -76,6 +81,7 @@ class MyAppState extends State<MyApp> {
   JoinRepositoryInterface _joinRepository =
       JoinRepository(JoinDataProvider());
 
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -89,19 +95,24 @@ class MyAppState extends State<MyApp> {
         RepositoryProvider<EkubRepositoryInterface>(
           create: (context) => _ekubRepository,
         ),
+
         RepositoryProvider<JoinRepositoryInterface>(
           create: (context) => _joinRepository,
         ),
+
       ],
       child: MultiBlocProvider(
           providers: [
             BlocProvider<AuthenticationBloc>(
               create: (context) => AuthenticationBloc(_authRepository),
             ),
+
+
             BlocProvider<JoinBloc>(
               create: (context) => JoinBloc(
                 joinRepository: _joinRepository),
             ),
+
             BlocProvider<SignupBloc>(
               create: (context) => SignupBloc(
                 signupRepository: _signUPRepository,
