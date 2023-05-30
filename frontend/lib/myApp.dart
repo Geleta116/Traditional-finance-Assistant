@@ -25,7 +25,6 @@ import 'application/ekub/ekub_bloc.dart';
 import 'application/join/join_bloc.dart';
 import 'domain/join/joinRepositoryInterface.dart';
 import 'routing.dart';
-
 import 'package:traditional_financial_asistant/presentation/equb/screens/createEqub.dart';
 import 'package:traditional_financial_asistant/presentation/auth/login.dart';
 import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
