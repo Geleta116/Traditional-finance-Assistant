@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:traditional_financial_asistant/domain/ekub/models/Notifications.dart';
 
 import '../../domain/register/User.dart';
 

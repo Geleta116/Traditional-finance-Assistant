@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/auth/authentication_repository.dart';
+import 'package:traditional_financial_asistant/infrastructure/auth/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'domain/auth/AuthFailure.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
