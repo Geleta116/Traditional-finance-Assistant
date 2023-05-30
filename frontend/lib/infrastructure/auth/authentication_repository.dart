@@ -19,11 +19,11 @@ class AuthenticationRepository implements AuthenticationRepositroyInterface {
     try {
       // accept the dto and convert it to an entity
       AccessTokenDto accessToken = await authProvider!.logIn(user);
-      
+      print("repo $accessToken");
       int personId = await dbHelper!.insertUser(accessToken.toJson());
       print('person with $personId successfully created');
       // save the entity to the local storage
-      print(id);
+      print("sds");
     } catch (error) {
       print(error);
       throw Exception(error);

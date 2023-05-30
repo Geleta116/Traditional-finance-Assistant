@@ -25,13 +25,14 @@ class UserDto {
       };
 
   factory UserDto.fromJson(Map<String, dynamic> json) {
+    print("json");
     UserDto temp = UserDto(
         username: json['username'],
         password: json['password'],
         balance: json['balance'],
         email: json['email'],
         fullName: json['fullName']);
-   
+
     return temp;
   }
 
