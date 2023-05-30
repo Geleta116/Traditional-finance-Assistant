@@ -1,5 +1,5 @@
-import 'package:traditional_finance_assistant__app/domain/auth/accessToken.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/register/user.DTO.dart';
+import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.dart';
 
 class AccessTokenDto {
   String? token;

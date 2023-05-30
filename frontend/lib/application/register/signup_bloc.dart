@@ -2,18 +2,19 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:traditional_finance_assistant__app/domain/register/email.dart';
-import 'package:traditional_finance_assistant__app/domain/register/fullname.dart';
-import 'package:traditional_finance_assistant__app/domain/register/signUpRepositoryInterface.dart';
 import '../../domain/register/AuthFailure.dart';
 import '../../domain/register/Password.dart';
 import '../../domain/register/Username.dart';
 import '../../domain/register/User.dart';
 import '../../domain/register/blance.dart';
+import '../../domain/register/email.dart';
+import '../../domain/register/fullname.dart';
+import '../../domain/register/signUpRepositoryInterface.dart';
 import '../../infrastructure/register/signup_repository.dart';
 import '../../application/register/signup_event.dart';
 import '../../application/register/signup_state.dart';
 import '../../domain/register/User.dart';
+
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final SignUpRepositoryInterface signupRepository;

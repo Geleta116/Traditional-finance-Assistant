@@ -1,7 +1,10 @@
-import 'package:traditional_finance_assistant__app/domain/auth/User.dart';
-import 'package:traditional_finance_assistant__app/domain/register/User.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/auth/accessToken.Dto.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/auth/user.DTO.dart';
+// import 'package:traditional_finance_assistant__app/domain/auth/User.dart';
+// import 'package:traditional_finance_assistant__app/domain/register/User.dart';
+// import 'package:traditional_finance_assistant__app/infrastructure/auth/accessToken.Dto.dart';
+// import 'package:traditional_finance_assistant__app/infrastructure/auth/user.DTO.dart';
+
+import '../../infrastructure/auth/accessToken.Dto.dart';
+import '../../infrastructure/auth/user.Dto.dart';
 
 class AccessToken {
   String? token;

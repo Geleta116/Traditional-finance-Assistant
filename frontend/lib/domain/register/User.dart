@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dartz/dartz.dart';
-import 'package:traditional_finance_assistant__app/domain/register/blance.dart';
+import 'package:traditional_financial_asistant/domain/register/blance.dart';
 
-import 'package:traditional_finance_assistant__app/infrastructure/register/user.DTO.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.dart';
 
 import 'AuthFailure.dart';
 import 'Password.dart';

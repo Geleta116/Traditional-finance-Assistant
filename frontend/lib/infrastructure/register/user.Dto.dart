@@ -1,8 +1,8 @@
-import 'package:traditional_finance_assistant__app/domain/register/Password.dart';
-import 'package:traditional_finance_assistant__app/domain/register/Username.dart';
-import 'package:traditional_finance_assistant__app/domain/register/blance.dart';
-import 'package:traditional_finance_assistant__app/domain/register/email.dart';
-import 'package:traditional_finance_assistant__app/domain/register/fullname.dart';
+import 'package:traditional_financial_asistant/domain/register/Password.dart';
+import 'package:traditional_financial_asistant/domain/register/Username.dart';
+import 'package:traditional_financial_asistant/domain/register/blance.dart';
+import 'package:traditional_financial_asistant/domain/register/email.dart';
+import 'package:traditional_financial_asistant/domain/register/fullname.dart';
 
 import '../../domain/register/User.dart';
 

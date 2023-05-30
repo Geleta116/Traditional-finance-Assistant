@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:traditional_finance_assistant__app/domain/auth/accessToken.dart';
-import 'package:traditional_finance_assistant__app/domain/ekub/ekub_barel.dart';
+import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
+import 'package:traditional_financial_asistant/domain/ekub/ekub_barel.dart';
 
 class DbHelper {
   final int version = 1;
@@ -26,15 +26,14 @@ class DbHelper {
   }
 
   Future<int> insertUser(Map<String, dynamic> accessToken) async {
-    print(accessToken);
+  
     Database db = await openDb();
-    print('works so far');
+  
     // Map<String, dynamic> row =
     //     accessToken['user']['accessToken'] = accessToken['accessToken'];
     Map<String, dynamic> row = accessToken['user'];
     row['accessToken'] = accessToken['token'];
-    print(row);
-    print("kdfjsfkjkdfj");
+ 
     final result = await db.rawQuery('SELECT COUNT(*) FROM users');
     final count = Sqflite.firstIntValue(result);
 
@@ -76,7 +75,7 @@ class DbHelper {
     Database db = await openDb();
     Map<String, dynamic> queryResult = (await db.query('users')).first;
     Map<String, dynamic> existingRow = Map.from(queryResult);
-    print(existingRow);
+  
     if (existingRow.isNotEmpty) {
       if (existingRow['accessToken'] != null) {
         return existingRow['accessToken'];

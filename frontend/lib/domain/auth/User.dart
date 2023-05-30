@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../infrastructure/auth/user.Dto.dart';
 import 'AuthFailure.dart';
 import 'Password.dart';
 import 'username.dart';
-import 'package:traditional_finance_assistant__app/infrastructure/auth/user.DTO.dart';
 
 class User {
   final Username username;

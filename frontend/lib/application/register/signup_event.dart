@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:traditional_finance_assistant__app/domain/register/User.dart';
+
+import '../../domain/register/User.dart';
+
 
 abstract class SignupEvent extends Equatable {
   const SignupEvent();

@@ -2,6 +2,8 @@
 
 import 'package:equatable/equatable.dart';
 
+
+
 abstract class AuthFailure extends Equatable {
   const AuthFailure();
 

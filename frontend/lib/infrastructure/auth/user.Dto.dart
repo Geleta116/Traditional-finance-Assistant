@@ -1,6 +1,6 @@
-import 'package:traditional_finance_assistant__app/domain/auth/User.dart';
-import 'package:traditional_finance_assistant__app/domain/auth/username.dart';
-import 'package:traditional_finance_assistant__app/domain/auth/Password.dart';
+import 'package:traditional_financial_asistant/domain/auth/User.dart';
+import 'package:traditional_financial_asistant/domain/auth/username.dart';
+import 'package:traditional_financial_asistant/domain/auth/Password.dart';
 
 class UserDto {
   

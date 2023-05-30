@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:traditional_finance_assistant__app/domain/auth/accessToken.dart';
+import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
 
 import '../../domain/auth/User.dart';
 import "../../infrastructure/auth/accessToken.Dto.dart";

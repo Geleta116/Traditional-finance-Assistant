@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:dartz/dartz.dart';
-import '../../infrastructure/auth/authentication_repository.dart';
+import '../../domain/auth/authenticationRepositoryInterface.dart';
 import '../../domain/auth/User.dart';
 import '../../domain/auth/AuthFailure.dart';
 import '../../domain/auth/Password.dart';
 import '../../domain/auth/username.dart';
 import '../../domain/auth/AuthFailure.dart';
-import 'package:traditional_finance_assistant__app/domain/auth/authenticationRepositoryInterface.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
