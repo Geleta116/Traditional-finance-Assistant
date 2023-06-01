@@ -16,9 +16,6 @@ export class Edirmembers {
     @Column({default: 0})
     penality: number;
 
-    @Column()
-    date: Date;
-
     @ManyToOne(() => Edir, (edir) => edir.members, {onDelete : 'CASCADE'})
     edir: Edir;
 

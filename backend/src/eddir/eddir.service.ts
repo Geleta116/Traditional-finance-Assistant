@@ -2,12 +2,11 @@ import { HttpException, HttpStatus, Injectable, Logger} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Cron } from 'nestjs-schedule';
-import { UserService } from '../user/user.service';
-import { Edir } from '../typeorm/edir entities/edir.entity';
-import { Edirmembers } from '../typeorm/edir entities/edir_members.entity';
-import { User } from '../typeorm/user entities/user.entity';
-import { EdirNotifications } from '../typeorm/edir entities/edir_notification.entity';
-import { Edirchatroom } from '../typeorm/edir entities/edir_chatroom.entity';
+import { User } from '../typeorm/entities/user.entity';
+import { Edir } from './typeorm_entities/edir.entity';
+import { Edirmembers } from './typeorm_entities/edir_members.entity';
+import { EdirNotifications } from './typeorm_entities/edir_notification.entity';
+import { Edirchatroom } from './typeorm_entities/edir_chatroom.entity';
 
 @Injectable()
 export class EddirService {
@@ -17,8 +16,6 @@ export class EddirService {
         @InjectRepository(User) private userRepository: Repository<User>,
         @InjectRepository(EdirNotifications) private notificationRepository: Repository<EdirNotifications>,
         @InjectRepository(Edirchatroom) private edirchatroomRepository: Repository<Edirchatroom>,
-
-        // private readonly userService: UserService
 
     ){}
     
@@ -67,7 +64,6 @@ export class EddirService {
 
         const data = {
             username:username,
-            date : new Date(),
             edir:edir
         }
 
@@ -152,21 +148,6 @@ export class EddirService {
         const members = await this.edirMembersRepository.find({
             where : {edir :edirId },
         })
-
-        const listofmembers = []
-
-        for (let member of members){
-            const user = await this.userRepository.findOne({where : {username : member.username}})
-            const data = {
-                name : user.fullName,
-                username : user.username,
-                date : member.date
-            }
-
-            listofmembers.push(data)
-
-        }
-
         return members
     }
 

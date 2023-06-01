@@ -17,6 +17,8 @@ export class EqubController {
     @UseGuards(Authenticate)
     createEqub(@Body() equbdto: EqubDTO, @Req() req:Request){  // create new Equb
         const usr = req.user['username']
+        console.log(usr)
+        console.log('ekub created')
         return this.equbService.createEqub(equbdto, usr)
     }
 
@@ -34,15 +36,17 @@ export class EqubController {
     @UseGuards(Authenticate)
     getAllEnrolledEqubs(@Req() req:Request){
         const usr = req.user['username']
+        console.log('gets to all equb')
         return this.equbService.getAllEqubs(usr)
     }
 
 
 
-    @Get('members/:id')
+    @Get('members/:equbName')
     @UseGuards(Authenticate)
-    getMembersOfEqub(@Param() id: number){  // get all members of an equb
-        return this.equbService.getMembersOfEqub(id)
+    getMembersOfEqub(@Param() equbName: String){  // get all members of an equb
+        console.log(equbName);
+        return this.equbService.getMembersOfEqub(equbName["equbName"])
     }
 
     @Get('currentwinner/:id')
@@ -51,11 +55,12 @@ export class EqubController {
         return this.equbService.getCurrentWinner(id)
     }
 
-    @Get('pay/:id')
+    @Get('pay/:name')
     @UseGuards(Authenticate)
-    makePayment(@Param() id:number, @Req() req:Request){
+    makePayment(@Param() name:String, @Req() req:Request){
+        console.log(name)
         const usr = req.user['username']
-        return this.equbService.payEqub(usr, id)
+        return this.equbService.payEqub(usr, name["name"])
     }
 
 
@@ -73,10 +78,10 @@ export class EqubController {
     }
 
     
-    @Get('blacklist/:id')
+    @Get('blacklist/:equbName')
     @UseGuards(Authenticate, EqubAuthorize)
-    getMembersInBlackList(@Param() id: number, @Req() req:Request){
-        return this.equbService.blackListMembers(id)
+    getMembersInBlackList(@Param() equbName: String, @Req() req:Request){
+        return this.equbService.blackListMembers(equbName["equbName"])
     }
 
     @Patch('update/:id')

@@ -21,6 +21,7 @@ export class UserController {
 
         @Post('signup/')
         async signUp(@Body() signupdto:SignUpDTO, @Res({ passthrough: true }) response: Response){
+            console.log("get's to the signup controller")
             return await this.userService.signUp(signupdto);
         }
     

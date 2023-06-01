@@ -1,15 +1,16 @@
+import { EqubMembers } from 'src/typeorm/entities/members.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
+import { Equb } from '../typeorm/entities/equb.entity';
+import { EqubNotification } from '../typeorm/entities/notification.entity';
 import { Cron } from '@nestjs/schedule';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { BlackList } from '../typeorm/entities/blackList.entity';
 import { UserService } from '../user/user.service'
+import { Equbchatroom } from '../typeorm/entities/equb.chatroom.entity';
+// import { join } from 'path';
 import { HttpException } from '@nestjs/common';
-import { EqubMembers } from '../typeorm/equb entities/members.entity';
-import { Equb } from '../typeorm/equb entities/equb.entity';
-import { User } from '../typeorm/user entities/user.entity';
-import { EqubNotification } from '../typeorm/equb entities/notification.entity';
-import { BlackList } from '../typeorm/equb entities/blackList.entity';
-import { Equbchatroom } from '../typeorm/equb entities/equb.chatroom.entity';
 
 @Injectable()
 export class EqubService {
@@ -44,6 +45,7 @@ export class EqubService {
 
     // CREATE NEW EQUB
     async createEqub(equb, usr): Promise<any> {
+
         if (await this.checkRedundency(usr, equb.name)){
             throw new HttpException('You are already a member of an equb', HttpStatus.CONFLICT);
         }
@@ -150,7 +152,7 @@ export class EqubService {
     async getAllEqubs(username:string){
 
         const listOfEqubs = []
-        
+
         const created_equbs = await this.equbRepository.find({ where: { creator:username } })
         for (let equb of created_equbs){
             listOfEqubs.push({
@@ -162,9 +164,8 @@ export class EqubService {
         }
 
         const joined_equbs = await this.memebersRepository.find({
-            where: {
-                username: username
-            }
+            where: {username : username},
+            relations: ['equb']
         })
         for (let data of joined_equbs){
             if (!created_equbs.includes(data.equb)) {
@@ -184,7 +185,6 @@ export class EqubService {
 
 
     async checkRedundency(username, name){
-        
         const allequbs = await this.getAllEqubs(username)
         let equbname = name.toLowerCase()
         
@@ -198,32 +198,36 @@ export class EqubService {
     }
 
 
-    getDataAboutEqub(equbId){
-        return this.equbRepository.findOne({where : {id :equbId}})
+    getDataAboutEqub(equbName){
+        return this.equbRepository.findOne({where : {name :equbName}})
     }
 
 
     // GET ALL MEMBERS OF AN EQUB
-    async getMembersOfEqub(equbid){ // get all members of an equb
-        const memebers = await this.memebersRepository.find({
-            where : {equb :equbid },
-        })
-        const listofmembers = []
-
-        for (let member of memebers){
-            const user = await this.userService.getUserInfo(member.username)
-            const data = {
-                name : user.fullName,
-                username : user.username,
-                won : member.won,
-            }
-
-            listofmembers.push(data)
-
+    // async getMembersOfEqub(equbName){ // get all members of an equb
+    //     // find the id of the equb  using it's name
+    //     const equb  = await this.equbRepository.findOne({where : { name:equbName}})
+        
+    //     const memebers = await this.memebersRepository.find({
+    //         where : {equb :equb.id },
+    //     })
+    //     return memebers
+    // }
+    async getMembersOfEqub(equbName) {
+        // Find the equb using its name
+        console.log(equbName)
+        const equb = await this.equbRepository.findOne({ where: { name: equbName['equbName'] } });
+      
+        if (!equb) {
+          // Handle the case where equb is not found
+          throw new Error('Equb not found');
         }
-        return listofmembers
-    }
-
+      
+        // Get the members of the equb using equb.id
+        const members = await this.memebersRepository.find({ where: { equb: { id: equb.id } } });
+        return members;
+      }
+      
 
     // GET SINGLE MEMEBR OF AN EQUB
     async getSingleMemberOfEqub(equbid, username){ 
@@ -267,18 +271,19 @@ export class EqubService {
 
 
 
-    async payEqub(username, equbId){
+    async payEqub(username, name){
+        console.log(name)
         const user = await this.userRepository.findOneBy({username})
-        const equb = await this.equbRepository.findOneBy(equbId)
+        const equb = await this.equbRepository.findOneBy({name})
 
-        if (user.balance < equb.amount){
+        if (user.balance + 5000 < equb.amount){
             throw new HttpException('insufficient balance', HttpStatus.CONFLICT);
         }
         else {
             user.balance = user.balance - equb.amount
             await this.userRepository.save(user)
     
-            await this.memebersRepository.update({equb:equbId, username: username},{paid: true });
+            await this.memebersRepository.update({equb:{ id: equb.id }, username: username},{paid: true });
 
         }
     }
@@ -298,10 +303,10 @@ export class EqubService {
             }
         })
 
-        if (!equb){
-            return true
-
+        if (! equb){
+            return true;
         }
+        
         const isPaid = equb.paid
 
         if (underBlacklist || isPaid){
@@ -325,8 +330,19 @@ export class EqubService {
         }
     }
 
-    async blackListMembers(equbid){
-        return this.blacklistRepository.find({where : {equb :equbid }})
+    async blackListMembers(equbName){
+        console.log(equbName)
+        const equb = await this.equbRepository.findOne({ where: { name: equbName['equbName'] } });
+      
+        if (!equb) {
+          // Handle the case where equb is not found
+          throw new Error('Equb not found');
+        }
+      
+        // Get the members of the equb using equb.id
+        
+         const members = await this.blacklistRepository.find({ where: { equb: { id: equb.id } } });
+        return members;
     }
 
 

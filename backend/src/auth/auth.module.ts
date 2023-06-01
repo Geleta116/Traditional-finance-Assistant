@@ -3,13 +3,12 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Equb } from '../typeorm/equb entities/equb.entity';
-import { EqubMembers } from '../typeorm/equb entities/members.entity';
-import { User } from '../typeorm/user entities/user.entity';
-import { Edir } from '../typeorm/edir entities/edir.entity';
-import { Edirmembers } from '../typeorm/edir entities/edir_members.entity';
-
-
+import { EqubMembers } from 'src/typeorm/entities/members.entity';
+import { User } from 'src/typeorm/entities/user.entity';
+import { Equb } from '../typeorm/entities/equb.entity';
+// import { UserModule } from '../user/user.module';
+import { Edir } from '../eddir/typeorm_entities/edir.entity';
+import { Edirmembers } from '../eddir/typeorm_entities/edir_members.entity';
 
 @Module({
   providers: [AuthService],
