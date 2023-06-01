@@ -34,7 +34,7 @@ let AuthService = class AuthService {
                 secret: 'at-secret'
             }),
         ]);
-        return token;
+        return token[0];
     }
     async validateToken(token) {
         try {
@@ -56,7 +56,7 @@ let AuthService = class AuthService {
             throw new common_1.HttpException('Password is not correct', common_1.HttpStatus.UNAUTHORIZED);
         }
         const token = await this.getToken(user.id, username);
-        return token;
+        return { "token": token, "user": user };
     }
     async currentUser(username) {
         return this.userRepository.findOneBy({ username });

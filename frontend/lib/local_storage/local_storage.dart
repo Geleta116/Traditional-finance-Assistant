@@ -10,7 +10,7 @@ class DbHelper {
   Future<Database> openDb() async {
     if (db == null) {
       db = await openDatabase(
-        join(await getDatabasesPath(), 'local_storage1.db'),
+        join(await getDatabasesPath(), 'local_cache.db'),
         onCreate: (database, version) {
           database.execute(
             "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fullName TEXT NULL,userName TEXT, email TEXT NULL, password TEXT, balance INTEGER NULL,accessToken TEXT NULL)",

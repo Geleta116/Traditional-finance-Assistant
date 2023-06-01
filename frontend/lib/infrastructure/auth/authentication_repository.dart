@@ -23,9 +23,8 @@ class AuthenticationRepository implements AuthenticationRepositroyInterface {
       int personId = await dbHelper!.insertUser(accessToken.toJson());
       print('person with $personId successfully created');
       // save the entity to the local storage
-      print("sds");
     } catch (error) {
-      print(error);
+      ;
       throw Exception(error);
     }
   }

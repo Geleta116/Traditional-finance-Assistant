@@ -164,7 +164,8 @@ export class EqubService {
         const joined_equbs = await this.memebersRepository.find({
             where: {
                 username: username
-            }
+            },
+            relations: ['equb']
         })
         for (let data of joined_equbs){
             if (!created_equbs.includes(data.equb)) {

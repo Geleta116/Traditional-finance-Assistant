@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 
-
 abstract class UserEvent extends Equatable {
   const UserEvent();
 }
@@ -21,6 +20,13 @@ class UserInit extends UserEvent {
   List<Object> get props => [];
 }
 
+class CurrentUserLoad extends UserEvent {
+  const CurrentUserLoad();
+
+  @override
+  List<Object> get props => [];
+}
+
 class UserUpdate extends UserEvent {
   final int id;
   final Users user;
@@ -31,13 +37,12 @@ class UserUpdate extends UserEvent {
   List<Object> get props => [id, user];
 }
 
-class makePayement extends UserEvent {
-  final int id;
-
-  const makePayement(this.id);
+class MakePayement extends UserEvent {
+  final int money;
+  const MakePayement(this.money);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [];
 }
 
 class fetchWinner extends UserEvent {

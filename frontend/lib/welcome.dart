@@ -64,9 +64,11 @@ class Welcome extends StatelessWidget {
                         context.goNamed('ekubLanding');
                       }),
                   BlockButton(text: 'Edir',  onPressed: () {
-                        context.goNamed('createEdir');
+                        context.goNamed('edirLanding');
                       }),
-                  BlockButton(text: 'My Profile', onPressed: () {}),
+                  BlockButton(text: 'My Profile', onPressed: () {
+                    context.goNamed('myAccount');
+                  }),
                 ])
               ],
             ),
