@@ -38,6 +38,14 @@ class MemberOperationSuccess extends UserState {
   @override
   List<Object?> get props => [members];
 }
+class PayOperationSuccess extends UserState {
+  
+
+  PayOperationSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class UserOperationFailure extends UserState {
   final String error;

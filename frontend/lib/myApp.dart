@@ -90,10 +90,10 @@ class MyAppState extends State<MyApp> {
         path: "/ekubDetailEqubCreator",
         name: "ekubDetailEqubCreator",
         builder: (context, state) => EqubDetailEqubCreatorScreen()),
-    GoRoute(
-        path: "/notification",
-        name: "notification",
-        builder: (context, state) => NotificationsScreen())
+    // GoRoute(
+    //     path: "/notification",
+    //     name: "notification",
+    //     builder: (context, state) => NotificationsScreen())
   ]);
 
   AuthenticationRepositroyInterface _authRepository =
@@ -103,7 +103,7 @@ class MyAppState extends State<MyApp> {
   EkubRepositoryInterface _ekubRepository = EkubRepository(EkubDataProvider());
   JoinRepositoryInterface _joinRepository = JoinRepository(JoinDataProvider());
   UserRepository _userRepository = UserRepository(UserDataProvider());
-NotificationRepository _notificationRepository = NotificationRepository(NotificationProvider());
+// NotificationRepository _notificationRepository = NotificationRepository(NotificationProvider());
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +125,9 @@ NotificationRepository _notificationRepository = NotificationRepository(Notifica
         RepositoryProvider<UserRepository>(
           create: (context) => _userRepository,
         ),
-        RepositoryProvider<NotificationRepository>(
-          create: (context) => _notificationRepository,
-        ),
+        // RepositoryProvider<NotificationRepository>(
+        //   create: (context) => _notificationRepository,
+        // ),
 
       ],
       child: MultiBlocProvider(
@@ -153,11 +153,11 @@ NotificationRepository _notificationRepository = NotificationRepository(Notifica
                 userRepository: _userRepository,
               ),
             ),
-            BlocProvider<NotificationBloc>(
-              create: (context) => NotificationBloc(
-                notificationRepository: _notificationRepository,
-              ),
-            ),
+            // BlocProvider<NotificationBloc>(
+            //   create: (context) => NotificationBloc(
+            //     notificationRepository: _notificationRepository,
+            //   ),
+            // ),
           ],
           child: MaterialApp.router(
             title: 'Traditional Finance Assistant',

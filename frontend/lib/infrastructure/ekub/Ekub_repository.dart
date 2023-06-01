@@ -30,9 +30,10 @@ class EkubRepository implements EkubRepositoryInterface {
 
   @override
   Future<List<Ekub>> fetchAllEnrolled() async {
+    print("fetch all enrolld");
     List<Ekub>? ekubListEntity = [];
     String accessToken = await helper.getAccessToken();
-
+    print('accessToken');
     //   List<Map<String, dynamic>> ekubList = await helper.getEkub();
 
     //   print(accessToken);
@@ -58,7 +59,7 @@ class EkubRepository implements EkubRepositoryInterface {
 
     ////////////////////////////////////////////////
     List<Map<String, dynamic>>? ekubList = await helper.getEkub();
-    
+
     print(ekubList);
     print('after cache');
     if (ekubList == null) {

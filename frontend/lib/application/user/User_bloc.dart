@@ -48,14 +48,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserOperationFailure("Can't Load Users"));
       }
     });
-    // on<makePayement>((event, emit) async {
-    //   try {
-    //     final user = await userRepository.fetchAllMembers(event.id);
-    //     emit(UserLoadedState(user));
-    //   } catch (error) {
-    //     emit(UserOperationFailure("Can't Load Users"));
-    //   }
-    // });
+    on<makePayement>((event, emit) async {
+      try {
+        print('get to pay usr bloc');
+        await userRepository.makePayment(event.name);
+        emit(PayOperationSuccess());
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
 
     on<getNotification>((event, emit) async {
       try {

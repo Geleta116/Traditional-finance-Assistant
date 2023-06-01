@@ -32,12 +32,12 @@ class UserUpdate extends UserEvent {
 }
 
 class makePayement extends UserEvent {
-  final int id;
+  final String name;
 
-  const makePayement(this.id);
+  const makePayement(this.name);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [name];
 }
 
 class fetchWinner extends UserEvent {

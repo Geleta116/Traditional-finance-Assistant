@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:traditional_financial_asistant/domain/auth/auth_domain_barell.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 import 'package:traditional_financial_asistant/infrastructure/register/memberDto.dart';
 
@@ -52,8 +53,10 @@ class UserRepository {
     return dataProvider.fetchWinner(id);
   }
 
-  Future<void> makePayment(int id) async {
-    return dataProvider.makePayment(id);
+  Future<void> makePayment(String name) async {
+    print('payment repo');
+    String accessToken = await helper.getAccessToken();
+    return dataProvider.makePayment(name,accessToken);
   }
 
   Future<List<Notifications>> getNotification() async {

@@ -5,12 +5,14 @@ import '../validNumber.dart';
 import '../Ekub.dart';
 
 class EkubModel {
- String name;
- String amount;
- String minMembers;
- String duration;
- String description;
- String countdown;
+  String name;
+  String amount;
+  String minMembers;
+  String duration;
+  String description;
+  String countdown;
+  bool? creator = false;
+  bool? canPay = false;
 
   EkubModel(
       {required this.description,
@@ -18,7 +20,9 @@ class EkubModel {
       required this.amount,
       required this.minMembers,
       required this.duration,
-      required this.countdown});
+      required this.countdown,
+      this.creator,
+      this.canPay});
 
   factory EkubModel.fromJson(Map<String, dynamic> json) {
     return EkubModel(
@@ -27,7 +31,10 @@ class EkubModel {
         amount: json['amount'],
         minMembers: json['minMembers'],
         duration: json['duration'],
-        countdown: json['countdown']);
+        countdown: json['countdown'],
+        creator:json['creator'],
+        canPay: json['canPay']);
+    
   }
 
   toEqubEntity() {
@@ -37,6 +44,8 @@ class EkubModel {
         amount: ValidNumber(amount),
         minMembers: ValidNumber(minMembers),
         duration: ValidNumber(duration),
-        countdown: ValidNumber(countdown));
+        countdown: ValidNumber(countdown),
+        creator: creator,
+        canPay: canPay);
   }
 }

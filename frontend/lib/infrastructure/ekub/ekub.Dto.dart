@@ -10,7 +10,8 @@ class EkubDto {
   final int duration;
   final String description;
   final int countdown;
- 
+  final bool? creator;
+  final bool? canPay;
 
   EkubDto(
       {required this.description,
@@ -18,7 +19,9 @@ class EkubDto {
       required this.amount,
       required this.minMembers,
       required this.duration,
-      required this.countdown});
+      required this.countdown,
+      this.creator,
+      this.canPay});
 
   factory EkubDto.fromJson(Map<String, dynamic> json) {
     var currEkub = json['equb'];
@@ -30,7 +33,9 @@ class EkubDto {
         amount: currEkub['amount'],
         minMembers: currEkub['minMembers'],
         duration: currEkub['duration'],
-        countdown: currEkub['countdown']);
+        countdown: currEkub['countdown'],
+        creator: json['creator'],
+        canPay: json['canPay']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -40,6 +45,8 @@ class EkubDto {
         'minMembers': minMembers,
         'duration': duration,
         'countdown': countdown,
+        'creator': creator,
+        'canPay': canPay
       };
 
   Ekub toEntity() {
@@ -49,6 +56,8 @@ class EkubDto {
         amount: ValidNumber(this.amount.toString()),
         minMembers: ValidNumber(this.minMembers.toString()),
         duration: ValidNumber(this.duration.toString()),
-        countdown: ValidNumber(this.countdown.toString()));
+        countdown: ValidNumber(this.countdown.toString()),
+        creator: this.creator,
+        canPay: this.canPay);
   }
 }

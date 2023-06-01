@@ -18,6 +18,7 @@ class EkubBloc extends Bloc<EkubEvent, EkubState> {
     on<EkubLoad>((event, emit) async {
       emit(EkubLoading());
       try {
+        print('ekub block');
         final ekubs = await ekubRepository.fetchAllEnrolled();
         List<EkubModel> ekubsList =
             List<EkubModel>.from(ekubs.map((e) => e.toEqubModel()));

@@ -60,14 +60,7 @@ class EkubDetail extends EkubEvent {
 
 // }
 
-class makePayement extends EkubEvent {
-  final int id;
 
-  const makePayement(this.id);
-
-  @override
-  List<Object> get props => [id];
-}
 
 class fetchWinner extends EkubEvent {
   final int id;

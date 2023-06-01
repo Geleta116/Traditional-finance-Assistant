@@ -11,7 +11,7 @@ import '../../domain/register/User.dart';
 import '../register/memberDto.dart';
 
 class UserDataProvider {
-  static const String _baseUrl = "http://10.4.101.40:3000/equb";
+  static const String _baseUrl = "http://192.168.251.221:3000/equb";
 
   Future<List<MemberDto>> fetchAllMembers(String name, accessToken) async {
     print('user provider');
@@ -47,8 +47,14 @@ class UserDataProvider {
     }
   }
 
-  Future<void> makePayment(int id) async {
-    final response = await http.get(Uri.parse("$_baseUrl/pay/:$id"));
+  Future<void> makePayment(String name,accessToken) async {
+    print('gets to the provider');
+    final response = await http.get(Uri.parse("$_baseUrl/pay/$name"),
+    headers: <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      });
+    print(response.statusCode);
     if (response.statusCode == 201) {
     } else {
       throw Exception("Could not fetch Ekubs");
