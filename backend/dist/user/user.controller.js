@@ -32,12 +32,17 @@ let UserController = class UserController {
         const username = req.user['username'];
         return await this.userService.changePassword(username, changepassworddto.oldpassword, changepassworddto.newpassword);
     }
-    getUserInfo(username) {
+    getUserInfo(req) {
+        const username = req.user["username"];
+        console.log(username);
         return this.userService.getUserInfo(username);
     }
     async makeDeposit(depositdto, req) {
         const usernam = req.user["username"];
-        return await this.userService.makeDeposit(usernam, depositdto.amount);
+        console.log(usernam);
+        let deposite = await this.userService.makeDeposit(usernam, depositdto.amount);
+        console.log(deposite);
+        return deposite;
     }
 };
 __decorate([
@@ -58,11 +63,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "changePassword", null);
 __decorate([
-    (0, common_1.Get)('info/:username'),
+    (0, common_1.Get)('info/'),
     (0, common_1.UseGuards)(authenticate_guard_1.Authenticate),
-    __param(0, (0, common_1.Param)()),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getUserInfo", null);
 __decorate([

@@ -38,7 +38,9 @@ let UserService = class UserService {
         }
     }
     async getUserInfo(username) {
-        return await this.userRepository.findOneBy({ username: username });
+        let store = await this.userRepository.findOneBy({ username: username });
+        console.log(store);
+        return store;
     }
     async changePassword(username, oldpassword, newpassword) {
         const user = await this.getUserInfo(username);

@@ -10,6 +10,6 @@ export declare class UserController {
     constructor(userService: UserService, authService: AuthService);
     signUp(signupdto: SignUpDTO, response: Response): Promise<import("../typeorm/user entities/user.entity").User[]>;
     changePassword(changepassworddto: changePasswordDTO, req: Request): Promise<import("../typeorm/user entities/user.entity").User>;
-    getUserInfo(username: string): Promise<import("../typeorm/user entities/user.entity").User>;
+    getUserInfo(req: Request): Promise<import("../typeorm/user entities/user.entity").User>;
     makeDeposit(depositdto: DepositDTO, req: Request): Promise<import("../typeorm/user entities/user.entity").User>;
 }
