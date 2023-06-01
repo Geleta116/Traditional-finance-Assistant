@@ -33,19 +33,45 @@ class EkubRepository implements EkubRepositoryInterface {
     List<Ekub>? ekubListEntity = [];
     String accessToken = await helper.getAccessToken();
 
-    // List<Map<String, dynamic>> ekubList = await helper.getEkub();
-    // ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
-    // print(accessToken);
-    if (ekubListEntity.isEmpty) {
-      List<EkubDto> ekubList = await dataProvider.fetchAllEnrolled(accessToken);
+    //   List<Map<String, dynamic>> ekubList = await helper.getEkub();
 
-      List<Ekub> ekubListEntity = ekubList.map((e) => e.toEntity()).toList();
+    //   print(accessToken);
+    //   if (ekubList == null || ekubList.isEmpty) {
+    //     List<EkubDto> ekubList = await dataProvider.fetchAllEnrolled(accessToken);
+    //     List<Ekub> ekubListEntity = ekubList.map((e) => e.toEntity()).toList();
+    //     await helper.insertEkub(ekubListEntity);
+    //     return ekubListEntity;
+    //   } else {
+    //     ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
+    //     return ekubListEntity;
+    //   }
+    //   //we need to persist this data to local storage
+    // }
+
+    // Future<List<Ekub>> fetchAllEnrolled() async {
+    // List<Ekub>? ekubListEntity;
+    // String accessToken = await helper.getAccessToken();
+    // List<EkubDto> ekubDtoList = await dataProvider.fetchAllEnrolled(accessToken);
+    //   ekubListEntity = ekubDtoList.map((e) => e.toEntity()).toList();
+    //   await helper.insertEkub(ekubListEntity);
+    // return ekubListEntity;
+
+    ////////////////////////////////////////////////
+    List<Map<String, dynamic>>? ekubList = await helper.getEkub();
+    
+    print(ekubList);
+    print('after cache');
+    if (ekubList == null) {
+      print("calling remote");
+      List<EkubDto> ekubDtoList =
+          await dataProvider.fetchAllEnrolled(accessToken);
+      ekubListEntity = ekubDtoList.map((e) => e.toEntity()).toList();
       await helper.insertEkub(ekubListEntity);
-      return ekubListEntity;
     } else {
-      return ekubListEntity;
+      ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
     }
-    //we need to persist this data to local storage
+
+    return ekubListEntity;
   }
 
   @override

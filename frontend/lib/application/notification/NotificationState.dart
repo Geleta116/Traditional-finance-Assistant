@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/notification/Notification.dart';
+import '../../domain/notification/notification_model.dart';
 
 
 
@@ -17,7 +18,7 @@ class NotificationLoading extends NotificationState {}
 class NotificationInitial extends NotificationState{}
 
 class NotificationOperationSuccess extends NotificationState {
-  final Iterable<Notification> notifications;
+  final List<NotificationModel> notifications;
 
   const NotificationOperationSuccess([this.notifications = const []]);
 

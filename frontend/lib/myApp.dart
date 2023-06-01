@@ -2,7 +2,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:traditional_financial_asistant/application/notification/NotificationBloc.dart';
 import 'package:traditional_financial_asistant/application/register/signup_bloc.dart';
+import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
 import 'package:traditional_financial_asistant/domain/auth/authenticationRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/domain/register/signUpRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
@@ -17,6 +19,10 @@ import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_pro
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
 import 'package:go_router/go_router.dart';
+import 'package:traditional_financial_asistant/infrastructure/user/User_repositories.dart';
+import 'package:traditional_financial_asistant/presentation/Equb/screens/blackList.dart';
+import 'package:traditional_financial_asistant/presentation/Equb/screens/members.dart';
+import 'package:traditional_financial_asistant/presentation/Equb/screens/notifications.dart';
 import 'package:traditional_financial_asistant/presentation/equb/screens/EqubLandingPage.dart';
 import 'package:traditional_financial_asistant/presentation/equb/screens/joinEqub.dart';
 import 'package:traditional_financial_asistant/waiting_screen.dart';
@@ -24,12 +30,15 @@ import 'application/auth/authentication_bloc.dart';
 import 'application/ekub/ekub_bloc.dart';
 import 'application/join/join_bloc.dart';
 import 'domain/join/joinRepositoryInterface.dart';
+import 'infrastructure/notification/Notification_Provider.dart';
+import 'infrastructure/notification/Notification_repositroy.dart';
+import 'infrastructure/user/User_data_provider.dart';
+import 'presentation/Equb/screens/equb_detail_equb_creator.dart';
 import 'routing.dart';
 import 'package:traditional_financial_asistant/presentation/equb/screens/createEqub.dart';
 import 'package:traditional_financial_asistant/presentation/auth/login.dart';
 import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
 import 'package:traditional_financial_asistant/welcome.dart';
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -39,12 +48,10 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-
   final appRouting = GoRouter(routes: [
     GoRoute(
       path: '/',
       name: 'waiting',
-
       builder: (context, state) => WaitingScreen(),
     ),
     GoRoute(
@@ -70,7 +77,23 @@ class MyAppState extends State<MyApp> {
     GoRoute(
         path: "/landing",
         name: "landing",
-        builder: (context, state) => Welcome())
+        builder: (context, state) => Welcome()),
+    GoRoute(
+        path: "/members",
+        name: "members",
+        builder: (context, state) => MemberScreen()),
+    GoRoute(
+        path: "/blacklist",
+        name: "blacklist",
+        builder: (context, state) => BlackListScreen()),
+    GoRoute(
+        path: "/ekubDetailEqubCreator",
+        name: "ekubDetailEqubCreator",
+        builder: (context, state) => EqubDetailEqubCreatorScreen()),
+    GoRoute(
+        path: "/notification",
+        name: "notification",
+        builder: (context, state) => NotificationsScreen())
   ]);
 
   AuthenticationRepositroyInterface _authRepository =
@@ -78,13 +101,14 @@ class MyAppState extends State<MyApp> {
   SignUpRepositoryInterface _signUPRepository =
       SignUpRepository(SignUpDataProvider());
   EkubRepositoryInterface _ekubRepository = EkubRepository(EkubDataProvider());
-  JoinRepositoryInterface _joinRepository =
-      JoinRepository(JoinDataProvider());
-
+  JoinRepositoryInterface _joinRepository = JoinRepository(JoinDataProvider());
+  UserRepository _userRepository = UserRepository(UserDataProvider());
+NotificationRepository _notificationRepository = NotificationRepository(NotificationProvider());
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
+
       providers: [
         RepositoryProvider<AuthenticationRepositroyInterface>(
           create: (context) => _authRepository,
@@ -95,9 +119,14 @@ class MyAppState extends State<MyApp> {
         RepositoryProvider<EkubRepositoryInterface>(
           create: (context) => _ekubRepository,
         ),
-
         RepositoryProvider<JoinRepositoryInterface>(
           create: (context) => _joinRepository,
+        ),
+        RepositoryProvider<UserRepository>(
+          create: (context) => _userRepository,
+        ),
+        RepositoryProvider<NotificationRepository>(
+          create: (context) => _notificationRepository,
         ),
 
       ],
@@ -106,13 +135,9 @@ class MyAppState extends State<MyApp> {
             BlocProvider<AuthenticationBloc>(
               create: (context) => AuthenticationBloc(_authRepository),
             ),
-
-
             BlocProvider<JoinBloc>(
-              create: (context) => JoinBloc(
-                joinRepository: _joinRepository),
+              create: (context) => JoinBloc(joinRepository: _joinRepository),
             ),
-
             BlocProvider<SignupBloc>(
               create: (context) => SignupBloc(
                 signupRepository: _signUPRepository,
@@ -121,6 +146,16 @@ class MyAppState extends State<MyApp> {
             BlocProvider<EkubBloc>(
               create: (context) => EkubBloc(
                 ekubRepository: _ekubRepository,
+              ),
+            ),
+            BlocProvider<UserBloc>(
+              create: (context) => UserBloc(
+                userRepository: _userRepository,
+              ),
+            ),
+            BlocProvider<NotificationBloc>(
+              create: (context) => NotificationBloc(
+                notificationRepository: _notificationRepository,
               ),
             ),
           ],

@@ -3,13 +3,15 @@ import 'package:path/path.dart';
 import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
 import 'package:traditional_financial_asistant/domain/ekub/ekub_barel.dart';
 
+import '../domain/register/memeber_model.dart';
+
 class DbHelper {
   final int version = 1;
   Database? db;
   Future<Database> openDb() async {
     if (db == null) {
       db = await openDatabase(
-        join(await getDatabasesPath(), 'local_storage1.db'),
+        join(await getDatabasesPath(), 'localCache3'),
         onCreate: (database, version) {
           database.execute(
             "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fullName TEXT NULL,userName TEXT, email TEXT NULL, password TEXT, balance INTEGER NULL,accessToken TEXT NULL)",
@@ -17,6 +19,9 @@ class DbHelper {
 
           database.execute(
             "CREATE TABLE ekub(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT NULL,name TEXT, amount INTEGER NULL, countdown INTEGER, minMembers INTEGER NULL,duration INTEGER NULL)",
+          );
+          database.execute(
+            "CREATE TABLE member(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,won TEXT NULL, paid TEXT NULL,name TEXT NULL)",
           );
         },
         version: version,
@@ -26,14 +31,13 @@ class DbHelper {
   }
 
   Future<int> insertUser(Map<String, dynamic> accessToken) async {
-  
     Database db = await openDb();
-  
+
     // Map<String, dynamic> row =
     //     accessToken['user']['accessToken'] = accessToken['accessToken'];
     Map<String, dynamic> row = accessToken['user'];
     row['accessToken'] = accessToken['token'];
- 
+
     final result = await db.rawQuery('SELECT COUNT(*) FROM users');
     final count = Sqflite.firstIntValue(result);
 
@@ -75,7 +79,7 @@ class DbHelper {
     Database db = await openDb();
     Map<String, dynamic> queryResult = (await db.query('users')).first;
     Map<String, dynamic> existingRow = Map.from(queryResult);
-  
+
     if (existingRow.isNotEmpty) {
       if (existingRow['accessToken'] != null) {
         return existingRow['accessToken'];
@@ -104,9 +108,19 @@ class DbHelper {
     return 1;
   }
 
-  Future<List<Map<String, dynamic>>> getEkub() async {
+  Future<List<Map<String, dynamic>>?>? getEkub() async {
     Database db = await openDb();
-    return await db.query('ekub');
+    List<Map<String, dynamic>>? lis;
+
+    try {
+      List<Map<String, dynamic>> lis = await db.query('ekub');
+    } catch (e) {
+      print(e);
+      throw Exception('no ekub');
+    }
+    print(lis);
+    print('local cache');
+    return lis;
   }
 
   Future<int> updateEkub(Map<String, dynamic> row) async {
@@ -121,5 +135,30 @@ class DbHelper {
 
     // Delete the database file
     await deleteDatabase(join(await getDatabasesPath(), 'user.db'));
+  }
+
+  Future<int> insertMember(List<Member> members, name) async {
+    print('insertinig in to members table');
+    Database db = await openDb();
+    final batch = db.batch();
+    for (var entity in members) {
+      var tempEntity = entity.toJson();
+      print(tempEntity['username']);
+      tempEntity['name'] = name;
+      batch.insert('member', tempEntity);
+    }
+    await batch.commit();
+    return 1;
+  }
+
+  Future<List<Member>?>? getAllMembers(name) async {
+    Database db = await openDb();
+    print(name);
+    final result = await db.query('member', where: 'name = ?', whereArgs: [name]);
+    if (result == null) {
+      return null;
+    }
+    final memberList = result.map((e) => Member.fromJson(e)).toList();
+    return memberList;
   }
 }

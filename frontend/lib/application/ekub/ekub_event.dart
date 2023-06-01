@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
 
+import '../../domain/ekub/Ekub.dart';
+
 abstract class EkubEvent extends Equatable {
   const EkubEvent();
 }
@@ -37,6 +39,15 @@ class EkubUpdate extends EkubEvent {
 
   @override
   List<Object> get props => [id, ekub];
+}
+
+class EkubDetail extends EkubEvent {
+  final Ekub ekub;
+
+  const EkubDetail(this.ekub);
+
+  @override
+  List<Object> get props => [ekub];
 }
 
 // class EkubDelete extends EkubEvent {
@@ -77,14 +88,14 @@ class join extends EkubEvent {
   List<Object> get props => [];
 }
 
-class fetchAllMembers extends EkubEvent {
-  final int id;
+// class fetchAllMembers extends EkubEvent {
+//   final String  name;
 
-  const fetchAllMembers(this.id);
+//   const fetchAllMembers(this.name);
 
-  @override
-  List<Object> get props => [id];
-}
+//   @override
+//   List<Object> get props => [name];
+// }
 
 // class EkubDelete extends EkubEvent {
 //   final int id;
@@ -105,14 +116,14 @@ class getNotification extends EkubEvent {
   List<Object> get props => [id];
 }
 
-class blackList extends EkubEvent {
-  final int id;
+// class blackList extends EkubEvent {
+//   final int id;
 
-  const blackList(this.id);
+//   const blackList(this.id);
 
-  @override
-  List<Object> get props => [id];
-}
+//   @override
+//   List<Object> get props => [id];
+// }
 
 class deleteMember extends EkubEvent {
   final int id;

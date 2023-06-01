@@ -51,8 +51,9 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
 
   void initState() {
     super.initState();
-     final EkubEvent event = EkubLoad();
-    BlocProvider.of<EkubBloc>(context).add(event); // Initialize your BLoC instance
+    final EkubEvent event = EkubLoad();
+    BlocProvider.of<EkubBloc>(context)
+        .add(event); // Initialize your BLoC instance
     // Emit the desired event
   }
 
@@ -65,7 +66,6 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
       body: BlocConsumer<EkubBloc, EkubState>(
         bloc: BlocProvider.of<EkubBloc>(context),
         listener: (context, state) {
-          
           if (state is EkubOperationSuccess) {
             setState(() {
               equbs.addAll(state.ekubs);
@@ -78,8 +78,6 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
             for (var ekub in state.ekubs) {
               if (!equbs.contains(ekub)) {
                 equbs.add(ekub);
-                
-
               }
             }
 
@@ -104,15 +102,15 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
                         CurveButton(
                           text: 'join Equb',
                           onPressed: () {
-                        context.goNamed('joinEkub');
-                      },
+                            context.goNamed('joinEkub');
+                          },
                           color: Color(0xff6D968F),
                         ),
                         CurveButton(
                           text: 'create Equb',
                           onPressed: () {
-                        context.goNamed('createEkub');
-                      },
+                            context.goNamed('createEkub');
+                          },
                           color: Color(0xff6D968F),
                         ),
                       ],
@@ -146,13 +144,13 @@ class EqubList extends StatefulWidget {
 class _EqubListState extends State<EqubList> {
   @override
   Widget build(BuildContext context) {
-   
     return ListView.builder(
       itemCount: equbs.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            print('tapped $index');
+            BlocProvider.of<EkubBloc>(context).add(EkubDetail(equbs[index].toEqubEntity()));
+            context.goNamed('ekubDetailEqubCreator');
           },
           child: Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -175,21 +173,21 @@ class _EqubListState extends State<EqubList> {
                   fontWeight: FontWeight.bold,
                 ),
               )),
-              EqubListTextDetail(
-                  boldText: 'amount',
-                  normalText: NumberFormat.currency(
-                    symbol: 'ETB',
-                  ).format(equbs[index].amount)),
-              EqubListTextDetail(
-                  boldText: 'Duration',
-                  normalText: ToDuration(widget.equbs[index].duration as int)),
+              // EqubListTextDetail(
+              //     boldText: 'amount',
+              //     normalText: NumberFormat.currency(
+              //       symbol: 'ETB',
+              //     ).format(double.parse(equbs[index].amount).toInt())),
+              // EqubListTextDetail(
+              //     boldText: 'Duration',
+              //     normalText: ToDuration(widget.equbs[index].duration as int)),
               EqubListTextDetail(
                   boldText: 'Description',
                   normalText: '${widget.equbs[index].description}'),
-              EqubListTextDetail(
-                  boldText: 'Start Date',
-                  normalText:
-                      calculateStartDate(widget.equbs[index].countdown as int)),
+              // EqubListTextDetail(
+              //     boldText: 'Start Date',
+              //     normalText:
+              //         calculateStartDate(widget.equbs[index].countdown as int)),
               EqubListTextDetail(
                   boldText: 'minMembers',
                   normalText: '${widget.equbs[index].minMembers.toString()}'),

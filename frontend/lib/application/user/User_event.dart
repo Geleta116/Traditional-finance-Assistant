@@ -49,14 +49,14 @@ class fetchWinner extends UserEvent {
   List<Object> get props => [id];
 }
 
-class fetchAllMembers extends UserEvent {
-  final int id;
+// class fetchAllMembers extends UserEvent {
+//   final int id;
 
-  const fetchAllMembers(this.id);
+//   const fetchAllMembers(this.id);
 
-  @override
-  List<Object> get props => [id];
-}
+//   @override
+//   List<Object> get props => [id];
+// }
 
 class getNotification extends UserEvent {
   final int id;
@@ -68,12 +68,12 @@ class getNotification extends UserEvent {
 }
 
 class blackList extends UserEvent {
-  final int id;
+  final String name;
 
-  const blackList(this.id);
+  const blackList(this.name);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [name];
 }
 
 class deleteMember extends UserEvent {
@@ -93,3 +93,23 @@ class deleteNotification extends UserEvent {
   @override
   List<Object> get props => [id];
 }
+
+// class fetchAllMembers extends UserEvent {
+//   final String  name;
+
+//   const fetchAllMembers(this.name);
+
+//   @override
+//   List<Object> get props => [name];
+// }
+
+class AllEkubMemebers extends UserEvent {
+  final String name;
+
+  const AllEkubMemebers(this.name);
+
+  @override
+  List<Object> get props => [name];
+}
+
+

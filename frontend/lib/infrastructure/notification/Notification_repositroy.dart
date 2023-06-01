@@ -1,4 +1,5 @@
 import '../../domain/notification/Notification.dart';
+import '../../domain/notification/notification_model.dart';
 import 'Notification_Provider.dart';
 
 
@@ -6,7 +7,7 @@ class NotificationRepository {
   final NotificationProvider dataProvider;
   NotificationRepository(this.dataProvider);
 
-  Future<List<Notification>> getNotification() async {
+  Future<List<NotificationModel>> getNotification() async {
     return dataProvider.getNotification();
   }
 
