@@ -9,14 +9,12 @@
 // import '../repositories/Ekub_repository.dart';
 // import 'blocs.dart';
 
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 
 import '../../infrastructure/user/User_repositories.dart';
 import 'User_event.dart';
 import 'User_state.dart';
-
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
@@ -26,6 +24,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       try {
         final user = await userRepository.fetchAllMembers(event.id);
         emit(UserLoadedState(user));
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
+
+    // on<MakePayement>((event, emit) async {
+    //   try {
+    //     final user = await userRepository.deposit(event.money);
+    //     emit(UsersData(user));
+    //   } catch (error) {
+    //     emit(UserOperationFailure("Can't Load Users"));
+    //   }
+    // });
+
+    on<CurrentUserLoad>((event, emit) async {
+      try {
+        Users user = await userRepository.fetchMember();
+        emit(UsersData(user));
       } catch (error) {
         emit(UserOperationFailure("Can't Load Users"));
       }
@@ -48,14 +64,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserOperationFailure("Can't Load Users"));
       }
     });
-    on<makePayement>((event, emit) async {
+
+
+
+
+    on<MakePayement>((event, emit) async {
+      int money = event.money;
+
       try {
-        final user = await userRepository.fetchAllMembers(event.id);
-        emit(UserLoadedState(user));
+        final user = await userRepository.deposit(money);
+        emit(UsersData(user));
       } catch (error) {
         emit(UserOperationFailure("Can't Load Users"));
       }
     });
+
+
+
+    
 
     on<getNotification>((event, emit) async {
       try {

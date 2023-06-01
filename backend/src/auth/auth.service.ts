@@ -32,7 +32,7 @@ export class AuthService {
       ])
     
       // return [access_token, refresh_token]
-      return token
+      return token[0]
     }
 
 
@@ -67,7 +67,8 @@ export class AuthService {
     }
 
     const token = await this.getToken(user.id, username,)
-    return token 
+    
+    return {"token" : token, "user":user}
   }
 
   async currentUser(username){

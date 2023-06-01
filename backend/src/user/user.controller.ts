@@ -33,9 +33,12 @@ export class UserController {
     
         
     
-        @Get('info/:username')
+        @Get('info/')
         @UseGuards(Authenticate)
-        getUserInfo(@Param() username: string){
+        getUserInfo(@Req() req:Request){
+            
+            const username = req.user["username"]
+            console.log(username)
             return this.userService.getUserInfo(username);
         }
 
@@ -44,7 +47,10 @@ export class UserController {
         @UseGuards(Authenticate)
         async makeDeposit(@Body() depositdto: DepositDTO, @Req() req:Request){
             const usernam = req.user["username"]
-            return await this.userService.makeDeposit(usernam, depositdto.amount)
+            console.log(usernam)
+            let deposite = await this.userService.makeDeposit(usernam, depositdto.amount)
+            console.log(deposite);
+            return deposite;
         }
  
 

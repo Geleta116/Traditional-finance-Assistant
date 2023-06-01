@@ -36,8 +36,11 @@ class EdirDataProvider {
     final response = await http.get(Uri.parse("$_baseUrl/all"),
         headers: <String, String>{"Authorization": "Bearer $accessToken"});
     if (response.statusCode == 200) {
-      final Edirs = jsonDecode(response.body) as List;
-      return Edirs.map((e) => EdirDto.fromJson(e)).toList();
+      String jsonString = response.body;
+      List<dynamic> jsonList = json.decode(jsonString);
+      List<EdirDto> equbDtoList =
+          jsonList.map((e) => EdirDto.fromJson(e)).toList();
+      return equbDtoList;
     } else {
       throw Exception("Could not fetch Edirs");
     }

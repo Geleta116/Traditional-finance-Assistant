@@ -45,19 +45,17 @@ class EkubDataProvider {
     try {
       final response = await http.get(Uri.parse("$_baseUrl/all"),
           headers: <String, String>{"Authorization": "Bearer $accessToken"});
-
+      print(response.body);
+      
       if (response.statusCode == 200) {
         print("FETCHED");
         var ekubs = jsonDecode(response.body);
-        
-        print(response.body);
-        // List<EkubDto> ekubsList = EkubDto.fromJson(jsonDRecode(response.body));
-       List<EkubDto> ekubsList = ekubs
-  .map((e) => e != null ? EkubDto.fromJson(jsonDecode(jsonEncode(e))) : null)
-  .toList();
+        String jsonString = response.body;
+        List<dynamic> jsonList = json.decode(jsonString);
+        List<EkubDto> equbDtoList =
+            jsonList.map((e) => EkubDto.fromJson(e)).toList();
 
-
-        return ekubsList;
+        return equbDtoList;
       } else {
         print("provider error");
         throw Exception("Could not fetch Ekubs");
