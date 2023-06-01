@@ -59,7 +59,7 @@ class UsersData extends UserState {
   const UsersData(this.users);
 
   @override
-  List<Object?> get props => [users];
+  List<Object?> get props => [];
 }
 class BlackListMemberOperationSuccess extends UserState {
   final List<Member> members;
@@ -77,3 +77,12 @@ class BlackListMemberOperationSuccess extends UserState {
 //   @override
 //   List<Object?> get props => [name];
 // }
+
+class MakePayements extends UserState {
+  final int money;
+
+  const MakePayements(this.money);
+
+  @override
+  List<Object?> get props => [];
+}

@@ -21,8 +21,8 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     async logIn(userdto) {
-        const token = await this.authService.logIn(userdto.username, userdto.password);
-        return { token: token };
+        const res_value = await this.authService.logIn(userdto.username, userdto.password);
+        return res_value;
     }
 };
 __decorate([

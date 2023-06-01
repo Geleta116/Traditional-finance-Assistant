@@ -30,6 +30,7 @@ class EkubBloc extends Bloc<EkubEvent, EkubState> {
     });
 
     on<EkubCreate>((event, emit) async {
+
       Description description = Description(event.ekub.description);
       EkubTitle name = EkubTitle(event.ekub.name);
       ValidNumber amount = ValidNumber(event.ekub.amount);

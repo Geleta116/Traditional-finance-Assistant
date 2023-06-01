@@ -42,7 +42,9 @@ export class UserService {
     }
 
     async getUserInfo(username) {
-        return await this.userRepository.findOneBy({username:username})
+        let store = await this.userRepository.findOneBy({username:username})
+        console.log(store)
+        return store;
     }
 
 

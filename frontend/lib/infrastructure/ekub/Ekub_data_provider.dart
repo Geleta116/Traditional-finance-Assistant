@@ -45,7 +45,8 @@ class EkubDataProvider {
     try {
       final response = await http.get(Uri.parse("$_baseUrl/all"),
           headers: <String, String>{"Authorization": "Bearer $accessToken"});
-
+      print(response.body);
+      
       if (response.statusCode == 200) {
         print("FETCHED");
         var ekubs = jsonDecode(response.body);

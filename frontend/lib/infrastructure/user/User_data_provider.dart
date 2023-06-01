@@ -5,10 +5,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:traditional_financial_asistant/domain/ekub/models/Notifications.dart';
 import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
-import 'package:traditional_financial_asistant/infrastructure/auth/user.Dto.dart';
+// import 'package:traditional_financial_asistant/infrastructure/auth/user.Dto.dart';
 
 import '../../domain/register/User.dart';
 import '../register/memberDto.dart';
+import '../register/user.DTO.dart';
 
 class UserDataProvider {
   static const String _baseUrl = "http://192.168.251.221:3000/equb";
@@ -34,6 +35,24 @@ class UserDataProvider {
       return MemberDtoList;
     } else {
       throw Exception("Could not update the Ekub");
+    }
+  }
+
+  Future<UserDto> fetchMember(String accessToken) async {
+    final response = await http.get(
+      Uri.parse("$_baseUrl/info/"),
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      },
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      UserDto d = UserDto.fromJson(jsonDecode(response.body));
+
+      return d;
+    } else {
+      throw Exception("Could not find the user");
     }
   }
 
@@ -110,6 +129,25 @@ class UserDataProvider {
     if (response.statusCode == 200) {
     } else {
       throw Exception("Could not fetch Winner");
+    }
+  }
+
+  Future<UserDto> deposit(int money, String accessToken) async {
+    final response = await http.post(Uri.parse("$_baseUrl/deposit"),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+          "Authorization": "Bearer: $accessToken"
+        },body: jsonEncode({
+          "amount": money,
+        }));
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+      
+       UserDto d = UserDto.fromJson(jsonDecode(response.body));
+
+      return d;
+    } else {
+      throw Exception("Could not deposit money");
     }
   }
 }

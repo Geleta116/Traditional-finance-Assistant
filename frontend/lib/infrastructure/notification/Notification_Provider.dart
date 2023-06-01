@@ -1,26 +1,34 @@
 // // ignore_for_file: non_constant_identifier_names
 
-// import 'dart:convert';
+import 'dart:convert';
 
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
-// import '../../domain/notification/Notification.dart';
-// import '../../domain/notification/notification_model.dart';
+import '../../domain/notification/Notification.dart';
+import '../../domain/notification/notification_model.dart';
 
-// class NotificationProvider {
-//   static const String _baseUrl = "http://localhost:3000/equb";
+class NotificationProvider {
 
-//   Future<List<NotificationModel>> getNotification() async {
-//     final response = await http.get(Uri.parse("$_baseUrl/notification"));
-//     if (response.statusCode == 200) {
-//       final notification = jsonDecode(response.body) as List;
-//       List<NotificationModel> notificationList = List<Notification>.from(
-//           notification.map((e) => NotificationModel.fromJson(e)));
-//       return notificationList;
-//     } else {
-//       throw Exception("Could not fetch Winner");
-//     }
-//   }
+static const String _baseUrl = "http://localhost:3000/equb";
+
+  Future<List<Notifications>> getNotification(accessToken) async {
+    final response = await http.get(
+      Uri.parse("$_baseUrl/notification"),
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      },
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      final notification = jsonDecode(response.body) as List;
+      List<Notifications> notificationList = List<Notifications>.from(
+          notification.map((e) => Notifications.fromJson(e)));
+      return notificationList;
+    } else {
+      throw Exception("Could not fetch Winner");
+    }
+  }
 
 //   Future<void> deleteNotification() async {
 //     final response =
@@ -30,4 +38,4 @@
 //       throw Exception("Could not fetch Winner");
 //     }
 //   }
-// }
+}

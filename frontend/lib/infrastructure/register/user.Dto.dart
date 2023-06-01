@@ -31,7 +31,7 @@ class UserDto {
         balance: json['balance'],
         email: json['email'],
         fullName: json['fullName']);
-   
+    // print(temp);
     return temp;
   }
 

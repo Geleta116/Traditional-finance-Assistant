@@ -5,6 +5,8 @@ import 'package:traditional_financial_asistant/domain/join/code.dart';
 import 'package:traditional_financial_asistant/domain/join/join.dart';
 import 'package:traditional_financial_asistant/domain/join/joinFailure.dart';
 import 'package:traditional_financial_asistant/domain/join/name.dart';
+import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
+import 'package:traditional_financial_asistant/infrastructure/join/join_repository.dart';
 
 import '../../domain/join/joinRepositoryInterface.dart';
 import 'join_event.dart';
@@ -25,6 +27,8 @@ class JoinBloc extends Bloc<JoinEvent, JoinState> {
         emit(JoinOperationFailure("wrong input"));
         emit(JoinInitial());
       },(_) async {
+      
+      
       try {
         print("reached join bloc");
         await joinRepository.joined(ekub);

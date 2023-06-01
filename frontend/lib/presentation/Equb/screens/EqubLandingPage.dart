@@ -54,6 +54,7 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
 
   void initState() {
     super.initState();
+    equbs = [];
     final EkubEvent event = EkubLoad();
     BlocProvider.of<EkubBloc>(context)
         .add(event); // Initialize your BLoC instance
@@ -76,13 +77,13 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
           }
         },
         builder: (context, state) {
-          // print(state);
+          
           if (state is EkubOperationSuccess) {
-            for (var ekub in state.ekubs) {
-              if (!equbs.contains(ekub)) {
-                equbs.add(ekub);
-              }
-            }
+            // for (var ekub in state.ekubs) {
+            //   if (!equbs.contains(ekub)) {
+            //     equbs.add(ekub);
+            //   }
+            // }
 
             return Container(
               padding: const EdgeInsets.all(20.0),
@@ -129,7 +130,40 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
               ),
             );
           } else {
-            return Text("Nothing to show here");
+            return Container(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                    child: Column(children: [
+                  Text(
+                    'Start Your Equb Today',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    'join a group and start your equb',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  SizedBox(height: 30.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CurveButton(
+                        text: 'join Equb',
+                        onPressed: () {
+                          context.goNamed('joinEkub');
+                        },
+                        color: Color(0xff6D968F),
+                      ),
+                      CurveButton(
+                        text: 'create Equb',
+                        onPressed: () {
+                          context.goNamed('createEkub');
+                        },
+                        color: Color(0xff6D968F),
+                      ),
+                    ],
+                  )
+                ])));
           }
         },
       ),
@@ -178,21 +212,22 @@ class _EqubListState extends State<EqubList> {
                   fontWeight: FontWeight.bold,
                 ),
               )),
-              // EqubListTextDetail(
-              //     boldText: 'amount',
-              //     normalText: NumberFormat.currency(
-              //       symbol: 'ETB',
-              //     ).format(double.parse(equbs[index].amount).toInt())),
-              // EqubListTextDetail(
-              //     boldText: 'Duration',
-              //     normalText: ToDuration(widget.equbs[index].duration as int)),
+              EqubListTextDetail(
+                  boldText: 'amount', normalText: equbs[index].amount
+                  // NumberFormat.currency(
+                  //   symbol: 'ETB',
+                  // ).format(equbs[index].amount)),
+                  ),
+              EqubListTextDetail(
+                boldText: 'Duration',
+                normalText: widget.equbs[index].duration,
+              ),
               EqubListTextDetail(
                   boldText: 'Description',
-                  normalText: '${widget.equbs[index].description}'),
-              // EqubListTextDetail(
-              //     boldText: 'Start Date',
-              //     normalText:
-              //         calculateStartDate(widget.equbs[index].countdown as int)),
+                  normalText: widget.equbs[index].description),
+              EqubListTextDetail(
+                  boldText: 'Start Date',
+                  normalText: widget.equbs[index].countdown),
               EqubListTextDetail(
                   boldText: 'minMembers',
                   normalText: '${widget.equbs[index].minMembers.toString()}'),

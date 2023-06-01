@@ -30,6 +30,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     //   }
     // });
 
+    on<MakePayement>((event, emit) async {
+      try {
+        final user = await userRepository.deposit(event.money);
+        emit(UsersData(user));
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
+
+    on<CurrentUserLoad>((event, emit) async {
+      try {
+        Users user = await userRepository.fetchMember();
+        emit(UsersData(user));
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
+
     on<blackList>((event, emit) async {
       try {
         print('blacklist block reached');
@@ -48,6 +66,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserOperationFailure("Can't Load Users"));
       }
     });
+
     on<makePayement>((event, emit) async {
       try {
         print('get to pay usr bloc');
@@ -57,6 +76,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(UserOperationFailure("Can't Load Users"));
       }
     });
+
+
+
+    on<MakePayement>((event, emit) async {
+      int money = event.money;
+
+      try {
+        final user = await userRepository.deposit(money);
+        emit(UsersData(user));
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
+
+
+
+    
 
     on<getNotification>((event, emit) async {
       try {

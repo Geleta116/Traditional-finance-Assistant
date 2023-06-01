@@ -18,7 +18,7 @@ class NotificationLoading extends NotificationState {}
 class NotificationInitial extends NotificationState{}
 
 class NotificationOperationSuccess extends NotificationState {
-  final List<NotificationModel> notifications;
+  final List<Notifications> notifications;
 
   const NotificationOperationSuccess([this.notifications = const []]);
 
