@@ -4,15 +4,15 @@ import 'Message.dart';
 
 import 'package:dartz/dartz.dart';
 
-class Notification {
+class Notifications {
   final Username username;
   final Message message;
 
-  Notification({required this.username, required this.message});
+  Notifications({required this.username, required this.message});
 
-  factory Notification.create(
+  factory Notifications.create(
       {required Username username, required Message message}) {
-    return Notification(username: username, message: message);
+    return Notifications(username: username, message: message);
   }
 
   Either<NotificationFailure, Unit> validateCredentials() {
@@ -25,8 +25,8 @@ class Notification {
     }
   }
 
-  factory Notification.fromJson(Map<String, dynamic> json) {
-    return Notification(
+  factory Notifications.fromJson(Map<String, dynamic> json) {
+    return Notifications(
         username: Username(json['username']),
         message: Message(json['message']));
 

@@ -41,5 +41,14 @@ class UsersData extends UserState {
   const UsersData(this.users);
 
   @override
-  List<Object?> get props => [users];
+  List<Object?> get props => [];
+}
+
+class MakePayements extends UserState {
+  final int money;
+
+  const MakePayements(this.money);
+
+  @override
+  List<Object?> get props => [];
 }

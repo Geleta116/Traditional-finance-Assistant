@@ -5,33 +5,29 @@ import 'package:traditional_financial_asistant/domain/join/code.dart';
 import 'package:traditional_financial_asistant/domain/join/join.dart';
 import 'package:traditional_financial_asistant/domain/join/joinFailure.dart';
 import 'package:traditional_financial_asistant/domain/join/name.dart';
-import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
-import 'package:traditional_financial_asistant/infrastructure/join/join_repository.dart';
 
 import '../../domain/join/joinRepositoryInterface.dart';
 import 'join_event.dart';
 import 'join_state.dart';
 
-class JoinBloc extends Bloc<JoinEvent, JoinState> {
+class JoinEdirBloc extends Bloc<JoinEdirEvent, JoinEdirState> {
   final JoinRepositoryInterface joinRepository;
 
-  JoinBloc({required this.joinRepository}) : super(JoinInitial()) {
-    on<JoinRequest>((event, emit) async {
+  JoinEdirBloc({required this.joinRepository}) : super(JoinInitial()) {
+    on<JoinEdirRequest>((event, emit) async {
       JoinName name = JoinName(event.Join.name);
       JoinCode code = JoinCode(event.Join.code);
-      final ekub = Join.create(
+      final edir = Join.create(
           name: name,
           code: code);
-      final Either<JoinFailure, Unit> validationResult = ekub.validateJoin();
+      final Either<JoinFailure, Unit> validationResult = edir.validateJoin();
       await validationResult.fold((failure) {
         emit(JoinOperationFailure("wrong input"));
         emit(JoinInitial());
       },(_) async {
-      
-      
       try {
         print("reached join bloc");
-        await joinRepository.joined(ekub);
+        await joinRepository.joined(edir);
         emit(JoinOperationSuccess());
       } catch (error) {
         print("reached join bloc BUT RETURNED ERROR");

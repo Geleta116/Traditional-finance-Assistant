@@ -20,6 +20,8 @@ class EkubDto {
       required this.countdown});
 
   factory EkubDto.fromJson(Map<String, dynamic> json) {
+    json = json["equb"];
+    print(json);
     return EkubDto(
         description: json['description'],
         name: json['name'],
@@ -28,8 +30,7 @@ class EkubDto {
         duration: json['duration'],
         countdown: json['countdown']);
   }
- 
- 
+
   Map<String, dynamic> toJson() => {
         'description': description,
         'name': name,
@@ -48,6 +49,4 @@ class EkubDto {
         duration: ValidNumber(this.duration.toString()),
         countdown: ValidNumber(this.countdown.toString()));
   }
-  }
-
-
+}

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:traditional_financial_asistant/domain/ekub/Ekub.dart';
+import 'package:traditional_financial_asistant/domain/join/join.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub.Dto.dart';
 import 'package:traditional_financial_asistant/local_storage/local_storage.dart';
@@ -55,6 +56,8 @@ class EkubRepository implements EkubRepositoryInterface {
     await helper.insertEkub([joinedEkubEntity]);
     return joinedEkubEntity;
   }
+
+  static joined(Join edir) {}
 
   // Future<void> delete(int id) async {
   //   dataProvider.delete(id);

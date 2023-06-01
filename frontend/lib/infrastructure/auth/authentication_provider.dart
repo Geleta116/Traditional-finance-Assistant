@@ -15,7 +15,7 @@ class AuthenticationProvider {
       final http.Response response = await http.post(Uri.parse(_baseUrl),
           headers: <String, String>{"Content-Type": "application/json"},
           body: jsonEncode(user.toDto().toJson()));
-      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 201) {
         print("reached here");
         AccessTokenDto accessToken = AccessTokenDto.fromJson(
@@ -23,9 +23,11 @@ class AuthenticationProvider {
         
         return accessToken;
       } else {
+        
         throw Exception("Failed to authenticate");
       }
     } catch (error) {
+      
       throw Exception("Failed to authenticate");
       print('faild faild');
     }

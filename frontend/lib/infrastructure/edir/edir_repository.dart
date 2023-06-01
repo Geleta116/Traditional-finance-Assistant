@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:traditional_financial_asistant/domain/join/join.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir_data_provider.dart';
 
 import '../../domain/edir/Edir.dart';
@@ -38,11 +39,14 @@ class EdirRepository implements EdirRepositoryInterface {
     List<Edir>? edirListEntity = [];
     String accessToken = await helper.getAccessToken();
 
-    List<Map<String, dynamic>> edirList = await helper.getEdir();
-    edirListEntity = edirList.map((e) => Edir.fromJson(e)).toList();
-
+    // List<Map<String, dynamic>> edirList = await helper.getEdir();
+    // edirListEntity = edirList.map((e) => Edir.fromJson(e)).toList();
+    // print(accessToken);
     if (edirListEntity.isEmpty) {
       List<EdirDto> edirList = await dataProvider.fetchAllEnrolled(accessToken);
+      for (int i = 0; i < edirList.length; i++) {
+        print(edirList[i].name);
+      }
       List<Edir> edirListEntity = edirList.map((e) => e.toEntity()).toList();
       await helper.insertEdir(edirListEntity);
       return edirListEntity;
@@ -58,6 +62,8 @@ class EdirRepository implements EdirRepositoryInterface {
     await helper.insertEdir([joinedEdirEntity]);
     return joinedEdirEntity;
   }
+
+  static joined(Join edir) {}
 
   // Future<void> delete(int id) async {
   //   dataProvider.delete(id);

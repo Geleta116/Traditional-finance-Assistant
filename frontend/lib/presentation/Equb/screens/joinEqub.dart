@@ -83,3 +83,4 @@ class JoinEqubScreen extends StatelessWidget {
         });
   }
 }
+

@@ -70,7 +70,7 @@ class Edir {
 
 
   Map<String, dynamic> toJson() => {
-        'description': countdown.value.getOrElse(() => ""),
+        'countdown': countdown.value.getOrElse(() => ""),
         'name': name.value.getOrElse(() => ""),
         'amount': amount.value.getOrElse(() => ""),
         'duration': duration.value.getOrElse(() => ""),
@@ -82,7 +82,7 @@ class Edir {
 
   factory Edir.fromJson(Map<String, dynamic> json) {
     return Edir(
-        countdown: ValidNumber(json['description']),
+        countdown: ValidNumber(json['countdown']),
         name: EdirTitle(json['name']),
         amount: ValidNumber(json['amount']),
         duration: ValidNumber(json['duration']));
