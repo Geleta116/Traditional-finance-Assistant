@@ -58,13 +58,6 @@ blocTest<AuthenticationBloc, AuthenticationState>(
     expect: () => [
       AuthenticationAuthenticated(),
     ],
-    // verify: (_) {
-    //   final expectedUser = User(
-    //     username: Username('valid_username'),
-    //     password: Password('ValidPassword1'),
-    //   );
-    //   verify(mockRepository!.logIn(expectedUser)).called(1);
-    // },
   );
 
   });
