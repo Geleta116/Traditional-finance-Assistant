@@ -11,6 +11,8 @@ import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir.Dto.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir_repository.dart';
 
+
+
 class EdirBloc extends Bloc<EdirEvent, EdirState> {
   final EdirRepositoryInterface edirRepository;
 

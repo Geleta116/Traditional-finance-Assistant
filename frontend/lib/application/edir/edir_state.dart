@@ -28,6 +28,7 @@ class EdirOperationFailure extends EdirState {
 
   const EdirOperationFailure(this.error);
   @override
+
   List<Object> get props => [error];
 }
 
@@ -39,4 +40,6 @@ class EdirDetailState extends EdirState{
 
   @override
   List<Object> get props => [edir];
+
+
 }

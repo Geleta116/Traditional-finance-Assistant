@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../infrastructure/auth/user.Dto.dart';
 import 'AuthFailure.dart';
-import 'Password.dart';
+import 'password.dart';
 import 'username.dart';
 
 class User {

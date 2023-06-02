@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'AuthFailure.dart';
 
-class Email {
+class Email extends Equatable{
   final Either<AuthFailure, String> value;
 
   factory Email(String input) {
@@ -22,4 +23,7 @@ class Email {
       return right(input);
     }
   }
+
+  @override
+  List<Object> get props => [value];
 }

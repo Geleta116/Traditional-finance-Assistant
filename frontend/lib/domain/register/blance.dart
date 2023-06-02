@@ -1,10 +1,11 @@
 import 'dart:ffi';
 
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'AuthFailure.dart';
 
 
-class Balance {
+class Balance extends Equatable{
   final Either<AuthFailure, String> value;
 
   factory Balance(String input) {
@@ -24,4 +25,6 @@ class Balance {
       return right(input);
     }
   }
+  @override
+  List<Object> get props => [value];
 }

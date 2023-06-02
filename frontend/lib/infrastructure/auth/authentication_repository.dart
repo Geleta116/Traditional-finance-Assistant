@@ -11,9 +11,14 @@ import 'package:traditional_financial_asistant/local_storage/local_storage.dart'
 
 class AuthenticationRepository implements AuthenticationRepositroyInterface {
   AuthenticationProvider? authProvider;
-  DbHelper? dbHelper = DbHelper();
+   DbHelper? dbHelper;
+  
 
-  AuthenticationRepository(this.authProvider);
+  AuthenticationRepository(this.authProvider, {DbHelper? passedDB}){
+
+     dbHelper = passedDB ?? DbHelper();
+      
+      }
   @override
   Future<void> logIn(User user) async {
     try {
@@ -25,7 +30,7 @@ class AuthenticationRepository implements AuthenticationRepositroyInterface {
       print('person with $personId successfully created');
       // save the entity to the local storage
     } catch (error) {
-      ;
+      
       throw Exception(error);
     }
   }
