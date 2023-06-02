@@ -27,5 +27,5 @@ class EdirOperationFailure extends EdirState {
 
   const EdirOperationFailure(this.error);
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [error.toString()];
 }

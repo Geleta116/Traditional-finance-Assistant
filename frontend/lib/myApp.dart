@@ -1,5 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
@@ -25,7 +23,6 @@ import 'package:traditional_financial_asistant/infrastructure/register/signup_pr
 import 'package:traditional_financial_asistant/infrastructure/auth/authentication_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_provider.dart';
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart';
-import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
 import 'package:go_router/go_router.dart';
 import 'package:traditional_financial_asistant/infrastructure/user/User_data_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/user/User_repositories.dart';

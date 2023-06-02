@@ -17,7 +17,7 @@ class AuthenticationProvider {
           body: jsonEncode(user.toDto().toJson()));
       print(response.body);
       if (response.statusCode == 201) {
-        print("reached here");
+
         AccessTokenDto accessToken = AccessTokenDto.fromJson(
             jsonDecode(response.body) as Map<String, dynamic>);
         
@@ -29,7 +29,6 @@ class AuthenticationProvider {
     } catch (error) {
       
       throw Exception("Failed to authenticate");
-      print('faild faild');
     }
   }
 }

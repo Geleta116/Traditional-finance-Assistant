@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/block_button.dart';
 
-import '';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});

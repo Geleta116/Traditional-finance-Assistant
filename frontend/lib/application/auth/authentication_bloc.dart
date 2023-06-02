@@ -1,14 +1,12 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/auth/authenticationRepositoryInterface.dart';
 import '../../domain/auth/User.dart';
 import '../../domain/auth/AuthFailure.dart';
-import '../../domain/auth/Password.dart';
+import '../../domain/auth/password.dart';
 import '../../domain/auth/username.dart';
-import '../../domain/auth/AuthFailure.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
@@ -35,7 +33,7 @@ class AuthenticationBloc
       }, (_) async{
            try {
         await authenticationRepository.logIn(user);
-        print('authenticated');
+        
         emit(AuthenticationAuthenticated());
       } catch (error) {
         emit(AuthenticationUnauthenticated());

@@ -15,7 +15,6 @@ class EdirBloc extends Bloc<EdirEvent, EdirState> {
 
   EdirBloc({required this.edirRepository}) : super(EdirLoading()) {
     on<EdirLoad>((event, emit) async {
-      // emit(EdirLoading());R
       try {
         final edir = await edirRepository.fetchAllEnrolled();
         List<EdirModel> edirsList =
