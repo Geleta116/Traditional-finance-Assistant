@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/auth/authentication_bloc.dart';
-import '../../domain/auth/Password.dart';
+import '../../domain/auth/password.dart';
 import '../../domain/auth/User.dart';
 import '../../domain/auth/username.dart';
 import '../../infrastructure/auth/authentication_repository.dart';
