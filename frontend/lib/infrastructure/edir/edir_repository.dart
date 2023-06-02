@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
 import 'package:traditional_financial_asistant/domain/join/join.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir_data_provider.dart';
 
 import '../../domain/edir/Edir.dart';
+// import '../domain/edir/Edir.dart';
+// import '../domain/edir/edirRepositoryInterface.dart';
+// import '../local_storage/local_storage.dart';
 import '../../domain/edir/edirRepositoryInterface.dart';
 import '../../local_storage/local_storage.dart';
 import 'edir.Dto.dart';
@@ -37,24 +42,40 @@ class EdirRepository implements EdirRepositoryInterface {
 
   Future<List<Edir>> fetchAllEnrolled() async {
     List<Edir>? edirListEntity = [];
+    print("edir repo reached");
     String accessToken = await helper.getAccessToken();
-
+    print(accessToken);
     // List<Map<String, dynamic>> edirList = await helper.getEdir();
     // edirListEntity = edirList.map((e) => Edir.fromJson(e)).toList();
     // print(accessToken);
     if (edirListEntity.isEmpty) {
       List<EdirDto> edirList = await dataProvider.fetchAllEnrolled(accessToken);
-      for (int i = 0; i < edirList.length; i++) {
-        print(edirList[i].name);
-      }
+      // print(edirList.length);
+      // for (int i = 0; i < edirList.length; i++) {
+      //   print(edirList[i].name);
+      // }
       List<Edir> edirListEntity = edirList.map((e) => e.toEntity()).toList();
+      // print(edirListEntity);
       await helper.insertEdir(edirListEntity);
+      print(edirListEntity);
       return edirListEntity;
     } else {
       return edirListEntity;
     }
     //we need to persist this data to local storage
   }
+
+  Future<bool> deleteEdir(String name) async {
+    String accessToken = await helper.getAccessToken();
+    try {
+      bool edir = await dataProvider.deleteEdir(name, accessToken);
+      return edir;
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+
 
   Future<Edir> join(String name, String code) async {
     EdirDto joinedEdir = await dataProvider.join(name, code);

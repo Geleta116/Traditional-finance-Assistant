@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
-import 'package:traditional_financial_asistant/application/join_edir/join_bloc.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationBloc.dart';
 import 'package:traditional_financial_asistant/application/register/signup_bloc.dart';
 import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
@@ -18,12 +16,14 @@ import 'package:traditional_financial_asistant/infrastructure/join_edir/join_rep
 import 'package:traditional_financial_asistant/infrastructure/notification/Notification_Provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/register/signup_repository.dart';
 import 'package:traditional_financial_asistant/infrastructure/auth/authentication_repository.dart';
-import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_repository.dart';
 import 'package:traditional_financial_asistant/infrastructure/register/signup_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/auth/authentication_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_provider.dart';
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart';
 import 'package:go_router/go_router.dart';
+import 'package:traditional_financial_asistant/infrastructure/user/User_repositories.dart';
+import 'package:traditional_financial_asistant/presentation/Equb/screens/blackList.dart';
+import 'package:traditional_financial_asistant/presentation/Equb/screens/members.dart';
 import 'package:traditional_financial_asistant/infrastructure/user/User_data_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/user/User_repositories.dart';
 import 'package:traditional_financial_asistant/presentation/Edir/screens/EdirLandingPage.dart';
@@ -35,16 +35,21 @@ import 'package:traditional_financial_asistant/presentation/equb/screens/EqubLan
 import 'package:traditional_financial_asistant/presentation/equb/screens/joinEqub.dart';
 import 'package:traditional_financial_asistant/waiting_screen.dart';
 import 'application/auth/authentication_bloc.dart';
+import 'application/edir/edir_bloc.dart';
 import 'application/ekub/ekub_bloc.dart';
 import 'application/join/join_bloc.dart';
+import 'application/join_edir/join_bloc.dart';
 import 'domain/join/joinRepositoryInterface.dart';
+import 'infrastructure/notification/Notification_Provider.dart';
+import 'infrastructure/notification/Notification_repositroy.dart';
+import 'infrastructure/user/User_data_provider.dart';
+import 'presentation/Equb/screens/equb_detail_equb_creator.dart';
 import 'infrastructure/notification/Notification_repositroy.dart';
 import 'routing.dart';
 import 'package:traditional_financial_asistant/presentation/equb/screens/createEqub.dart';
 import 'package:traditional_financial_asistant/presentation/auth/login.dart';
 import 'package:traditional_financial_asistant/presentation/register/signup_screen.dart';
 import 'package:traditional_financial_asistant/welcome.dart';
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -53,7 +58,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-  final appRouting = GoRouter(routes: [
+  final appRouting = GoRouter(routes:[
     GoRoute(
       path: '/',
       name: 'waiting',
@@ -82,6 +87,19 @@ class MyAppState extends State<MyApp> {
         name: "landing",
         builder: (context, state) => Welcome()),
     GoRoute(
+        path: "/members",
+        name: "members",
+        builder: (context, state) => MemberScreen()),
+    GoRoute(
+        path: "/blacklist",
+        name: "blacklist",
+        builder: (context, state) => BlackListScreen()),
+    GoRoute(
+        path: "/ekubDetailEqubCreator",
+        name: "ekubDetailEqubCreator",
+        builder: (context, state) => EqubDetailEqubCreatorScreen()),
+
+    GoRoute(
         path: "/createEdir",
         name: "createEdir",
         builder: (context, state) => CreateEdirScreen()),
@@ -100,10 +118,9 @@ class MyAppState extends State<MyApp> {
      GoRoute(
         path: "/notification",
         name: "notification",
-        builder: (context, state) => NotificationsScreen()),
+        builder: (context, state) => NotificationScreen()),
         
-      
-  ]);
+]);
 
   AuthenticationRepositroyInterface _authRepository =
       AuthenticationRepository(AuthenticationProvider());
@@ -111,6 +128,9 @@ class MyAppState extends State<MyApp> {
       SignUpRepository(SignUpDataProvider());
   EkubRepositoryInterface _ekubRepository = EkubRepository(EkubDataProvider());
   JoinRepositoryInterface _joinRepository = JoinRepository(JoinDataProvider());
+ 
+// NotificationRepository _notificationRepository = NotificationRepository(NotificationProvider());
+
   EdirRepositoryInterface _edirRepository = EdirRepository(EdirDataProvider());
   JoinRepositoryInterface _joinedirRepository = JoinEdirRepository(JoinEdirDataProvider());
   UserRepository _userRepository = UserRepository(UserDataProvider());
@@ -118,6 +138,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
+
       providers: [
         RepositoryProvider<AuthenticationRepositroyInterface>(
           create: (context) => _authRepository,

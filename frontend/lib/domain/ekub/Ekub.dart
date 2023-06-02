@@ -15,6 +15,8 @@ class Ekub {
   final ValidNumber minMembers;
   final ValidNumber countdown;
   final ValidNumber duration;
+  bool? creator;
+  bool? canPay;
 
   Ekub(
       {required this.description,
@@ -22,7 +24,9 @@ class Ekub {
       required this.amount,
       required this.countdown,
       required this.minMembers,
-      required this.duration});
+      required this.duration,
+      this.creator,
+      this.canPay});
 
   factory Ekub.create(
       {required Description description,
@@ -30,14 +34,18 @@ class Ekub {
       required ValidNumber amount,
       required ValidNumber minMembers,
       required ValidNumber countdown,
-      required ValidNumber duration}) {
+      required ValidNumber duration,
+      bool? creator,
+      bool? canPay}) {
     return Ekub(
         description: description,
         name: name,
         amount: amount,
         minMembers: minMembers,
         countdown: countdown,
-        duration: duration);
+        duration: duration,
+        creator: creator,
+        canPay: canPay);
   }
 
   Either<EkubFailure, Unit> validateEkub() {
@@ -66,9 +74,10 @@ class Ekub {
       minMembers: int.parse(minMembers.value.getOrElse(() => '0')),
       countdown: int.parse(countdown.value.getOrElse(() => '0')),
       duration: int.parse(duration.value.getOrElse(() => '0')),
+      creator: creator,
+      canPay: canPay
     );
   }
-
 
   Map<String, dynamic> toJson() => {
         'description': description.value.getOrElse(() => ""),
@@ -77,6 +86,8 @@ class Ekub {
         'minMembers': minMembers.value.getOrElse(() => ""),
         'countdown': countdown.value.getOrElse(() => ""),
         'duration': duration.value.getOrElse(() => ""),
+        'creator': creator,
+        'canPay': canPay
       };
 
   factory Ekub.fromJson(Map<String, dynamic> json) {
@@ -86,7 +97,10 @@ class Ekub {
         amount: ValidNumber(json['amount']),
         minMembers: ValidNumber(json['minMembers']),
         duration: ValidNumber(json['duration']),
-        countdown: ValidNumber(json['countdown']));
+        countdown: ValidNumber(json['countdown']),
+        creator: json['creator'],
+        canPay: json['canPay']);
+        
   }
 
   toEqubModel() {
@@ -97,6 +111,8 @@ class Ekub {
       minMembers: minMembers.value.getOrElse(() => ""),
       countdown: countdown.value.getOrElse(() => ""),
       duration: duration.value.getOrElse(() => ""),
+      creator: creator,
+      canPay: canPay
     );
   }
 }

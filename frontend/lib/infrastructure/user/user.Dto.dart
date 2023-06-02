@@ -6,6 +6,8 @@ import 'package:traditional_financial_asistant/domain/register/fullname.dart';
 
 import '../../domain/register/User.dart';
 
+// import '../domain/register/User.dart';
+
 class UserDto {
   String? username;
   String? password;

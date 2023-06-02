@@ -12,14 +12,14 @@ class EkubRepository implements EkubRepositoryInterface {
   EkubRepository(this.dataProvider);
   DbHelper helper = DbHelper();
   @override
-  Future<Ekub> create(Ekub ekub) async {
+  Future<bool> create(Ekub ekub) async {
     print('ekub create repositroy');
     String accessToken = await helper.getAccessToken();
 
-    EkubDto createEkub = await dataProvider.create(ekub.toDto(), accessToken);
-    await helper.insertEkub([createEkub.toEntity()]);
+    bool valid = await dataProvider.create(ekub.toDto(), accessToken);
+    // await helper.insertEkub([createEkub.toEntity()]);
 
-    return createEkub.toEntity();
+    return valid;
   }
 
   @override
@@ -31,22 +31,54 @@ class EkubRepository implements EkubRepositoryInterface {
 
   @override
   Future<List<Ekub>> fetchAllEnrolled() async {
-    List<Ekub>? ekubListEntity = [];
+    print("fetch all enrolld");
+    // List<Ekub>? ekubListEntity = [];
     String accessToken = await helper.getAccessToken();
+    print('accessToken');
+    // //   List<Map<String, dynamic>> ekubList = await helper.getEkub();
+    // ////////////////////////////////////////////////
+    // List<Map<String, dynamic>>? ekubList = await helper.getEkub();
 
-    // List<Map<String, dynamic>> ekubList = await helper.getEkub();
-    // ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
-    // print(accessToken);
-    if (ekubListEntity.isEmpty) {
-      List<EkubDto> ekubList = await dataProvider.fetchAllEnrolled(accessToken);
+    // print(ekubList);
+    // print('after cache');
+    // if (ekubList == null) {
+    //   print("calling remote");
+    //   List<EkubDto> ekubDtoList =
+    //       await dataProvider.fetchAllEnrolled(accessToken);
+    //   ekubListEntity = ekubDtoList.map((e) => e.toEntity()).toList();
+    //   await helper.insertEkub(ekubListEntity);
+    // } else {
+    //   ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
+    // }
 
-      List<Ekub> ekubListEntity = ekubList.map((e) => e.toEntity()).toList();
-      await helper.insertEkub(ekubListEntity);
-      return ekubListEntity;
+    // return ekubListEntity;
+    
+  print("fetch all enrolled");
+  List<Ekub>? ekubListEntity;
+  List<Map<String, dynamic>>? ekubList = await helper.getEkub();
+
+  print(ekubList);
+  print('after cache');
+
+  try {
+    List<EkubDto> ekubDtoList = await dataProvider.fetchAllEnrolled(accessToken);
+    ekubListEntity = ekubDtoList.map((e) => e.toEntity()).toList();
+    await helper.insertEkub(ekubListEntity);
+    return ekubListEntity;
+  } catch (error) {
+    print("Error while calling remote API: $error");
+    if (ekubList == null) {
+      throw Exception("No cached data available");
     } else {
+      ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
       return ekubListEntity;
     }
-    //we need to persist this data to local storage
+  }
+
+
+
+
+    
   }
 
   @override

@@ -19,7 +19,8 @@ class NotificationRepository {
     }
   }
 
-  Future<void> deleteNotification() async {
-    return dataProvider.deleteNotification();
-  }
+//   Future<void> deleteNotification() async {
+//     return dataProvider.deleteNotification();
+//   }
+// }
 }

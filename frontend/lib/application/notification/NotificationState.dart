@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/notification/Notification.dart';
+import '../../domain/notification/notification_model.dart';
 
 
 

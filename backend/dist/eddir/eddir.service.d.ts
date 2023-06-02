@@ -1,9 +1,9 @@
 import { Repository } from 'typeorm';
-import { Edir } from '../typeorm/edir entities/edir.entity';
-import { Edirmembers } from '../typeorm/edir entities/edir_members.entity';
-import { User } from '../typeorm/user entities/user.entity';
-import { EdirNotifications } from '../typeorm/edir entities/edir_notification.entity';
-import { Edirchatroom } from '../typeorm/edir entities/edir_chatroom.entity';
+import { User } from '../typeorm/entities/user.entity';
+import { Edir } from './typeorm_entities/edir.entity';
+import { Edirmembers } from './typeorm_entities/edir_members.entity';
+import { EdirNotifications } from './typeorm_entities/edir_notification.entity';
+import { Edirchatroom } from './typeorm_entities/edir_chatroom.entity';
 export declare class EddirService {
     private edirRepository;
     private edirMembersRepository;
@@ -22,7 +22,7 @@ export declare class EddirService {
     getDataAboutEdir(edirId: any): Promise<Edir>;
     getMembersOfEdir(edirId: any): Promise<Edirmembers[]>;
     getSingleMemberOfEdir(edirId: any, username: any): Promise<Edirmembers>;
-    payEdir(username: any, edirId: any): Promise<void>;
+    payEdir(username: any, edirName: any): Promise<void>;
     notification(message: string, edirId: any): Promise<void>;
     notifyUnpaidUsers(edirId: any): Promise<void>;
     getNotification(username: any): Promise<EdirNotifications[]>;

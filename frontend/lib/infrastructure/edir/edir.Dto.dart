@@ -5,7 +5,7 @@ import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/EdirTitle.dart';
 import 'package:traditional_financial_asistant/domain/edir/ValidNumber.dart';
 
-import '../../domain/edir/edir_barel.dart';
+// import '../domain/edir/edir_barel.dart';
 // import '../../domain/edir/Edir.dart';
 
 class EdirDto {
@@ -13,21 +13,43 @@ class EdirDto {
   final int amount;
   final int duration;
   final int countdown;
+  final bool? creator;
+  final String? code;
+
 
   EdirDto({
     required this.countdown,
     required this.name,
     required this.amount,
     required this.duration,
+    this.creator,
+    this.code
   });
 
   factory EdirDto.fromJson(Map<String, dynamic> json) {
-    json = json["edir"];
+     var jso = json["edir"];
     return EdirDto(
-      countdown: json['countdown'],
-      name: json['name'],
-      amount: json['amount'],
-      duration: json['duration'],
+      countdown: jso['countdown'],
+      name: jso['name'],
+      amount: jso['amount'],
+      duration: jso['duration'],
+      creator: json['creator'],
+      code: json['code']
+    );
+  }
+
+
+
+
+  factory EdirDto.fromCreateJson(Map<String, dynamic> json) {
+     var jso = json;
+    return EdirDto(
+      countdown: jso['countdown'],
+      name: jso['name'],
+      amount: jso['amount'],
+      duration: jso['duration'],
+      creator: json['creator'],
+      code: json['code']
     );
   }
 
@@ -36,6 +58,8 @@ class EdirDto {
         'name': name,
         'amount': amount,
         'duration': duration,
+        'creator': creator,
+        'code': code
       };
 
   Edir toEntity() {
@@ -44,6 +68,8 @@ class EdirDto {
       name: EdirTitle(this.name),
       amount: ValidNumber(this.amount.toString()),
       duration: ValidNumber(this.duration.toString()),
+      creator: this.creator,
+      code: this.code
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:traditional_financial_asistant/domain/register/User.dart';
 import 'package:traditional_financial_asistant/domain/register/Username.dart';
 // import 'package:traditional_financial_asistant/domain/auth/auth_domain_barell.dart';
 
+import '../../../domain/auth/change_password.dart';
 import '../../utilities/Input.dart';
 import '../../utilities/curve_button.dart';
 
@@ -20,11 +21,10 @@ class MyAccount extends StatefulWidget {
 class _MyAccountState extends State<MyAccount> {
   void initState() {
     super.initState();
-    
+
     final UserEvent event = CurrentUserLoad();
-    BlocProvider.of<UserBloc>(context)
-        .add(event); 
-        // Initialize your BLoC instance
+    BlocProvider.of<UserBloc>(context).add(event);
+    // Initialize your BLoC instance
     // Emit the desired event
   }
 
@@ -32,6 +32,12 @@ class _MyAccountState extends State<MyAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('landing');
+              },
+            ),
         title: Text('My Account'),
         centerTitle: true,
         actions: [
@@ -51,10 +57,11 @@ class _MyAccountState extends State<MyAccount> {
       ),
       body: BlocConsumer<UserBloc, UserState>(
         listener: (context, state) {
-           if (state is UsersData) {
-          Users userDetail = state.users;
-          // TODO: implement listener}
-        };
+          if (state is UsersData) {
+            Users userDetail = state.users;
+            // TODO: implement listener}
+          }
+          ;
         },
         builder: (context, state) {
           TextEditingController? money = TextEditingController();
@@ -142,32 +149,38 @@ class _MyAccountState extends State<MyAccount> {
                                                     money.text as String));
                                             BlocProvider.of<UserBloc>(context)
                                                 .add(event);
-                                            
                                           },
-
                                         ),
-
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
                               actions: [
-                                
-                                  TextButton(
-                                    child: Text('Cancel'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      context.goNamed("myAccount");
-                                      
-                                    },
-                                  
+                                TextButton(
+                                  child: Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    context.goNamed("myAccount");
+                                  },
                                 ),
                               ],
                             );
                           },
                         );
                         context.goNamed("welcome");
+                      },
+                    ),
+                    CurveButton(
+                      color: Color(0xff6D968F),
+                      text: "change password",
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ChangePasswordModal();
+                          },
+                        );
                       },
                     ),
                     SizedBox(
@@ -225,10 +238,20 @@ void showLogoutConfirmationDialog(BuildContext context) {
                   Navigator.of(context).pop();
                 },
               ),
-              TextButton(
-                child: Text('Logout'),
-                onPressed: () {
-                  Navigator.of(context).pop();
+              BlocConsumer<UserBloc, UserState>(
+                listener: (context, state) {
+                  if (state is LogoutSuccesfull) {
+                    context.goNamed('login');
+                  }
+                },
+                builder: (context, state) {
+                  return TextButton(
+                    child: Text('Logout'),
+                    onPressed: () {
+                      BlocProvider.of<UserBloc>(context).add(UserLogout());
+                      Navigator.of(context).pop();
+                    },
+                  );
                 },
               ),
             ],
@@ -238,3 +261,93 @@ void showLogoutConfirmationDialog(BuildContext context) {
     },
   );
 }
+
+class ChangePasswordModal extends StatefulWidget {
+  @override
+  _ChangePasswordModalState createState() => _ChangePasswordModalState();
+}
+
+class _ChangePasswordModalState extends State<ChangePasswordModal> {
+  final _formKey = GlobalKey<FormState>();
+  late String _oldPassword;
+  late String _newPassword;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Change Password'),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Old Password'),
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your old password';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  _oldPassword = value;
+                });
+              },
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'New Password'),
+              obscureText: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your new password';
+                }
+                return null;
+              },
+              onChanged: (value) {
+                setState(() {
+                  _newPassword = value;
+                });
+              },
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        BlocConsumer<UserBloc, UserState>(
+          listener: (context, state) {
+            if (state is LogoutSuccesfull) {
+              context.goNamed('login');
+            } else if (state is ChangePasswordSuccess) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('operation successfull')));
+              BlocProvider.of<UserBloc>(context).add(UserLogout());
+              // context.goNamed('login');
+              // Navigator.of(context).pop();
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Unable to change password')));
+              Navigator.of(context).pop();
+            }
+          },
+          builder: (context, state) {
+            return ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  BlocProvider.of<UserBloc>(context).add(ChangePassword(
+                      ChangePasswordModel(
+                          oldpassword: _oldPassword,
+                          newpassword: _newPassword)));
+                }
+              },
+              child: Text('Submit'),
+            );
+          },
+        ),
+      ],
+    );
+  }
+}
+
+// To open the change password modal using showDialog:

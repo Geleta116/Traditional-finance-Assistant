@@ -8,7 +8,7 @@ import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.
 import '../../domain/register/User.dart';
 
 class SignUpDataProvider {
-  static const String _baseUrl = "http://localhost:3000/user/signup";
+  static const String _baseUrl = "http://192.168.251.221:3000/user/signup";
 
   Future<UserDto> create(UserDto user) async {
     try {

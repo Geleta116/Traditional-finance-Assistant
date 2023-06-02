@@ -21,10 +21,13 @@ export class UserController {
 
         @Post('signup/')
         async signUp(@Body() signupdto:SignUpDTO, @Res({ passthrough: true }) response: Response){
+            console.log("get's to the signup controller")
             return await this.userService.signUp(signupdto);
         }
     
-        @Patch('changepassword/')
+
+        @Patch('changepassoword/')
+
         @UseGuards(Authenticate)
         async changePassword(@Body() changepassworddto : changePasswordDTO, @Req() req:Request){
             const username = req.user['username']

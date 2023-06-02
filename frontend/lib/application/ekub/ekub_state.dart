@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 
-import 'package:traditional_financial_asistant/domain/ekub/models/models.dart'; 
+import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
+
+import '../../domain/ekub/Ekub.dart'; 
 
 abstract class EkubState extends Equatable {
   const EkubState();
@@ -13,6 +15,14 @@ abstract class EkubState extends Equatable {
 
 class EkubLoading extends EkubState {}
 class EkubInitial extends EkubState{}
+class EkubDetailState extends EkubState{
+  final Ekub ekub;
+
+  const EkubDetailState(this.ekub);
+
+  @override
+  List<Object> get props => [ekub];
+}
 class EkubOperationSuccess extends EkubState {
   final List<EkubModel> ekubs;
 

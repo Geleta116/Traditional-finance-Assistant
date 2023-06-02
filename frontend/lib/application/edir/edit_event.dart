@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 
 import 'package:traditional_financial_asistant/domain/edir/models/models.dart';
 
@@ -13,6 +14,21 @@ class EdirLoad extends EdirEvent {
   List<Object> get props => [];
 }
 
+class EdirDelete extends EdirEvent {
+  final String edir;
+  const EdirDelete(this.edir);
+
+  @override
+  List<Object> get props => [];
+}
+class EdirDetail extends EdirEvent {
+  final Edir edir;
+
+  const EdirDetail(this.edir);
+
+  @override
+  List<Object> get props => [edir];
+}
 class EdirInit extends EdirEvent {
   const EdirInit();
 
@@ -131,3 +147,5 @@ class deleteNotification extends EdirEvent {
   @override
   List<Object> get props => [id];
 }
+
+

@@ -1,11 +1,11 @@
+import { EqubMembers } from 'src/typeorm/entities/members.entity';
+import { User } from 'src/typeorm/entities/user.entity';
 import { Repository } from 'typeorm';
+import { Equb } from '../typeorm/entities/equb.entity';
+import { EqubNotification } from '../typeorm/entities/notification.entity';
+import { BlackList } from '../typeorm/entities/blackList.entity';
 import { UserService } from '../user/user.service';
-import { EqubMembers } from '../typeorm/equb entities/members.entity';
-import { Equb } from '../typeorm/equb entities/equb.entity';
-import { User } from '../typeorm/user entities/user.entity';
-import { EqubNotification } from '../typeorm/equb entities/notification.entity';
-import { BlackList } from '../typeorm/equb entities/blackList.entity';
-import { Equbchatroom } from '../typeorm/equb entities/equb.chatroom.entity';
+import { Equbchatroom } from '../typeorm/entities/equb.chatroom.entity';
 export declare class EqubService {
     private memebersRepository;
     private equbRepository;
@@ -24,18 +24,18 @@ export declare class EqubService {
     deleteMember(username: any, equbId: any): Promise<import("typeorm").DeleteResult>;
     getAllEqubs(username: string): Promise<any[]>;
     checkRedundency(username: any, name: any): Promise<boolean>;
-    getDataAboutEqub(equbId: any): Promise<Equb>;
-    getMembersOfEqub(equbid: any): Promise<any[]>;
+    getDataAboutEqub(equbName: any): Promise<Equb>;
+    getMembersOfEqub(equbName: any): Promise<EqubMembers[]>;
     getSingleMemberOfEqub(equbid: any, username: any): Promise<EqubMembers>;
     getUnwonMembers(equbId: any): Promise<EqubMembers[]>;
     getCurrentWinner(equbId: any): Promise<{
         name: string;
         username: string;
     }>;
-    payEqub(username: any, equbId: any): Promise<void>;
+    payEqub(username: any, name: any): Promise<void>;
     canPay(username: any, equbId: any): Promise<boolean>;
     addToBlackList(equbId: any): Promise<void>;
-    blackListMembers(equbid: any): Promise<BlackList[]>;
+    blackListMembers(equbName: any): Promise<BlackList[]>;
     determineTheWinner(equbId: any): Promise<import("typeorm").DeleteResult>;
     notification(message: string, equbId: any): Promise<void>;
     notifyUnpaidUsers(equbId: any): Promise<void>;
