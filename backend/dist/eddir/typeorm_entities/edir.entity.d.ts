@@ -10,7 +10,6 @@ export declare class Edir {
     code: string;
     countdown: number;
     duration: number;
-    description: string;
     durationControl: number;
     members: Edirmembers[];
     chatroom: Edirchatroom[];

@@ -12,12 +12,13 @@ import '../register/memberDto.dart';
 import '../register/user.DTO.dart';
 
 class UserDataProvider {
-  static const String _baseUrl = "http://192.168.251.221:3000/equb";
+  static const String _baseUrl = "http://10.4.118.4:3000/equb";
 
   Future<List<MemberDto>> fetchAllMembers(String name, accessToken) async {
+
     print('user provider');
     final response = await http.get(
-      Uri.parse("$_baseUrl/members/:$name"),
+      Uri.parse("$_baseUrl/members/$name"),
       headers: <String, String>{
         "Content-Type": "application/json",
         "Authorization": "Bearer $accessToken"
@@ -39,6 +40,8 @@ class UserDataProvider {
   }
 
   Future<UserDto> fetchMember(String accessToken) async {
+  const String _baseUrl = "http://10.4.118.4:3000/user";
+
     final response = await http.get(
       Uri.parse("$_baseUrl/info/"),
       headers: <String, String>{

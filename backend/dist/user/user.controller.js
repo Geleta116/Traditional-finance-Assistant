@@ -26,6 +26,7 @@ let UserController = class UserController {
         this.authService = authService;
     }
     async signUp(signupdto, response) {
+        console.log("get's to the signup controller");
         return await this.userService.signUp(signupdto);
     }
     async changePassword(changepassworddto, req) {

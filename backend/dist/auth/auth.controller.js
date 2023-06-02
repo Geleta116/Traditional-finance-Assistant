@@ -22,6 +22,7 @@ let AuthController = class AuthController {
     }
     async logIn(userdto) {
         const res_value = await this.authService.logIn(userdto.username, userdto.password);
+        console.log("get's to the login controller");
         return res_value;
     }
 };

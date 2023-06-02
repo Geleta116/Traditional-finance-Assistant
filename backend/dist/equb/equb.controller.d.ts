@@ -8,19 +8,19 @@ export declare class EqubController {
     private readonly equbService;
     constructor(equbService: EqubService);
     createEqub(equbdto: EqubDTO, req: Request): Promise<any>;
-    joinEqub(enrolldto: EnrollDTO, req: Request): Promise<import("../typeorm/equb entities/members.entity").EqubMembers>;
+    joinEqub(enrolldto: EnrollDTO, req: Request): Promise<import("../typeorm/entities/members.entity").EqubMembers>;
     getAllEnrolledEqubs(req: Request): Promise<any[]>;
-    getMembersOfEqub(id: number): Promise<any[]>;
+    getMembersOfEqub(equbName: String): Promise<import("../typeorm/entities/members.entity").EqubMembers[]>;
     getCurrentwinner(id: number): Promise<{
         name: string;
         username: string;
     }>;
-    makePayment(id: number, req: Request): Promise<void>;
-    getNotification(req: Request): Promise<import("../typeorm/equb entities/notification.entity").EqubNotification[]>;
+    makePayment(name: String, req: Request): Promise<void>;
+    getNotification(req: Request): Promise<import("../typeorm/entities/notification.entity").EqubNotification[]>;
     deleteNotification(id: number): Promise<import("typeorm").DeleteResult>;
-    getMembersInBlackList(id: number, req: Request): Promise<import("../typeorm/equb entities/blackList.entity").BlackList[]>;
+    getMembersInBlackList(equbName: String, req: Request): Promise<import("../typeorm/entities/blackList.entity").BlackList[]>;
     updateEqub(id: number, equbdto: EqubDTO, req: Request): Promise<import("typeorm").UpdateResult>;
     deleteMember(deletedto: DeleteDTO): Promise<import("typeorm").DeleteResult>;
-    sendMessage(id: number, equbChatDTO: EqubChatDTO, req: Request): Promise<import("../typeorm/equb entities/equb.chatroom.entity").Equbchatroom>;
-    getMessage(id: number): Promise<import("../typeorm/equb entities/equb.chatroom.entity").Equbchatroom[]>;
+    sendMessage(id: number, equbChatDTO: EqubChatDTO, req: Request): Promise<import("../typeorm/entities/equb.chatroom.entity").Equbchatroom>;
+    getMessage(id: number): Promise<import("../typeorm/entities/equb.chatroom.entity").Equbchatroom[]>;
 }

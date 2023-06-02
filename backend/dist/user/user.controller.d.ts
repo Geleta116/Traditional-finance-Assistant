@@ -8,8 +8,8 @@ export declare class UserController {
     private readonly userService;
     private readonly authService;
     constructor(userService: UserService, authService: AuthService);
-    signUp(signupdto: SignUpDTO, response: Response): Promise<import("../typeorm/user entities/user.entity").User[]>;
-    changePassword(changepassworddto: changePasswordDTO, req: Request): Promise<import("../typeorm/user entities/user.entity").User>;
-    getUserInfo(req: Request): Promise<import("../typeorm/user entities/user.entity").User>;
-    makeDeposit(depositdto: DepositDTO, req: Request): Promise<import("../typeorm/user entities/user.entity").User>;
+    signUp(signupdto: SignUpDTO, response: Response): Promise<import("../typeorm/entities/user.entity").User[]>;
+    changePassword(changepassworddto: changePasswordDTO, req: Request): Promise<import("../typeorm/entities/user.entity").User>;
+    getUserInfo(req: Request): Promise<import("../typeorm/entities/user.entity").User>;
+    makeDeposit(depositdto: DepositDTO, req: Request): Promise<import("../typeorm/entities/user.entity").User>;
 }

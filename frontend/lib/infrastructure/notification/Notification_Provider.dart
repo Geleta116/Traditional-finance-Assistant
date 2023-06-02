@@ -9,7 +9,7 @@ import '../../domain/notification/notification_model.dart';
 
 class NotificationProvider {
 
-static const String _baseUrl = "http://localhost:3000/equb";
+static const String _baseUrl = "http://10.4.118.4:3000/equb";
 
   Future<List<Notifications>> getNotification(accessToken) async {
     final response = await http.get(

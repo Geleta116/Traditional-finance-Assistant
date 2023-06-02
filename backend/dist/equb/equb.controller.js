@@ -27,6 +27,8 @@ let EqubController = class EqubController {
     }
     createEqub(equbdto, req) {
         const usr = req.user['username'];
+        console.log(usr);
+        console.log('ekub created');
         return this.equbService.createEqub(equbdto, usr);
     }
     joinEqub(enrolldto, req) {
@@ -37,17 +39,20 @@ let EqubController = class EqubController {
     }
     getAllEnrolledEqubs(req) {
         const usr = req.user['username'];
+        console.log('gets to all equb');
         return this.equbService.getAllEqubs(usr);
     }
-    getMembersOfEqub(id) {
-        return this.equbService.getMembersOfEqub(id);
+    getMembersOfEqub(equbName) {
+        console.log(equbName);
+        return this.equbService.getMembersOfEqub(equbName["equbName"]);
     }
     getCurrentwinner(id) {
         return this.equbService.getCurrentWinner(id);
     }
-    makePayment(id, req) {
+    makePayment(name, req) {
+        console.log(name);
         const usr = req.user['username'];
-        return this.equbService.payEqub(usr, id);
+        return this.equbService.payEqub(usr, name["name"]);
     }
     getNotification(req) {
         const usr = req.user['username'];
@@ -56,8 +61,8 @@ let EqubController = class EqubController {
     deleteNotification(id) {
         return this.equbService.deleteNotification(id);
     }
-    getMembersInBlackList(id, req) {
-        return this.equbService.blackListMembers(id);
+    getMembersInBlackList(equbName, req) {
+        return this.equbService.blackListMembers(equbName["equbName"]);
     }
     updateEqub(id, equbdto, req) {
         return this.equbService.updateEqub(id, equbdto);
@@ -100,11 +105,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EqubController.prototype, "getAllEnrolledEqubs", null);
 __decorate([
-    (0, common_1.Get)('members/:id'),
+    (0, common_1.Get)('members/:equbName'),
     (0, common_1.UseGuards)(authenticate_guard_1.Authenticate),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EqubController.prototype, "getMembersOfEqub", null);
 __decorate([
@@ -116,12 +121,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EqubController.prototype, "getCurrentwinner", null);
 __decorate([
-    (0, common_1.Get)('pay/:id'),
+    (0, common_1.Get)('pay/:name'),
     (0, common_1.UseGuards)(authenticate_guard_1.Authenticate),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], EqubController.prototype, "makePayment", null);
 __decorate([
@@ -141,12 +146,12 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EqubController.prototype, "deleteNotification", null);
 __decorate([
-    (0, common_1.Get)('blacklist/:id'),
+    (0, common_1.Get)('blacklist/:equbName'),
     (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, EqubAuthorise_guard_1.EqubAuthorize),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
 ], EqubController.prototype, "getMembersInBlackList", null);
 __decorate([
