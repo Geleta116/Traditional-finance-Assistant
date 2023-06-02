@@ -104,12 +104,14 @@ class Login extends StatelessWidget {
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
+                                      key: Key('username'),
                                       controller: _usernameController,
                                       decoration: InputDecoration(
                                           labelText: 'username'),
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
+                                      key: Key('password'),
                                       controller: _passwordController,
                                       decoration: InputDecoration(
                                           labelText: 'Password'),
@@ -117,6 +119,7 @@ class Login extends StatelessWidget {
                                     ),
                                     SizedBox(height: 20),
                                     ElevatedButton(
+                                      key: Key('login_user'),
                                       onPressed: () {
                                         final username =
                                             _usernameController.text;

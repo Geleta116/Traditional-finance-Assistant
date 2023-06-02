@@ -28,7 +28,7 @@ class Welcome extends StatelessWidget {
               children: [
                 SizedBox(height: 30.0),
                 Container(
-                  child: Image.asset('images/welcome.png'),
+                  child: Image.asset('lib/presentation/images/welcome.png'),
                   height: 185,
                   width: 250,
                 ),
@@ -58,11 +58,14 @@ class Welcome extends StatelessWidget {
                 SizedBox(height: 50.0),
                 Column(children: [
                   BlockButton(
+                      key: Key('ekub'),
                       text: 'Equb',
                       onPressed: () {
                         context.goNamed('ekubLanding');
                       }),
-                  BlockButton(text: 'Edir',  onPressed: () {
+                  BlockButton(
+                    key: Key('edir'),
+                    text: 'Edir',  onPressed: () {
                         context.goNamed('edirLanding');
                       }),
                   BlockButton(text: 'My Profile', onPressed: () {

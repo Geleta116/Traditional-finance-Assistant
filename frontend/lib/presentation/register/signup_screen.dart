@@ -106,6 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     Flexible(
                                       child: TextField(
+                                        key: Key('fullName'),
                                         controller: _fullName,
                                         decoration: InputDecoration(
                                             hintText: 'Full Name'),
@@ -118,6 +119,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     Flexible(
                                       child: TextField(
+                                        key: Key('username'),
                                         controller: _usernameController,
                                         decoration: InputDecoration(
                                             hintText: 'UserName'),
@@ -132,6 +134,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     Flexible(
                                       child: TextField(
+                                        key: Key('password'),
                                         controller: _passwordController,
                                         decoration: InputDecoration(
                                             hintText: 'Password'),
@@ -145,6 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     Flexible(
                                       child: TextField(
+                                        key: Key('email'),
                                         controller: _email,
                                         decoration: InputDecoration(
                                             hintText: 'email'),
@@ -158,6 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                     Flexible(
                                       child: TextField(
+                                        key: Key('balance'),
                                         controller: _balance,
                                         decoration: InputDecoration(
                                             hintText: 'balance'),
@@ -170,6 +175,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                               0.05,
                                     ),
                                     ElevatedButton(
+                                      key: Key('sign_up'),
                                       onPressed: () {
                                         final user = Users(
                                           // name: _nameController.text,
@@ -207,6 +213,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   children: [
                     Text("have an account? "),
                     ElevatedButton(
+                      key: Key('login'),
                       onPressed: () {
                         context.goNamed('login');
                       },
