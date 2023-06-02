@@ -68,11 +68,14 @@ export class EddirController {
     }
 
 
-    @Post('pay/:id')
+    @Post('pay/:edirName')
     @UseGuards(Authenticate)
-    async payEdir(@Req() req: Request, @Param() id:number){
+    async payEdir(@Req() req: Request, @Param() edirName:String){
+        console.log('edir pay')
+        console.log(edirName) 
+        console.log("hello")   
         const username = req.user["username"]
-        return this.edirService.payEdir(username, id)
+        return this.edirService.payEdir(username, edirName["edirName"])
     }
 
 

@@ -65,6 +65,12 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+           context.goNamed('landingPage');
+          },
+        ),
         title: Text('Equb'),
       ),
       body: BlocConsumer<EkubBloc, EkubState>(

@@ -11,7 +11,7 @@ import 'package:traditional_financial_asistant/domain/edir/models/models.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir.Dto.dart';
 
 class EdirDataProvider {
-  static const String _baseUrl = "http://10.4.118.4:3000/edir";
+  static const String _baseUrl = "http://localhost:3000/edir";
 
   Future<EdirDto> create(EdirDto edir, accessToken) async {
     print("edir provider");
@@ -28,21 +28,44 @@ class EdirDataProvider {
       return EdirDto.fromJson(jsonDecode(response.body));
     }
     {
+      print("it is failing");
       throw Exception("Failed to create Edir");
     }
   }
 
   Future<List<EdirDto>> fetchAllEnrolled(accessToken) async {
+    print("yooo");
     final response = await http.get(Uri.parse("$_baseUrl/all"),
         headers: <String, String>{"Authorization": "Bearer $accessToken"});
+    print(response.statusCode);
     if (response.statusCode == 200) {
       String jsonString = response.body;
       List<dynamic> jsonList = json.decode(jsonString);
+      // print(response.body);
       List<EdirDto> equbDtoList =
           jsonList.map((e) => EdirDto.fromJson(e)).toList();
+      // print(equbDtoList);
       return equbDtoList;
     } else {
+      print("unfetched");
       throw Exception("Could not fetch Edirs");
+    }
+  }
+
+  Future<bool> deleteEdir(String edir, accessToken) async {
+    print("this is the edir ${edir}");
+    final response = await http.post(
+      Uri.parse("$_baseUrl/delete/$edir"),
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      },
+    );
+
+    if (response.statusCode == 201) {
+      return true;
+    } else {
+      throw Exception("Could not update the Edir");
     }
   }
 

@@ -27,7 +27,14 @@ class JoinEqubScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
+           
             appBar: AppBar(
+               leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('EkubLanding');
+              },
+            ),
               title: Text('Join Equb'),
               centerTitle: true,
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationBloc.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationEvent.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationState.dart';
@@ -75,7 +76,14 @@ class _NotificationsScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('myAccount');
+              },
+            ),
           title: Text('Notifications'),
         ),
         body: BlocConsumer<NotificationBloc, NotificationState>(

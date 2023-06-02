@@ -44,7 +44,9 @@ export class EqubController {
 
     @Get('members/:equbName')
     @UseGuards(Authenticate)
-    getMembersOfEqub(@Param() equbName: String){  // get all members of an equb
+    getMembersOfEqub(@Param() equbName: String){  
+        // get all members of an equb
+        
         console.log(equbName);
         return this.equbService.getMembersOfEqub(equbName["equbName"])
     }

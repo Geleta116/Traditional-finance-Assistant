@@ -17,6 +17,7 @@ class AuthenticationRepository implements AuthenticationRepositroyInterface {
   @override
   Future<void> logIn(User user) async {
     try {
+      print('auth repo');
       // accept the dto and convert it to an entity
       AccessTokenDto accessToken = await authProvider!.logIn(user);
       print("repo $accessToken");

@@ -154,20 +154,21 @@ export class EddirService {
     // GET SINGLE MEMEBR OF AN Edir
     async getSingleMemberOfEdir(edirId, username){ 
         const member = await this.edirMembersRepository.findOne({
-            where : {edir: edirId, username: username}
+            where : {edir: { id: edirId }, username: username}
         })
 
         return member
     }
 
 
-    async payEdir(username, edirId){
+    async payEdir(username, edirName){
         const user = await this.userRepository.findOneBy({username})
         
-        const edir = await this.edirRepository.findOne({where : {id :edirId}})
+        const edir = await this.edirRepository.findOne({where : {name :edirName}})
+        const edirId = edir.id
         const penality = await (await this.getSingleMemberOfEdir(edirId, username)).penality
         
-        if (user.balance < edir.amount + penality){
+        if (user.balance + 500 < edir.amount + penality){
             throw new HttpException('Your balance is insufficient', HttpStatus.CONFLICT);
         }
         else{
@@ -179,7 +180,7 @@ export class EddirService {
             await this.edirRepository.save(edir)
     
     
-            await this.edirMembersRepository.update({edir:edirId, username: username},{paid: true });
+            await this.edirMembersRepository.update({edir:{id:edirId}, username: username},{paid: true });
         }
     }
 

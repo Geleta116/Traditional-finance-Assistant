@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 
 import 'package:traditional_financial_asistant/domain/edir/models/models.dart'; 
 
@@ -28,4 +29,14 @@ class EdirOperationFailure extends EdirState {
   const EdirOperationFailure(this.error);
   @override
   List<Object> get props => [error];
+}
+
+
+class EdirDetailState extends EdirState{
+  final Edir edir;
+
+  const EdirDetailState(this.edir);
+
+  @override
+  List<Object> get props => [edir];
 }

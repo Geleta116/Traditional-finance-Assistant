@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
+import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 import 'package:bloc/bloc.dart';
 
-import '../../domain/register/memeber_model.dart';
+import '../../domain/register/edirmember.dart';
 
 abstract class UserState extends Equatable {
   const UserState();
@@ -22,14 +24,7 @@ class UserLoadedState extends UserState {
   List<Object?> get props => [users];
 }
 
-class UserOperationSuccess extends UserState {
-  final List<Users> users;
 
-  UserOperationSuccess(this.users);
-
-  @override
-  List<Object?> get props => [users];
-}
 class MemberOperationSuccess extends UserState {
   final List<Member> members;
 
@@ -38,13 +33,25 @@ class MemberOperationSuccess extends UserState {
   @override
   List<Object?> get props => [members];
 }
-class PayOperationSuccess extends UserState {
-  
 
-  PayOperationSuccess();
+class EdirMemberOperationSuccess extends UserState {
+  final List<EdirMember> members;
+
+  EdirMemberOperationSuccess(this.members);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [members];
+}
+
+
+
+class UserOperationSuccess extends UserState {
+  final List<Users> users;
+
+  UserOperationSuccess(this.users);
+
+  @override
+  List<Object?> get props => [users];
 }
 
 class UserOperationFailure extends UserState {
@@ -61,6 +68,16 @@ class UsersData extends UserState {
   @override
   List<Object?> get props => [];
 }
+
+class MakePayements extends UserState {
+  final int money;
+
+  const MakePayements(this.money);
+
+  @override
+  List<Object?> get props => [];
+}
+
 class BlackListMemberOperationSuccess extends UserState {
   final List<Member> members;
 
@@ -69,19 +86,43 @@ class BlackListMemberOperationSuccess extends UserState {
   @override
   List<Object?> get props => [members];
 }
-// class fetchAllMembers extends UserState {
-//   final String name;
 
-//   const fetchAllMembers(this.name);
+class PayOperationSuccess extends UserState {
+  
 
-//   @override
-//   List<Object?> get props => [name];
-// }
+  PayOperationSuccess();
 
-class MakePayements extends UserState {
+  @override
+  List<Object?> get props => [];
+}
+class ChangePasswordSuccess extends UserState {
+  
+
+  ChangePasswordSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+class ChangePasswordFaliure extends UserState {
+  
+
+  ChangePasswordFaliure();
+
+  @override
+  List<Object?> get props => [];
+}
+
+
+class depositeMoney extends UserState {
   final int money;
 
-  const MakePayements(this.money);
+  const depositeMoney(this.money);
+
+  @override
+  List<Object?> get props => [];
+}
+class LogoutSuccesfull extends UserState {
+  const LogoutSuccesfull();
 
   @override
   List<Object?> get props => [];

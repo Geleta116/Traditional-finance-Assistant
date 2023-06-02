@@ -25,7 +25,7 @@ export class UserController {
             return await this.userService.signUp(signupdto);
         }
     
-        @Patch('changepassowrd/')
+        @Patch('changepassoword/')
         @UseGuards(Authenticate)
         async changePassword(@Body() changepassworddto : changePasswordDTO, @Req() req:Request){
             const username = req.user['username']

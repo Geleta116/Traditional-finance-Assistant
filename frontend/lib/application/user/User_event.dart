@@ -37,21 +37,20 @@ class UserUpdate extends UserEvent {
   List<Object> get props => [id, user];
 }
 
+class deposite extends UserEvent {
+  final int money;
+  const deposite(this.money);
+
+  @override
+  List<Object> get props => [];
+}
+
 class makePayement extends UserEvent {
   final String name;
 
   const makePayement(this.name);
-
-  @override
+    @override
   List<Object> get props => [name];
-}
-
-class MakePayement extends UserEvent {
-  final int money;
-  const MakePayement(this.money);
-
-  @override
-  List<Object> get props => [];
 }
 
 class fetchWinner extends UserEvent {
@@ -99,6 +98,15 @@ class deleteMember extends UserEvent {
   List<Object> get props => [id];
 }
 
+
+class AllEdirMemebers extends UserEvent {
+  final String name;
+
+  const AllEdirMemebers(this.name);
+
+  @override
+  List<Object> get props => [name];
+}
 class deleteNotification extends UserEvent {
   final int id;
 
@@ -108,15 +116,6 @@ class deleteNotification extends UserEvent {
   List<Object> get props => [id];
 }
 
-// class fetchAllMembers extends UserEvent {
-//   final String  name;
-
-//   const fetchAllMembers(this.name);
-
-//   @override
-//   List<Object> get props => [name];
-// }
-
 class AllEkubMemebers extends UserEvent {
   final String name;
 
@@ -125,3 +124,5 @@ class AllEkubMemebers extends UserEvent {
   @override
   List<Object> get props => [name];
 }
+
+

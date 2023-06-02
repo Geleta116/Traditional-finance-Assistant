@@ -4,6 +4,7 @@ abstract class EdirRepositoryInterface {
   Future<Edir> create(Edir edir);
   Future<Edir> update(int id, Edir edir);
   Future<List<Edir>> fetchAllEnrolled();
+  Future<bool> deleteEdir(String name);
   Future<Edir> join(String name, String code);
   // Future<void> delete(int id);
   // Future<List<User>> fetchAllMembers(int id);

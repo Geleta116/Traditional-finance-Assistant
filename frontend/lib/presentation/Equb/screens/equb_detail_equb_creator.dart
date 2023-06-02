@@ -16,6 +16,11 @@ class EqubDetailEqubCreatorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              context.goNamed('ekubLanding');
+            },),
           title: Text('Equb Name'),
           centerTitle: true,
         ),
@@ -90,17 +95,25 @@ class EqubDetailEqubCreatorScreen extends StatelessWidget {
                         // TODO: implement listener
                       },
                       builder: (context, state) {
-                        return BlockButton(
-                          text: 'Blacklist',
-                          onPressed: () {
-                            if (state is EkubDetailState) {
-                              String ekubName =
-                                  state.ekub.name.value.getOrElse(() => '');
-                              BlocProvider.of<UserBloc>(context)
-                                  .add(blackList(ekubName));
-                              context.goNamed('blacklist');
-                            }
-                          },
+                        bool creator = false;
+                        if (state is EkubDetailState ){
+                       creator = state.ekub.creator!;
+
+                        }
+                        return Visibility(
+                          visible: creator,
+                          child: BlockButton(
+                            text: 'Blacklist',
+                            onPressed: () {
+                              if (state is EkubDetailState) {
+                                String ekubName =
+                                    state.ekub.name.value.getOrElse(() => '');
+                                BlocProvider.of<UserBloc>(context)
+                                    .add(blackList(ekubName));
+                                context.goNamed('blacklist');
+                              }
+                            },
+                          ),
                         );
                       },
                     ),

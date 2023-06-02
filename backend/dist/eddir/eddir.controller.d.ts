@@ -15,7 +15,7 @@ export declare class EddirController {
     updateEdir(id: number, dto: EdirDTO): Promise<import("typeorm").UpdateResult>;
     deleteMember(id: number, dto: DeleteEdirMemberDTO): Promise<import("typeorm").DeleteResult | "Edir doesn't exist">;
     getAllEdirs(req: Request): Promise<any[]>;
-    payEdir(req: Request, id: number): Promise<void>;
+    payEdir(req: Request, edirName: String): Promise<void>;
     getMembers(id: number): Promise<import("./typeorm_entities/edir_members.entity").Edirmembers[]>;
     getNotification(req: Request): Promise<import("./typeorm_entities/edir_notification.entity").EdirNotifications[]>;
     notifyDeath(notificationdto: EdirNotificationDTO, id: number): Promise<void>;

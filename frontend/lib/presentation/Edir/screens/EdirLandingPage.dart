@@ -7,8 +7,9 @@ import 'package:traditional_financial_asistant/application/edir/edir_state.dart'
 import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
 import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
+import 'package:traditional_financial_asistant/presentation/utilities/curve_button.dart';
 
-import '../../utilities/curve_button.dart';
+// import '../../Edir presentaion/utilities/curve_button.dart';
 
 // class Edir {
 //   String name;
@@ -30,7 +31,6 @@ import '../../utilities/curve_button.dart';
 //   Edir(name: 'edir1', amount: 1000, duration: 3, countdown: 2, paid: false),
 //   Edir(name: 'edir2', amount: 2000, duration: 4, countdown: 3, paid: true),
 // ];
-
 List<EdirModel> edirs = [];
 
 class EdirLandingPage extends StatefulWidget {
@@ -41,37 +41,43 @@ class EdirLandingPage extends StatefulWidget {
 }
 
 class _EdirLandingPageState extends State<EdirLandingPage> {
-  void initState() {
-    super.initState();
-    List<EdirModel> edirs = [];
-    final EdirEvent event = EdirLoad();
-    BlocProvider.of<EdirBloc>(context)
-        .add(event); // Initialize your BLoC instance
-    // Emit the desired event
-  }
+  // void initState() {
+  //   super.initState();
+  //   List<EdirModel> edirs = [];
+  //   EdirEvent event = EdirLoad();
+  //   BlocProvider.of<EdirBloc>(context)
+  //       .add(event); // Initialize your BLoC instance
+  //   // Emit the desired event
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('landing');
+              },
+            ),
           title: Text('Edir'),
         ),
         body: BlocConsumer<EdirBloc, EdirState>(listener: (context, state) {
-          // List<EdirModel> edirs = [];
           if (state is EdirOperationSuccess) {
-            // print(state.edirs.name);
-            // setState(() {
-            //   edirs.addAll(state.edirs);
-            // });
+            setState(() {
+              edirs = state.edirs; // Assign the updated list
+            });
           }
         }, builder: (context, state) {
-          if (state is EdirOperationSuccess) {
-            for (var edir in state.edirs) {
-              if (!edirs.contains(edir)) {
-                edirs.add(edir);
-                
-              }
-            }
+          if (state is EdirLoading) {
+            print("it is edir loading");
+            List<EdirModel> edirs = [];
+            final EdirEvent event = EdirLoad();
+            BlocProvider.of<EdirBloc>(context).add(event);
+            return Text("Loading");
+          } else if (state is EdirOperationSuccess) {
+            //List<EdirModel> edirs = [];
+
             return Container(
               padding: const EdgeInsets.all(20.0),
               child: Center(
@@ -165,7 +171,9 @@ class _EdirListState extends State<EdirList> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            print('tapped $index');
+            BlocProvider.of<EdirBloc>(context)
+                .add(EdirDetail(edirs[index].toEdirEntity()));
+            context.goNamed('edirDetail');
           },
           child: Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0),

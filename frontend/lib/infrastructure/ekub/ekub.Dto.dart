@@ -24,8 +24,27 @@ class EkubDto {
       this.canPay});
 
   factory EkubDto.fromJson(Map<String, dynamic> json) {
+    print('gets tojson');
     var currEkub = json['equb'];
     print(currEkub);
+    print(json);
+
+    return EkubDto(
+        description: currEkub['description'],
+        name: currEkub['name'],
+        amount: currEkub['amount'],
+        minMembers: currEkub['minMembers'],
+        duration: currEkub['duration'],
+        countdown: currEkub['countdown'],
+        creator: json['creator'],
+        canPay: json['canPay']);
+  }
+
+  factory EkubDto.fromCreateJson(Map<String, dynamic> json) {
+    print('gets tojson');
+    var currEkub = json;
+    print(currEkub);
+    print(json);
 
     return EkubDto(
         description: currEkub['description'],

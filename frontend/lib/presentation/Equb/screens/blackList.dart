@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../application/user/User_bloc.dart';
 import '../../../application/user/User_state.dart';
@@ -18,7 +19,15 @@ class _BlackListScreenState extends State<BlackListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       appBar: AppBar(
+        leading: IconButton(
+        icon: Icon(Icons.arrow_back_ios_new),
+        onPressed: () {
+          context.goNamed('members');
+        
+        },
+      ),
         title: Text('BlackList'),
         centerTitle: true,
       ),

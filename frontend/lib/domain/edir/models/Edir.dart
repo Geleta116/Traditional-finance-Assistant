@@ -9,7 +9,8 @@ class EdirModel {
   final String amount;
   final String duration;
   final String countdown;
-  
+  bool? creator;
+  String? code = "";
  
 
   EdirModel(
@@ -17,6 +18,8 @@ class EdirModel {
       required this.name,
       required this.amount,
       required this.duration,
+      this.creator,
+      this.code,
       });
 
   factory EdirModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +28,8 @@ class EdirModel {
         name: json['name'],
         amount: json['amount'],
         duration: json['duration'],
+        creator: json['creator'],
+        code: json['code']
      );
   }
  toEdirEntity() {
@@ -33,7 +38,10 @@ class EdirModel {
         name: EdirTitle(name),
         amount: ValidNumber(amount),
         duration: ValidNumber(duration),
-        countdown: ValidNumber(countdown));
+        countdown: ValidNumber(countdown),
+        creator: creator,
+        code: code);
+        
   }
   
 

@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:traditional_financial_asistant/application/join/join_event.dart';
 import 'package:traditional_financial_asistant/application/join/join_state.dart';
 import 'package:traditional_financial_asistant/application/join_edir/join_bloc.dart';
 import 'package:traditional_financial_asistant/application/join_edir/join_event.dart';
 import 'package:traditional_financial_asistant/application/join_edir/join_state.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/join.dart';
-import '../../utilities/block_button.dart';
+// import '../../Edir presentaion/utilities/block_button.dart';
 
+// import '../../Edir presentaion/utilities/Input.dart';
 import '../../utilities/Input.dart';
+import '../../utilities/block_button.dart';
 
 class JoinEdirScreen extends StatelessWidget {
   // const JoinEdirScreen({super.key});
@@ -26,6 +29,12 @@ class JoinEdirScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('edirLanding');
+              },
+            ),
             title: Text('Join Edir'),
             centerTitle: true,
           ),

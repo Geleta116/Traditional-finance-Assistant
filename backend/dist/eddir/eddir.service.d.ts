@@ -22,7 +22,7 @@ export declare class EddirService {
     getDataAboutEdir(edirId: any): Promise<Edir>;
     getMembersOfEdir(edirId: any): Promise<Edirmembers[]>;
     getSingleMemberOfEdir(edirId: any, username: any): Promise<Edirmembers>;
-    payEdir(username: any, edirId: any): Promise<void>;
+    payEdir(username: any, edirName: any): Promise<void>;
     notification(message: string, edirId: any): Promise<void>;
     notifyUnpaidUsers(edirId: any): Promise<void>;
     getNotification(username: any): Promise<EdirNotifications[]>;

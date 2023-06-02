@@ -11,9 +11,9 @@ import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub.Dto.dart';
 
 class EkubDataProvider {
-  static const String _baseUrl = "http://10.4.118.4:3000/equb";
+  static const String _baseUrl = "http://192.168.251.221:3000/equb";
 
-  Future<EkubDto> create(EkubDto ekub, accessToken) async {
+  Future<bool> create(EkubDto ekub, accessToken) async {
     try {
       print('ekub provider');
 
@@ -28,7 +28,8 @@ class EkubDataProvider {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 201) {
-        return EkubDto.fromJson(jsonDecode(response.body));
+        return true;
+        // return EkubDto.fromCreateJson(jsonDecode(response.body));
       }
       {
         throw Exception("Failed to create Ekub");
@@ -36,7 +37,7 @@ class EkubDataProvider {
     } catch (e) {
       print("hasn't reached ekub provider");
       print(e);
-      return ekub;
+      throw Exception("Failed to create Ekub");
     }
   }
 
@@ -46,7 +47,7 @@ class EkubDataProvider {
       final response = await http.get(Uri.parse("$_baseUrl/all"),
           headers: <String, String>{"Authorization": "Bearer $accessToken"});
       print(response.body);
-      
+
       if (response.statusCode == 200) {
         print("FETCHED");
         var ekubs = jsonDecode(response.body);
@@ -59,7 +60,8 @@ class EkubDataProvider {
         // .toList();
         String jsonString = response.body;
         List<dynamic> jsonList = json.decode(jsonString);
-        List<EkubDto> equbDtoList = jsonList.map((e) => EkubDto.fromJson(e)).toList();
+        List<EkubDto> equbDtoList =
+            jsonList.map((e) => EkubDto.fromJson(e)).toList();
         print('after response');
 
         return equbDtoList;

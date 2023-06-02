@@ -8,20 +8,38 @@ import 'package:traditional_financial_asistant/domain/edir/EdirTitle.dart';
 import 'package:traditional_financial_asistant/domain/edir/ValidNumber.dart';
 import 'package:traditional_financial_asistant/domain/edir/edirRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
+import 'package:traditional_financial_asistant/infrastructure/edir/edir.Dto.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir_repository.dart';
 
 class EdirBloc extends Bloc<EdirEvent, EdirState> {
   final EdirRepositoryInterface edirRepository;
 
-  EdirBloc({required this.edirRepository}) : super(EdirLoading()) {
+  EdirBloc({required this.edirRepository}) : super(EdirInitial()) {
     on<EdirLoad>((event, emit) async {
       // emit(EdirLoading());R
+      print("edir bloc reached");
       try {
         final edir = await edirRepository.fetchAllEnrolled();
+
         List<EdirModel> edirsList =
             List<EdirModel>.from(edir.map((e) => e.toEdirModel()));
-
+       
         emit(EdirOperationSuccess(edirsList));
+      } catch (error) {
+        emit(EdirOperationFailure(error));
+      }
+    });
+
+    on<EdirDelete>((event, emit) async {
+      try {
+        // emit(EdirLoading());R
+
+        final bool edir = await edirRepository.deleteEdir(event.edir);
+
+        if (edir) {
+          print("delete");
+          emit(EdirLoading());
+        }
       } catch (error) {
         emit(EdirOperationFailure(error));
       }
@@ -124,6 +142,11 @@ class EdirBloc extends Bloc<EdirEvent, EdirState> {
       } catch (error) {
         emit(EdirOperationFailure(error));
       }
+    });
+
+    on<EdirDetail>((event, emit) async {
+      print('here');
+      emit(EdirDetailState(event.edir));
     });
   }
 }

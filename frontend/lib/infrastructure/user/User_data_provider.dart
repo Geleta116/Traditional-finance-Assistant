@@ -4,21 +4,19 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:traditional_financial_asistant/domain/ekub/models/Notifications.dart';
-import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
-// import 'package:traditional_financial_asistant/infrastructure/auth/user.Dto.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/edirmember.Dto.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/memberDto.dart';
+import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.dart';
 
-import '../../domain/register/User.dart';
-import '../register/memberDto.dart';
-import '../register/user.DTO.dart';
+// import '../domain/register/User.dart';
 
 class UserDataProvider {
-  static const String _baseUrl = "http://10.4.118.4:3000/equb";
+  static const String _baseUrl = "http://localhost:3000/equb";
 
   Future<List<MemberDto>> fetchAllMembers(String name, accessToken) async {
-
     print('user provider');
     final response = await http.get(
-      Uri.parse("$_baseUrl/members/$name"),
+      Uri.parse("$_baseUrl/members/:$name"),
       headers: <String, String>{
         "Content-Type": "application/json",
         "Authorization": "Bearer $accessToken"
@@ -39,11 +37,33 @@ class UserDataProvider {
     }
   }
 
-  Future<UserDto> fetchMember(String accessToken) async {
-  const String _baseUrl = "http://10.4.118.4:3000/user";
-
+  Future<List<EdirMemberDto>> fetchAllEdirMembers(String name, accessToken) async {
+    print("name");
     final response = await http.get(
-      Uri.parse("$_baseUrl/info/"),
+      Uri.parse("http://localhost:3000/edir/members/$name"),
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $accessToken"
+      },
+    );
+    print('member response');
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      String jsonString = response.body;
+      List<dynamic> jsonList = json.decode(jsonString);
+      List<EdirMemberDto> MemberDtoList =
+          jsonList.map((e) => EdirMemberDto.fromJson(e)).toList();
+      print(MemberDtoList);
+
+      return MemberDtoList;
+    } else {
+      throw Exception("Could not update the Edir");
+    }
+  }
+
+  Future<UserDto> fetchMember(String accessToken) async {
+    final response = await http.get(
+      Uri.parse("http://localhost:3000/user/info/"),
       headers: <String, String>{
         "Content-Type": "application/json",
         "Authorization": "Bearer $accessToken"
@@ -69,19 +89,7 @@ class UserDataProvider {
     }
   }
 
-  Future<void> makePayment(String name,accessToken) async {
-    print('gets to the provider');
-    final response = await http.get(Uri.parse("$_baseUrl/pay/$name"),
-    headers: <String, String>{
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $accessToken"
-      });
-    print(response.statusCode);
-    if (response.statusCode == 201) {
-    } else {
-      throw Exception("Could not fetch Ekubs");
-    }
-  }
+ 
 
   Future<List<Notifications>> getNotification() async {
     final response = await http.get(Uri.parse("$_baseUrl/notification"));
@@ -102,6 +110,66 @@ class UserDataProvider {
     }
   }
 
+  Future<void> deleteMember(String username, String equbId) async {
+    final response =
+        await http.delete(Uri.parse("$_baseUrl/deleteNotification"));
+    if (response.statusCode == 200) {
+    } else {
+      throw Exception("Could not fetch Winner");
+    }
+  }
+
+
+  Future<UserDto> deposit(int money, String accessToken) async {
+    final response = await http.post(
+        Uri.parse("http://localhost:3000/user/deposit"),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+          "Authorization": "Bearer: $accessToken"
+        },
+        body: jsonEncode({
+          "amount": money,
+        }));
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+      UserDto d = UserDto.fromJson(jsonDecode(response.body));
+
+      return d;
+    } else {
+      throw Exception("Could not deposit money");
+    }
+  }
+
+   Future<void> makePayment(String name, accessToken) async {
+    print('gets to the provider');
+    final response = await http.get(Uri.parse("$_baseUrl/equb/pay/$name"),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $accessToken"
+        });
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+    } else {
+      throw Exception("Could not fetch Ekubs");
+    }
+  }
+
+
+ Future<void> makeEdirPayment(String name, accessToken) async {
+    print('gets to the provider edir');
+
+    final response = await http.post(Uri.parse("$_baseUrl/edir/pay/$name"),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $accessToken"
+        });
+    print(response.statusCode);
+    if (response.statusCode == 201) {
+    } else {
+      throw Exception("Could not fetch Ekubs");
+    }
+  }
+
   Future<List<MemberDto>> blackList(String name, accessToken) async {
     print('blacklist provider');
     final response = await http.get(
@@ -111,6 +179,7 @@ class UserDataProvider {
         "Authorization": "Bearer $accessToken"
       },
     );
+    print(response.statusCode);
     if (response.statusCode == 200) {
       String jsonString = response.body;
       List<dynamic> jsonList = json.decode(jsonString);
@@ -123,34 +192,6 @@ class UserDataProvider {
       return MemberDtoList;
     } else {
       throw Exception("Could not fetch Winner");
-    }
-  }
-
-  Future<void> deleteMember(String username, String equbId) async {
-    final response =
-        await http.delete(Uri.parse("$_baseUrl/deleteNotification"));
-    if (response.statusCode == 200) {
-    } else {
-      throw Exception("Could not fetch Winner");
-    }
-  }
-
-  Future<UserDto> deposit(int money, String accessToken) async {
-    final response = await http.post(Uri.parse("$_baseUrl/deposit"),
-        headers: <String, String>{
-          "Content-Type": "application/json",
-          "Authorization": "Bearer: $accessToken"
-        },body: jsonEncode({
-          "amount": money,
-        }));
-    print(response.statusCode);
-    if (response.statusCode == 201) {
-      
-       UserDto d = UserDto.fromJson(jsonDecode(response.body));
-
-      return d;
-    } else {
-      throw Exception("Could not deposit money");
     }
   }
 }

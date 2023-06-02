@@ -27,6 +27,12 @@ class _MemberScreenState extends State<MemberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('ekubDetailEqubCreator');
+              },
+            ),
         title: Text('Members'),
         centerTitle: true,
       ),
@@ -35,6 +41,9 @@ class _MemberScreenState extends State<MemberScreen> {
   }
 
   Widget buildTable() {
+      if (members.isEmpty) {
+        return Text('No members found'); // Display a message when the list is empty
+      }
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is UserOperationFailure) {
