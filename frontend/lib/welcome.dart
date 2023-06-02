@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
+import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
+import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
+import 'package:traditional_financial_asistant/application/user/User_event.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/block_button.dart';
 
 import '';
@@ -29,7 +34,7 @@ class Welcome extends StatelessWidget {
               children: [
                 SizedBox(height: 30.0),
                 Container(
-                  child: Image.asset('images/welcome.png'),
+                  child: Image.asset('lib/presentation/images/welcome.png'),
                   height: 185,
                   width: 250,
                 ),
@@ -64,9 +69,13 @@ class Welcome extends StatelessWidget {
                         context.goNamed('ekubLanding');
                       }),
                   BlockButton(text: 'Edir',  onPressed: () {
+                      BlocProvider.of<EdirBloc>(context)
+                                        .add(EdirLoad());
                         context.goNamed('edirLanding');
                       }),
                   BlockButton(text: 'My Profile', onPressed: () {
+                    BlocProvider.of<UserBloc>(context)
+                                        .add(CurrentUserLoad());
                     context.goNamed('myAccount');
                   }),
                 ])
