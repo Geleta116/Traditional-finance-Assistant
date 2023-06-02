@@ -7,10 +7,14 @@ import 'package:traditional_financial_asistant/application/edir/edir_state.dart'
 import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
 import 'package:traditional_financial_asistant/application/edir/edir_state.dart';
 import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
+// import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
 
 import '../../utilities/Input.dart';
 import '../../utilities/block_button.dart';
+
+// import '../../Edir presentaion/utilities/Input.dart';
+// import '../../Edir presentaion/utilities/block_button.dart';
 
 class CreateEdirScreen extends StatefulWidget {
   
@@ -58,6 +62,12 @@ class _CreateEdirScreenState extends State<CreateEdirScreen> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back_ios_new),
+                onPressed: () {
+                  context.goNamed('edirLanding');
+                },
+              ),
               title: Text('Create Edir'),
               centerTitle: true,
             ),

@@ -21,14 +21,14 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       }
     });
 
-    on<NotificationDelete>((event, emit) async {
-      emit(NotificationLoading());
-      try {
-        final notification = await notificationRepository.deleteNotification();
-        emit(NotificationOperationSuccess());
-      } catch (error) {
-        emit(NotificationOperationFailure(error));
-      }
-    });
+    // on<NotificationDelete>((event, emit) async {
+    //   emit(NotificationLoading());
+    //   try {
+    //     final notification = await notificationRepository.deleteNotification();
+    //     emit(NotificationOperationSuccess());
+    //   } catch (error) {
+    //     emit(NotificationOperationFailure(error));
+    //   }
+    // });
   }
 }

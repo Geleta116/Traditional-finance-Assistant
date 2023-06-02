@@ -16,11 +16,11 @@ exports.EddirService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
-const edir_entity_1 = require("../typeorm/edir entities/edir.entity");
-const edir_members_entity_1 = require("../typeorm/edir entities/edir_members.entity");
-const user_entity_1 = require("../typeorm/user entities/user.entity");
-const edir_notification_entity_1 = require("../typeorm/edir entities/edir_notification.entity");
-const edir_chatroom_entity_1 = require("../typeorm/edir entities/edir_chatroom.entity");
+const user_entity_1 = require("../typeorm/entities/user.entity");
+const edir_entity_1 = require("./typeorm_entities/edir.entity");
+const edir_members_entity_1 = require("./typeorm_entities/edir_members.entity");
+const edir_notification_entity_1 = require("./typeorm_entities/edir_notification.entity");
+const edir_chatroom_entity_1 = require("./typeorm_entities/edir_chatroom.entity");
 let EddirService = class EddirService {
     constructor(edirRepository, edirMembersRepository, userRepository, notificationRepository, edirchatroomRepository) {
         this.edirRepository = edirRepository;
@@ -54,7 +54,6 @@ let EddirService = class EddirService {
         }
         const data = {
             username: username,
-            date: new Date(),
             edir: edir
         };
         const member = await this.edirMembersRepository.create(data);
@@ -116,29 +115,20 @@ let EddirService = class EddirService {
         const members = await this.edirMembersRepository.find({
             where: { edir: edirId },
         });
-        const listofmembers = [];
-        for (let member of members) {
-            const user = await this.userRepository.findOne({ where: { username: member.username } });
-            const data = {
-                name: user.fullName,
-                username: user.username,
-                date: member.date
-            };
-            listofmembers.push(data);
-        }
         return members;
     }
     async getSingleMemberOfEdir(edirId, username) {
         const member = await this.edirMembersRepository.findOne({
-            where: { edir: edirId, username: username }
+            where: { edir: { id: edirId }, username: username }
         });
         return member;
     }
-    async payEdir(username, edirId) {
+    async payEdir(username, edirName) {
         const user = await this.userRepository.findOneBy({ username });
-        const edir = await this.edirRepository.findOne({ where: { id: edirId } });
+        const edir = await this.edirRepository.findOne({ where: { name: edirName } });
+        const edirId = edir.id;
         const penality = await (await this.getSingleMemberOfEdir(edirId, username)).penality;
-        if (user.balance < edir.amount + penality) {
+        if (user.balance + 500 < edir.amount + penality) {
             throw new common_1.HttpException('Your balance is insufficient', common_1.HttpStatus.CONFLICT);
         }
         else {
@@ -147,7 +137,7 @@ let EddirService = class EddirService {
             edir.balance += payment_money;
             await this.userRepository.save(user);
             await this.edirRepository.save(edir);
-            await this.edirMembersRepository.update({ edir: edirId, username: username }, { paid: true });
+            await this.edirMembersRepository.update({ edir: { id: edirId }, username: username }, { paid: true });
         }
     }
     async notification(message, edirId) {

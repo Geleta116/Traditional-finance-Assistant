@@ -37,12 +37,20 @@ class UserUpdate extends UserEvent {
   List<Object> get props => [id, user];
 }
 
-class MakePayement extends UserEvent {
+class deposite extends UserEvent {
   final int money;
-  const MakePayement(this.money);
+  const deposite(this.money);
 
   @override
   List<Object> get props => [];
+}
+
+class makePayement extends UserEvent {
+  final String name;
+
+  const makePayement(this.name);
+    @override
+  List<Object> get props => [name];
 }
 
 class fetchWinner extends UserEvent {
@@ -54,14 +62,14 @@ class fetchWinner extends UserEvent {
   List<Object> get props => [id];
 }
 
-class fetchAllMembers extends UserEvent {
-  final int id;
+// class fetchAllMembers extends UserEvent {
+//   final int id;
 
-  const fetchAllMembers(this.id);
+//   const fetchAllMembers(this.id);
 
-  @override
-  List<Object> get props => [id];
-}
+//   @override
+//   List<Object> get props => [id];
+// }
 
 class getNotification extends UserEvent {
   final int id;
@@ -73,12 +81,12 @@ class getNotification extends UserEvent {
 }
 
 class blackList extends UserEvent {
-  final int id;
+  final String name;
 
-  const blackList(this.id);
+  const blackList(this.name);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [name];
 }
 
 class deleteMember extends UserEvent {
@@ -90,6 +98,15 @@ class deleteMember extends UserEvent {
   List<Object> get props => [id];
 }
 
+
+class AllEdirMemebers extends UserEvent {
+  final String name;
+
+  const AllEdirMemebers(this.name);
+
+  @override
+  List<Object> get props => [name];
+}
 class deleteNotification extends UserEvent {
   final int id;
 
@@ -98,3 +115,14 @@ class deleteNotification extends UserEvent {
   @override
   List<Object> get props => [id];
 }
+
+class AllEkubMemebers extends UserEvent {
+  final String name;
+
+  const AllEkubMemebers(this.name);
+
+  @override
+  List<Object> get props => [name];
+}
+
+

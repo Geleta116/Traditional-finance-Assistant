@@ -18,9 +18,9 @@ export class AuthController {
     // @HttpCode(HttpStatus.OK)
     @Post('login')
     async logIn(@Body() userdto:logInDTO ){
-        
         const res_value = await this.authService.logIn(userdto.username, userdto.password)
-        return res_value;
+        console.log("get's to the login controller");
+        return res_value
 
         // response.cookie('accessToken', access_token, { httpOnly: true });
         // response.cookie('refreshToken', refresh_token, { httpOnly: true })

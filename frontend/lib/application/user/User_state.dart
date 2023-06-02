@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
+import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 import 'package:bloc/bloc.dart';
+
+import '../../domain/register/edirmember.dart';
 
 abstract class UserState extends Equatable {
   const UserState();
@@ -19,6 +23,27 @@ class UserLoadedState extends UserState {
   @override
   List<Object?> get props => [users];
 }
+
+
+class MemberOperationSuccess extends UserState {
+  final List<Member> members;
+
+  MemberOperationSuccess(this.members);
+
+  @override
+  List<Object?> get props => [members];
+}
+
+class EdirMemberOperationSuccess extends UserState {
+  final List<EdirMember> members;
+
+  EdirMemberOperationSuccess(this.members);
+
+  @override
+  List<Object?> get props => [members];
+}
+
+
 
 class UserOperationSuccess extends UserState {
   final List<Users> users;
@@ -48,6 +73,56 @@ class MakePayements extends UserState {
   final int money;
 
   const MakePayements(this.money);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class BlackListMemberOperationSuccess extends UserState {
+  final List<Member> members;
+
+  const BlackListMemberOperationSuccess(this.members);
+
+  @override
+  List<Object?> get props => [members];
+}
+
+class PayOperationSuccess extends UserState {
+  
+
+  PayOperationSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+class ChangePasswordSuccess extends UserState {
+  
+
+  ChangePasswordSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+class ChangePasswordFaliure extends UserState {
+  
+
+  ChangePasswordFaliure();
+
+  @override
+  List<Object?> get props => [];
+}
+
+
+class depositeMoney extends UserState {
+  final int money;
+
+  const depositeMoney(this.money);
+
+  @override
+  List<Object?> get props => [];
+}
+class LogoutSuccesfull extends UserState {
+  const LogoutSuccesfull();
 
   @override
   List<Object?> get props => [];

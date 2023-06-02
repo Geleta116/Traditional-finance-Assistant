@@ -1,16 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationBloc.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationEvent.dart';
 import 'package:traditional_financial_asistant/application/notification/NotificationState.dart';
 import 'package:traditional_financial_asistant/domain/notification/Notification.dart';
 
-class NotificationsScreen extends StatefulWidget {
-  const NotificationsScreen({super.key});
+//         }
+//         // TODO: implement listener
+//       },
+//       builder: (context, state) {
+//         return Scaffold(
+//             appBar: AppBar(
+//               title: Text('Notifications'),
+//             ),
+//             body: Container(
+//               child: Center(
+//                   child: Column(
+//                 children: [
+//                   Flexible(
+//                     child: ListView.builder(
+//                       itemCount: messages.length,
+//                       itemBuilder: (context, index) {
+//                         final item = messages[index];
+//                         return Dismissible(
+//                           key: Key(item.message),
+//                           onDismissed: (direction) {
+//                             setState(() {
+//                               messages.removeAt(index);
+//                             });
+//                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                                 content: Text('${item.messages} dismissed')));
+//                           },
+//                           child: ListTile(
+//                             title: Text(messages[index].message),
+//                             // subtitle: Text(messages[index].date),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//                   )
+//                 ],
+//               )),
+//             ));
+//       },
+//     );
+//   }
+// }
 
-  @override
-  State<NotificationsScreen> createState() => _NotificationsScreenState();
-}
+// class Messages {
+//   final String message;
+//   final String date;
 
 // List<Messages> messages = [
 //   Messages(message: 'You have been added to the group', date: '12/12/2021'),
@@ -18,7 +58,14 @@ class NotificationsScreen extends StatefulWidget {
 
 // ];
 
-class _NotificationsScreenState extends State<NotificationsScreen> {
+class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({Key? key}) : super(key: key);
+
+  @override
+  _NotificationsScreenState createState() => _NotificationsScreenState();
+}
+
+class _NotificationsScreenState extends State<NotificationScreen> {
   void initState() {
     super.initState();
 
@@ -29,7 +76,14 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                context.goNamed('myAccount');
+              },
+            ),
           title: Text('Notifications'),
         ),
         body: BlocConsumer<NotificationBloc, NotificationState>(

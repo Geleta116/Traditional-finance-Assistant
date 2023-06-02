@@ -17,12 +17,14 @@ export class EqubAuthorize {
 
     const result = await this.authService.validateToken(token)
     const username = result.username // get the user ID from the request
-    const id = request.params.id;
-    const equb = await this.equbService.getDataAboutEqub(id)
+    console.log(request.params)
+    const ekubNameObj = request.params;
+    const ekubName = ekubNameObj['equbName']
+    const equb = await this.equbService.getDataAboutEqub(ekubName)
+
     // const result = await this.authService.validateToken(refreshToken)
-
-
     if (equb.creator == username) {
+     
         return true
     } else {
         response.status(403).send('only creators are allowed to access this route')

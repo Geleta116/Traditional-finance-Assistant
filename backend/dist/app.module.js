@@ -7,25 +7,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
+const notification_entity_1 = require("./typeorm/entities/notification.entity");
 const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
+const equb_entity_1 = require("./typeorm/entities/equb.entity");
+const members_entity_1 = require("./typeorm/entities/members.entity");
 const equb_module_1 = require("./equb/equb.module");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
+const user_entity_1 = require("./typeorm/entities/user.entity");
 const schedule_1 = require("@nestjs/schedule");
+const blackList_entity_1 = require("./typeorm/entities/blackList.entity");
+const edir_entity_1 = require("./eddir/typeorm_entities/edir.entity");
+const edir_notification_entity_1 = require("./eddir/typeorm_entities/edir_notification.entity");
+const edir_members_entity_1 = require("./eddir/typeorm_entities/edir_members.entity");
+const edir_chatroom_entity_1 = require("./eddir/typeorm_entities/edir_chatroom.entity");
+const equb_chatroom_entity_1 = require("./typeorm/entities/equb.chatroom.entity");
 const eddir_module_1 = require("./eddir/eddir.module");
-const user_entity_1 = require("./typeorm/user entities/user.entity");
-const equb_entity_1 = require("./typeorm/equb entities/equb.entity");
-const members_entity_1 = require("./typeorm/equb entities/members.entity");
-const notification_entity_1 = require("./typeorm/equb entities/notification.entity");
-const blackList_entity_1 = require("./typeorm/equb entities/blackList.entity");
-const equb_chatroom_entity_1 = require("./typeorm/equb entities/equb.chatroom.entity");
-const edir_entity_1 = require("./typeorm/edir entities/edir.entity");
-const edir_notification_entity_1 = require("./typeorm/edir entities/edir_notification.entity");
-const edir_members_entity_1 = require("./typeorm/edir entities/edir_members.entity");
-const edir_chatroom_entity_1 = require("./typeorm/edir entities/edir_chatroom.entity");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -35,7 +35,10 @@ AppModule = __decorate([
                 host: "localhost",
                 port: 3306,
                 username: "root",
-                password: "s1a2h3i4b5",
+
+
+                password: "your password",
+
                 database: "mobile_backend",
                 entities: [
                     user_entity_1.User,

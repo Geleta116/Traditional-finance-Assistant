@@ -10,16 +10,14 @@ import '../../domain/auth/username.dart';
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
-
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationRepositroyInterface authenticationRepository;
 
-  AuthenticationBloc(
-     this.authenticationRepository)
-      :
-        super(AuthenticationInitial()) {
+  AuthenticationBloc(this.authenticationRepository)
+      : super(AuthenticationInitial()) {
     on<LoginEvent>((event, emit) async {
+      print('login bloc');
       Username username = event.user.username;
       Password password = event.user.password;
 
@@ -27,9 +25,10 @@ class AuthenticationBloc
       final Either<AuthFailure, Unit> validationResult =
           user.validateCredentials();
 
-       await validationResult.fold((failure) {
+      await validationResult.fold((failure) {
         emit(AuthenticationFailure());
         emit(AuthenticationInitial());
+
       }, (_) async{
            try {
         await authenticationRepository.logIn(user);
@@ -38,8 +37,8 @@ class AuthenticationBloc
       } catch (error) {
         emit(AuthenticationUnauthenticated());
       }
+
       });
-   
     });
   }
 }

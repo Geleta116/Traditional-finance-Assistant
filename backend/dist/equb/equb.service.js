@@ -14,17 +14,17 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 var EqubService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EqubService = void 0;
+const members_entity_1 = require("../typeorm/entities/members.entity");
 const typeorm_1 = require("@nestjs/typeorm");
+const user_entity_1 = require("../typeorm/entities/user.entity");
 const typeorm_2 = require("typeorm");
+const equb_entity_1 = require("../typeorm/entities/equb.entity");
+const notification_entity_1 = require("../typeorm/entities/notification.entity");
 const common_1 = require("@nestjs/common");
+const blackList_entity_1 = require("../typeorm/entities/blackList.entity");
 const user_service_1 = require("../user/user.service");
+const equb_chatroom_entity_1 = require("../typeorm/entities/equb.chatroom.entity");
 const common_2 = require("@nestjs/common");
-const members_entity_1 = require("../typeorm/equb entities/members.entity");
-const equb_entity_1 = require("../typeorm/equb entities/equb.entity");
-const user_entity_1 = require("../typeorm/user entities/user.entity");
-const notification_entity_1 = require("../typeorm/equb entities/notification.entity");
-const blackList_entity_1 = require("../typeorm/equb entities/blackList.entity");
-const equb_chatroom_entity_1 = require("../typeorm/equb entities/equb.chatroom.entity");
 let EqubService = EqubService_1 = class EqubService {
     constructor(memebersRepository, equbRepository, userRepository, notificationRepository, blacklistRepository, equbchatroomRepository, userService) {
         this.memebersRepository = memebersRepository;
@@ -121,9 +121,7 @@ let EqubService = EqubService_1 = class EqubService {
             });
         }
         const joined_equbs = await this.memebersRepository.find({
-            where: {
-                username: username
-            },
+            where: { username: username },
             relations: ['equb']
         });
         for (let data of joined_equbs) {
@@ -148,24 +146,17 @@ let EqubService = EqubService_1 = class EqubService {
         }
         return false;
     }
-    getDataAboutEqub(equbId) {
-        return this.equbRepository.findOne({ where: { id: equbId } });
+    getDataAboutEqub(equbName) {
+        return this.equbRepository.findOne({ where: { name: equbName } });
     }
-    async getMembersOfEqub(equbid) {
-        const memebers = await this.memebersRepository.find({
-            where: { equb: equbid },
-        });
-        const listofmembers = [];
-        for (let member of memebers) {
-            const user = await this.userService.getUserInfo(member.username);
-            const data = {
-                name: user.fullName,
-                username: user.username,
-                won: member.won,
-            };
-            listofmembers.push(data);
+    async getMembersOfEqub(equbName) {
+        console.log(equbName);
+        const equb = await this.equbRepository.findOne({ where: { name: equbName['equbName'] } });
+        if (!equb) {
+            throw new Error('Equb not found');
         }
-        return listofmembers;
+        const members = await this.memebersRepository.find({ where: { equb: { id: equb.id } } });
+        return members;
     }
     async getSingleMemberOfEqub(equbid, username) {
         const member = await this.memebersRepository.findOne({
@@ -196,16 +187,17 @@ let EqubService = EqubService_1 = class EqubService {
         }
         throw new common_2.HttpException('there is no winner in this month', common_1.HttpStatus.CONFLICT);
     }
-    async payEqub(username, equbId) {
+    async payEqub(username, name) {
+        console.log(name);
         const user = await this.userRepository.findOneBy({ username });
-        const equb = await this.equbRepository.findOneBy(equbId);
-        if (user.balance < equb.amount) {
+        const equb = await this.equbRepository.findOneBy({ name });
+        if (user.balance + 5000 < equb.amount) {
             throw new common_2.HttpException('insufficient balance', common_1.HttpStatus.CONFLICT);
         }
         else {
             user.balance = user.balance - equb.amount;
             await this.userRepository.save(user);
-            await this.memebersRepository.update({ equb: equbId, username: username }, { paid: true });
+            await this.memebersRepository.update({ equb: { id: equb.id }, username: username }, { paid: true });
         }
     }
     async canPay(username, equbId) {
@@ -241,8 +233,14 @@ let EqubService = EqubService_1 = class EqubService {
             await this.blacklistRepository.save(blacklist);
         }
     }
-    async blackListMembers(equbid) {
-        return this.blacklistRepository.find({ where: { equb: equbid } });
+    async blackListMembers(equbName) {
+        console.log(equbName);
+        const equb = await this.equbRepository.findOne({ where: { name: equbName['equbName'] } });
+        if (!equb) {
+            throw new Error('Equb not found');
+        }
+        const members = await this.blacklistRepository.find({ where: { equb: { id: equb.id } } });
+        return members;
     }
     async determineTheWinner(equbId) {
         const equb = await this.equbRepository.findOne({ where: { id: equbId } });

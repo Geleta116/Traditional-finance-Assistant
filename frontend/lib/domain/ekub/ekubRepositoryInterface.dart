@@ -1,7 +1,7 @@
 import 'Ekub.dart';
 
 abstract class EkubRepositoryInterface {
-  Future<Ekub> create(Ekub ekub);
+  Future<bool> create(Ekub ekub);
   Future<Ekub> update(int id, Ekub ekub);
   Future<List<Ekub>> fetchAllEnrolled();
   Future<Ekub> join(String name, String code);

@@ -34,8 +34,8 @@ export class Edir {
 
     
 
-    @Column()
-    description: string
+    // @Column()
+    // description: string
 
     @Column({default : 0})
     durationControl: number

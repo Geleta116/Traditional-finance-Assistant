@@ -6,13 +6,17 @@ import '../EkubTitle.dart';
 import '../validNumber.dart';
 import '../Ekub.dart';
 
+
 class EkubModel extends Equatable{
- String name;
- String amount;
- String minMembers;
- String duration;
- String description;
- String countdown;
+  String name;
+  String amount;
+  String minMembers;
+  String duration;
+  String description;
+  String countdown;
+  bool? creator = false;
+  bool? canPay = false;
+
 
   EkubModel(
       {required this.description,
@@ -20,7 +24,9 @@ class EkubModel extends Equatable{
       required this.amount,
       required this.minMembers,
       required this.duration,
-      required this.countdown});
+      required this.countdown,
+      this.creator,
+      this.canPay});
 
   factory EkubModel.fromJson(Map<String, dynamic> json) {
     return EkubModel(
@@ -29,7 +35,10 @@ class EkubModel extends Equatable{
         amount: json['amount'],
         minMembers: json['minMembers'],
         duration: json['duration'],
-        countdown: json['countdown']);
+        countdown: json['countdown'],
+        creator:json['creator'],
+        canPay: json['canPay']);
+    
   }
 
   toEqubEntity() {
@@ -39,7 +48,9 @@ class EkubModel extends Equatable{
         amount: ValidNumber(amount),
         minMembers: ValidNumber(minMembers),
         duration: ValidNumber(duration),
-        countdown: ValidNumber(countdown));
+        countdown: ValidNumber(countdown),
+        creator: creator,
+        canPay: canPay);
   }
   @override
   List<Object> get props => [name, amount, duration, countdown, minMembers, description];

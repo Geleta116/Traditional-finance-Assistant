@@ -10,6 +10,9 @@ import 'package:traditional_financial_asistant/application/ekub/ekub_state.dart'
 // import 'package:traditional_finance_assistant__app/domain/ekub/models/Ekub.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/Ekub.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/curve_button.dart';
+
+import '../../../application/user/User_bloc.dart';
+import '../../../application/user/User_event.dart';
 // import '../../application/ekub/ekub_bloc.dart';
 // import '../../application/ekub/ekub_state.dart';
 // import '../../domain/ekub/Ekub.dart';
@@ -62,6 +65,12 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+           context.goNamed('landingPage');
+          },
+        ),
         title: Text('Equb'),
       ),
       body: BlocConsumer<EkubBloc, EkubState>(
@@ -183,7 +192,10 @@ class _EqubListState extends State<EqubList> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            print('tapped $index');
+            
+            BlocProvider.of<EkubBloc>(context)
+                .add(EkubDetail(equbs[index].toEqubEntity()));
+            context.goNamed('ekubDetailEqubCreator');
           },
           child: Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -227,10 +239,10 @@ class _EqubListState extends State<EqubList> {
                   normalText: '${widget.equbs[index].minMembers.toString()}'),
               Center(
                   child: Visibility(
-                      // visible: equbs[index].paid,
+                      visible: equbs[index].canPay as bool,
                       child: CurveButton(
                 text: 'proceed payement',
-                onPressed: () => {showModal(context)},
+                onPressed: () => {showModal(context, index)},
                 color: Colors.indigoAccent,
               )))
             ]),
@@ -293,7 +305,7 @@ String calculateStartDate(int numberOfDays) {
   return formattedStartDate;
 }
 
-void showModal(BuildContext context) {
+void showModal(BuildContext context, index) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -328,6 +340,8 @@ void showModal(BuildContext context) {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
+                    BlocProvider.of<UserBloc>(context)
+                        .add(makePayement(equbs[index].name as String));
                     Navigator.of(context).pop(); // Close the modal
                   },
                   child: Text('Pay'),

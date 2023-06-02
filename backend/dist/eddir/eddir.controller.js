@@ -54,9 +54,12 @@ let EddirController = class EddirController {
         const username = req.user["username"];
         return this.edirService.getAllEdirs(username);
     }
-    async payEdir(req, id) {
+    async payEdir(req, edirName) {
+        console.log('edir pay');
+        console.log(edirName);
+        console.log("hello");
         const username = req.user["username"];
-        return this.edirService.payEdir(username, id);
+        return this.edirService.payEdir(username, edirName["edirName"]);
     }
     async getMembers(id) {
         return this.edirService.getMembersOfEdir(id);
@@ -141,12 +144,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EddirController.prototype, "getAllEdirs", null);
 __decorate([
-    (0, common_1.Post)('pay/:id'),
+    (0, common_1.Post)('pay/:edirName'),
     (0, common_1.UseGuards)(authenticate_guard_1.Authenticate),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], EddirController.prototype, "payEdir", null);
 __decorate([

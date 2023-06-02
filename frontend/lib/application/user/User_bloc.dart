@@ -10,6 +10,8 @@
 // import 'blocs.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
+import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 
 import '../../infrastructure/user/User_repositories.dart';
@@ -20,14 +22,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
 
   UserBloc({required this.userRepository}) : super(UsersLoad()) {
-    on<UserLoad>((event, emit) async {
-      try {
-        final user = await userRepository.fetchAllMembers(event.id);
-        emit(UserLoadedState(user));
-      } catch (error) {
-        emit(UserOperationFailure("Can't Load Users"));
-      }
-    });
+    // on<UserLoad>((event, emit) async {
+    //   try {
+    //     final user = await userRepository.fetchAllMembers(event.id);
+    //     emit(UserLoadedState(user));
+    //   } catch (error) {
+    //     emit(UserOperationFailure("Can't Load Users"));
+    //   }
+    // });
 
     // on<MakePayement>((event, emit) async {
     //   try {
@@ -38,6 +40,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     //   }
     // });
 
+    on<blackList>((event, emit) async {
+      try {
+        print('blacklist block reached');
+        final users = await userRepository.blackList(event.name);
+        emit(BlackListMemberOperationSuccess(users));
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load blackListed users"));
+      }
+    });
+
     on<CurrentUserLoad>((event, emit) async {
       try {
         Users user = await userRepository.fetchMember();
@@ -47,14 +59,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
-    on<blackList>((event, emit) async {
-      try {
-        final user = await userRepository.blackList(event.id);
-        emit(UserLoadedState(user));
-      } catch (error) {
-        emit(UserOperationFailure("Can't Load blackListed users"));
-      }
-    });
+    // on<blackList>((event, emit) async {
+    //   try {
+    //     final user = await userRepository.blackList(event.id);
+    //     emit(UserLoadedState(user));
+    //   } catch (error) {
+    //     emit(UserOperationFailure("Can't Load blackListed users"));
+    //   }
+    // });
 
     on<fetchWinner>((event, emit) async {
       try {
@@ -65,23 +77,53 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
     });
 
-
-
-
-    on<MakePayement>((event, emit) async {
-      int money = event.money;
-
+    on<AllEkubMemebers>((event, emit) async {
+      print('block reached');
       try {
-        final user = await userRepository.deposit(money);
-        emit(UsersData(user));
+        List<Member> memebers =
+            await userRepository.fetchAllMembers(event.name);
+        print('operation success');
+        emit(MemberOperationSuccess(memebers));
       } catch (error) {
         emit(UserOperationFailure("Can't Load Users"));
       }
     });
 
+    on<AllEdirMemebers>((event, emit) async {
+      print('block reached');
+      try {
+        List<EdirMember> members =
+            await userRepository.fetchAllEdirMembers(event.name);
+        print('operation success');
+        emit(EdirMemberOperationSuccess(members));
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
 
+    on<deposite>((event, emit) async {
+      int money = event.money;
 
-    
+      try {
+        final user = await userRepository.deposit(money);
+        
+        emit(UsersLoad());
+        emit(UsersData(user));
+        
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
+
+    on<makePayement>((event, emit) async {
+      try {
+        print('get to pay usr bloc');
+        await userRepository.makePayment(event.name);
+        emit(PayOperationSuccess());
+      } catch (error) {
+        emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
 
     on<getNotification>((event, emit) async {
       try {

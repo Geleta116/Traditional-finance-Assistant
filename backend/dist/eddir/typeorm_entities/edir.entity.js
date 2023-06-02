@@ -52,10 +52,6 @@ __decorate([
     __metadata("design:type", Number)
 ], Edir.prototype, "duration", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Edir.prototype, "description", void 0);
-__decorate([
     (0, typeorm_1.Column)({ default: 0 }),
     __metadata("design:type", Number)
 ], Edir.prototype, "durationControl", void 0);

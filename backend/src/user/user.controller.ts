@@ -21,10 +21,13 @@ export class UserController {
 
         @Post('signup/')
         async signUp(@Body() signupdto:SignUpDTO, @Res({ passthrough: true }) response: Response){
+            console.log("get's to the signup controller")
             return await this.userService.signUp(signupdto);
         }
     
-        @Patch('changepassowrd/')
+
+        @Patch('changepassoword/')
+
         @UseGuards(Authenticate)
         async changePassword(@Body() changepassworddto : changePasswordDTO, @Req() req:Request){
             const username = req.user['username']
@@ -52,11 +55,4 @@ export class UserController {
             console.log(deposite);
             return deposite;
         }
- 
-
-    // @Get('info/:username')
-    // @UseGuards(Authenticate)
-    // getUserInfo(@Param() username: string){
-    //     return this.userService.getUserInfo(username);
-    // }
 }

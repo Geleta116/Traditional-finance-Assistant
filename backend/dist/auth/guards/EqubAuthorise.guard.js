@@ -24,8 +24,10 @@ let EqubAuthorize = class EqubAuthorize {
         const token = request.headers['authorization'].split(' ')[1];
         const result = await this.authService.validateToken(token);
         const username = result.username;
-        const id = request.params.id;
-        const equb = await this.equbService.getDataAboutEqub(id);
+        console.log(request.params);
+        const ekubNameObj = request.params;
+        const ekubName = ekubNameObj['equbName'];
+        const equb = await this.equbService.getDataAboutEqub(ekubName);
         if (equb.creator == username) {
             return true;
         }
