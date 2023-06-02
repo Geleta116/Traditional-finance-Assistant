@@ -6,6 +6,7 @@ import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/models.dart'; 
 
 abstract class EdirState extends Equatable {
+  
   const EdirState();
 
   @override
