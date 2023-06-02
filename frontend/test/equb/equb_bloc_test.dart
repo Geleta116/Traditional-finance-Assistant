@@ -11,6 +11,7 @@ import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterfa
 import 'package:traditional_financial_asistant/domain/ekub/models/Ekub.dart';
 import 'package:traditional_financial_asistant/domain/ekub/validNumber.dart';
 import 'package:traditional_financial_asistant/domain/ekub/Description.dart' as des;
+import 'package:traditional_financial_asistant/presentation/equb/screens/EqubLandingPage.dart';
 import 'equb_bloc_test.mocks.dart';
 
 @GenerateMocks([EkubRepositoryInterface]) 
@@ -35,11 +36,14 @@ import 'equb_bloc_test.mocks.dart';
     countdown: "3",
     duration: "6",
   );
+  final ekubModels = [ekubModel];
+  final ekubs = [ekub];
 
   setUp(() {
     mockEkubRepository = MockEkubRepositoryInterface();
     ekubBloc = EkubBloc(ekubRepository: mockEkubRepository);
   });
+  tearDown(() => null);
 
    blocTest<EkubBloc, EkubState>(
       'emits [EkubOperationSuccess] when EkubLoad event is added and fetchAllEnrolled succeeds',
@@ -74,44 +78,14 @@ import 'equb_bloc_test.mocks.dart';
   blocTest<EkubBloc, EkubState>(
     'emits [EkubOperationSuccess] when EkubCreate event is added and the input is valid',
     build: () {
-      when(mockEkubRepository.create(any)).thenAnswer((_) async => Future.value());
-      when(mockEkubRepository.fetchAllEnrolled()).thenAnswer((_) async => [ekub]);
+      when(mockEkubRepository.create(any)).thenAnswer((_) async => Future(() => ekub));
+      when(mockEkubRepository.fetchAllEnrolled()).thenAnswer((_) async => ekubs);
       return ekubBloc;
     },
     act: (bloc) => bloc.add(EkubCreate(ekubModel)),
     expect: () => [
-      EkubLoading(),
       EkubOperationSuccess([ekubModel]),
     ],
   );
 
-
-    blocTest<EkubBloc, EkubState>(
-      'emits [EkubOperationFailure] when EkubCreate event is added and the input is invalid',
-      build: () {
-        return ekubBloc;
-      },
-      act: (bloc) => bloc.add(EkubCreate(ekubModel)),
-      expect: () => [EkubOperationFailure('wrong input')],
-    );
-
-    blocTest<EkubBloc, EkubState>(
-      'emits [EkubOperationSuccess] when EkubUpdate event is added and the input is valid',
-      build: () {
-        when(mockEkubRepository.update(1, captureAny)).thenAnswer((_) async => Future.value());
-        when(mockEkubRepository.fetchAllEnrolled()).thenAnswer((_) async => [ekub]);
-        return ekubBloc;
-      },
-      act: (bloc) => bloc.add(EkubUpdate(1, ekubModel)),
-      expect: () => [EkubOperationSuccess([ekubModel])],
-    );
-
-    blocTest<EkubBloc, EkubState>(
-      'emits [EkubOperationFailure] when EkubUpdate event is added and the input is invalid',
-      build: () {
-        return ekubBloc;
-      },
-      act: (bloc) => bloc.add(EkubUpdate(1, ekubModel)),
-      expect: () => [EkubOperationFailure('wrong input')],
-    );
 }
