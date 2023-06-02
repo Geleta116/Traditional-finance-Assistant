@@ -29,7 +29,7 @@ import { Edirchatroom } from './typeorm/edir entities/edir_chatroom.entity';
     host: "localhost",
     port: 3306,
     username: "root", // ur mysql username  , eg: root
-    // password: "12345678", // ur mysql password, eg : 12345678
+    password: "s1a2h3i4b5", // ur mysql password, eg : 12345678
     database: "mobile_backend",
     entities: [
       User,

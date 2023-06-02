@@ -5,8 +5,9 @@ class CurveButton extends StatelessWidget {
   String text;
   VoidCallback onPressed;
   Color? color;
+  final Key? key;
 
-   CurveButton({required this.text, required this.onPressed, this.color});
+   CurveButton({required this.text, required this.onPressed, this.color, this.key});
 
   @override
   Widget build(BuildContext context) {

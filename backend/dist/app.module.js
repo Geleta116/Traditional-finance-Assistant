@@ -35,6 +35,7 @@ AppModule = __decorate([
                 host: "localhost",
                 port: 3306,
                 username: "root",
+                password: "s1a2h3i4b5",
                 database: "mobile_backend",
                 entities: [
                     user_entity_1.User,
