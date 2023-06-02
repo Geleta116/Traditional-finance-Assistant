@@ -24,7 +24,7 @@ export class UserController {
             return await this.userService.signUp(signupdto);
         }
     
-        @Patch('changepassowrd/')
+        @Patch('changepassword/')
         @UseGuards(Authenticate)
         async changePassword(@Body() changepassworddto : changePasswordDTO, @Req() req:Request){
             const username = req.user['username']
@@ -52,11 +52,4 @@ export class UserController {
             console.log(deposite);
             return deposite;
         }
- 
-
-    // @Get('info/:username')
-    // @UseGuards(Authenticate)
-    // getUserInfo(@Param() username: string){
-    //     return this.userService.getUserInfo(username);
-    // }
 }
