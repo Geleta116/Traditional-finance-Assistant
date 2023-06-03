@@ -24,18 +24,20 @@ class CreateEqubScreen extends StatelessWidget {
         bloc: BlocProvider.of<EkubBloc>(context),
         listener: (context, state) {
           // print(state);
-          if (state is EkubOperationSuccess) {
+          if (state is EkubCreateSuccess) {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('created Ekub succesfully'),
-                              content: Text('Created Ekub successfully'),
+                              content: Text(' code: ${state.ekubCreateDto.code}'),
                               actions: [
                                 TextButton(
                                   onPressed: () {
+                              //        final EkubEvent event = EkubLoad();
+                              // BlocProvider.of<EkubBloc>(context).add(event);
                                     
-                                    context.goNamed('ekubLanding'); // Close the dialog
+                              context.goNamed('ekubLanding'); // Close the dialog
                                   },
                                   child: Text('Go to ekub landing'),
                                 ),
@@ -50,6 +52,12 @@ class CreateEqubScreen extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+           context.goNamed('ekublanding');
+          },
+        ),
               title: Text('Create Equb'),
               centerTitle: true,
             ),

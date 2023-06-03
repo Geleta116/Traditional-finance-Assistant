@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
+import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
+import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
+import 'package:traditional_financial_asistant/application/user/User_event.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/block_button.dart';
 
 
@@ -63,12 +68,16 @@ class Welcome extends StatelessWidget {
                       onPressed: () {
                         context.goNamed('ekubLanding');
                       }),
-                  BlockButton(
-                    key: Key('edir'),
-                    text: 'Edir',  onPressed: () {
+
+                  BlockButton(text: 'Edir',  onPressed: () {
+                      BlocProvider.of<EdirBloc>(context)
+                                        .add(EdirLoad());
+
                         context.goNamed('edirLanding');
                       }),
                   BlockButton(text: 'My Profile', onPressed: () {
+                    BlocProvider.of<UserBloc>(context)
+                                        .add(CurrentUserLoad());
                     context.goNamed('myAccount');
                   }),
                 ])

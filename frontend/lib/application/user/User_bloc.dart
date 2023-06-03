@@ -10,7 +10,8 @@
 // import 'blocs.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
+import 'package:traditional_financial_asistant/domain/register/edirmember.dart';
+// import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
 import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 
@@ -31,14 +32,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     //   }
     // });
 
-    // on<MakePayement>((event, emit) async {
-    //   try {
-    //     final user = await userRepository.deposit(event.money);
-    //     emit(UsersData(user));
-    //   } catch (error) {
-    //     emit(UserOperationFailure("Can't Load Users"));
-    //   }
-    // });
+    on<makeEdirPayement>((event, emit) async {
+      try {
+        final user = await userRepository.makeEdirPayment(event.name);
+        emit(EdirPaymentSuccess());
+      } catch (error) {
+        emit(EdirPaymentFaliure());
+      }
+    });
 
     on<blackList>((event, emit) async {
       try {
@@ -68,14 +69,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     //   }
     // });
 
-    on<fetchWinner>((event, emit) async {
-      try {
-        final user = await userRepository.fetchWinner(event.id);
-        // emit(UserLoadedState(user));
-      } catch (error) {
-        emit(UserOperationFailure("Can't Load Users"));
-      }
-    });
+    // on<fetchWinner>((event, emit) async {
+    //   try {
+    //     final user = await userRepository.fetchWinner(event.id);
+    //     // emit(UserLoadedState(user));
+    //   } catch (error) {
+    //     emit(UserOperationFailure("Can't Load Users"));
+    //   }
+    // });
 
     on<AllEkubMemebers>((event, emit) async {
       print('block reached');
@@ -103,13 +104,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<deposite>((event, emit) async {
       int money = event.money;
+      print(money);
 
       try {
         final user = await userRepository.deposit(money);
-        
+
         emit(UsersLoad());
         emit(UsersData(user));
-        
       } catch (error) {
         emit(UserOperationFailure("Can't Load Users"));
       }
@@ -131,6 +132,29 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         // emit(UserLoadedState(user));
       } catch (error) {
         emit(UserOperationFailure("Can't Load Users"));
+      }
+    });
+    on<ChangePassword>((event, emit) async {
+      try {
+        print('get to pay usr bloc');
+        await userRepository.changePassword(event.changePasswordModel);
+        // emit(UserLoadedState(user));
+        emit(ChangePasswordSuccess());
+        print('success');
+      } catch (error) {
+        emit(ChangePasswordFaliure());
+      }
+    });
+    on<UserLogout>((event, emit) async {
+      try {
+        print('get to pay usr bloc');
+        await userRepository.logout();
+        // emit(UserLoadedState(user));
+        emit(LogoutSuccesfull());
+        print('success');
+      } catch (error) {
+        emit(LogoutUnsuccesfull());
+        // emit(UserOperationFailure("Can't Load Users"));
       }
     });
   }

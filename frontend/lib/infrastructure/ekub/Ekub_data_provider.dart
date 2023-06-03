@@ -9,11 +9,12 @@ import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub.Dto.dart';
+import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_crate.Dto.dart';
 
 class EkubDataProvider {
-  static const String _baseUrl = "http://192.168.251.221:3000/equb";
+  static const String _baseUrl = "http://192.168.43.209:3000/equb";
 
-  Future<bool> create(EkubDto ekub, accessToken) async {
+  Future<EkubCreateDto> create(EkubDto ekub, accessToken) async {
     try {
       print('ekub provider');
 
@@ -28,8 +29,7 @@ class EkubDataProvider {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 201) {
-        return true;
-        // return EkubDto.fromCreateJson(jsonDecode(response.body));
+        return EkubCreateDto.fromJson(jsonDecode(response.body));
       }
       {
         throw Exception("Failed to create Ekub");

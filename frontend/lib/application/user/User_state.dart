@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
+// import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
 import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 import 'package:bloc/bloc.dart';
@@ -77,6 +77,22 @@ class MakePayements extends UserState {
   @override
   List<Object?> get props => [];
 }
+class EdirPaymentSuccess extends UserState {
+  
+
+  const EdirPaymentSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+class EdirPaymentFaliure extends UserState {
+  
+
+  const EdirPaymentFaliure();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class BlackListMemberOperationSuccess extends UserState {
   final List<Member> members;
@@ -123,6 +139,12 @@ class depositeMoney extends UserState {
 }
 class LogoutSuccesfull extends UserState {
   const LogoutSuccesfull();
+
+  @override
+  List<Object?> get props => [];
+}
+class LogoutUnsuccesfull extends UserState {
+  const LogoutUnsuccesfull();
 
   @override
   List<Object?> get props => [];

@@ -6,6 +6,7 @@ import 'package:traditional_financial_asistant/domain/ekub/EkubFailure.dart';
 import 'package:traditional_financial_asistant/domain/ekub/EkubTitle.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/Ekub.dart';
 import 'package:traditional_financial_asistant/domain/ekub/validNumber.dart';
+import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_crate.Dto.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_repository.dart';
 import 'blocs.dart';
 import 'package:traditional_financial_asistant/domain/ekub/Ekub.dart';
@@ -53,13 +54,13 @@ class EkubBloc extends Bloc<EkubEvent, EkubState> {
         emit(EkubInitial());
       }, (_) async {
         try {
-          await ekubRepository.create(ekub);
-          final List<Ekub> ekubs = await ekubRepository.fetchAllEnrolled();
+          EkubCreateDto ekubCreateDto = await ekubRepository.create(ekub);
+          // final List<Ekub> ekubs = await ekubRepository.fetchAllEnrolled();
 
-          List<EkubModel> ekubsList =
-              List<EkubModel>.from(ekubs.map((e) => e.toEqubModel()));
+          // List<EkubModel> ekubsList =
+          //     List<EkubModel>.from(ekubs.map((e) => e.toEqubModel()));
 
-          emit(EkubOperationSuccess(ekubsList));
+          emit(EkubCreateSuccess(ekubCreateDto));
         } catch (error) {
           emit(EkubOperationFailure(error));
         }

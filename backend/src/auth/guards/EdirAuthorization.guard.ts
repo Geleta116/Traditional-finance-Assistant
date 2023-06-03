@@ -19,7 +19,8 @@ export class EdirAuthorize {
     const result = await this.authService.validateToken(token)
     const username = result.username // get the user ID from the request
     const id = request.params.id;
-    const edir = await this.edirService.getDataAboutEdir(id)
+    const edirName = request.params['edirName']
+    const edir = await this.edirService.getDataAboutEdir(edirName)
     // const result = await this.authService.validateToken(refreshToken)
 
 

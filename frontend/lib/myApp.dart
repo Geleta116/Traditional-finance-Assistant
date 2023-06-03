@@ -22,6 +22,7 @@ import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_pro
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart';
 import 'package:go_router/go_router.dart';
 import 'package:traditional_financial_asistant/infrastructure/user/User_repositories.dart';
+import 'package:traditional_financial_asistant/presentation/Edir/screens/Edir_creator.dart';
 import 'package:traditional_financial_asistant/presentation/Equb/screens/blackList.dart';
 import 'package:traditional_financial_asistant/presentation/Equb/screens/members.dart';
 import 'package:traditional_financial_asistant/infrastructure/user/User_data_provider.dart';
@@ -119,6 +120,10 @@ class MyAppState extends State<MyApp> {
         path: "/notification",
         name: "notification",
         builder: (context, state) => NotificationScreen()),
+     GoRoute(
+        path: "/edirDetail",
+        name: "edirDetail",
+        builder: (context, state) => EdirCreatorScreen()),
         
 ]);
 

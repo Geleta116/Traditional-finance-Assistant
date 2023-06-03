@@ -18,15 +18,15 @@ class EdirRepository implements EdirRepositoryInterface {
   EdirRepository(this.dataProvider);
   DbHelper helper = DbHelper();
 
-  Future<Edir> create(Edir edir) async {
+  Future<bool> create(Edir edir) async {
     print("edir repo");
     String accessToken = await helper.getAccessToken();
-    EdirDto createEdir = await dataProvider.create(edir.toDto(), accessToken);
+    bool temp = await dataProvider.create(edir.toDto(), accessToken);
     print(accessToken);
     try {
-      await helper.insertEdir([createEdir.toEntity()]);
+      // await helper.insertEdir([createEdir.toEntity()]);
 
-      return createEdir.toEntity();
+      return temp;
     } catch (e) {
       print(e);
       throw (e);
@@ -36,7 +36,7 @@ class EdirRepository implements EdirRepositoryInterface {
   Future<Edir> update(int id, Edir edir) async {
     String accessToken = await helper.getAccessToken();
     EdirDto updateEdir = await dataProvider.update(id, edir as EdirDto);
-    await helper.updateEdir(updateEdir.toEntity().toJson());
+    // await helper.updateEdir(updateEdir.toEntity().toJson());
     return updateEdir.toEntity();
   }
 
@@ -56,7 +56,7 @@ class EdirRepository implements EdirRepositoryInterface {
       // }
       List<Edir> edirListEntity = edirList.map((e) => e.toEntity()).toList();
       // print(edirListEntity);
-      await helper.insertEdir(edirListEntity);
+      // await helper.insertEdir(edirListEntity);
       print(edirListEntity);
       return edirListEntity;
     } else {
@@ -74,8 +74,6 @@ class EdirRepository implements EdirRepositoryInterface {
       throw (e);
     }
   }
-
-
 
   Future<Edir> join(String name, String code) async {
     EdirDto joinedEdir = await dataProvider.join(name, code);

@@ -36,8 +36,9 @@ let EddirController = class EddirController {
         const username = req.user['username'];
         return this.edirService.joinEdir(dto.name, dto.code, username);
     }
-    async deleteEdir(id) {
-        return this.edirService.deleteEdir(id);
+    async deleteEdir(edirName) {
+        console.log(edirName);
+        return this.edirService.deleteEdir(edirName["edirName"]);
     }
     async leaveEdir(id, req) {
         const username = req.user['username'];
@@ -101,11 +102,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], EddirController.prototype, "joinEdir", null);
 __decorate([
-    (0, common_1.Post)('delete/:id'),
+    (0, common_1.Post)('delete/:edirName'),
     (0, common_1.UseGuards)(authenticate_guard_1.Authenticate, EdirAuthorization_guard_1.EdirAuthorize),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], EddirController.prototype, "deleteEdir", null);
 __decorate([

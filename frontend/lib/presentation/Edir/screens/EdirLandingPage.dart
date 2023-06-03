@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:traditional_financial_asistant/application/edir/edir_bloc.dart';
 import 'package:traditional_financial_asistant/application/edir/edir_state.dart';
 import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
+import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
+import 'package:traditional_financial_asistant/application/user/User_event.dart';
 import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/curve_button.dart';
@@ -211,19 +213,13 @@ class _EdirListState extends State<EdirList> {
                     ? MainAxisAlignment.spaceEvenly
                     : MainAxisAlignment.start,
                 children: [
-                  CurveButton(
-                    text: 'leave group',
-                    onPressed: () {
-                      showConfirmationDialog(context);
-                    },
-                    color: Colors.redAccent,
-                  ),
+                  
                   Visibility(
                       visible: true, // edirs[index].paid,
                       child: CurveButton(
                         text: 'pay',
                         onPressed: () => {
-                          showModal(context, edirs[index].amount),
+                          showModal(context, edirs[index].amount,edirs[index].name),
                         },
                         color: Colors.indigoAccent,
                       )),
@@ -315,7 +311,7 @@ String calculateStartDate(int numberOfDays) {
   return formattedStartDate;
 }
 
-void showModal(BuildContext context, amount) {
+void showModal(BuildContext context, amount,name) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -350,6 +346,8 @@ void showModal(BuildContext context, amount) {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
+                      final UserEvent event = makeEdirPayement(name);
+                      BlocProvider.of<UserBloc>(context).add(event);
                     Navigator.of(context).pop(); // Close the modal
                   },
                   child: Text('Pay'),

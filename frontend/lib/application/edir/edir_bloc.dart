@@ -25,8 +25,9 @@ class EdirBloc extends Bloc<EdirEvent, EdirState> {
 
         List<EdirModel> edirsList =
             List<EdirModel>.from(edir.map((e) => e.toEdirModel()));
-       
+        emit(EdirInitial());
         emit(EdirOperationSuccess(edirsList));
+        
       } catch (error) {
         emit(EdirOperationFailure(error));
       }
@@ -48,6 +49,7 @@ class EdirBloc extends Bloc<EdirEvent, EdirState> {
     });
 
     on<EdirCreate>((event, emit) async {
+      print('edir create bloc');
       EdirTitle name = EdirTitle(event.edir.name);
       ValidNumber amount = ValidNumber(event.edir.amount);
       ValidNumber duration = ValidNumber(event.edir.duration);

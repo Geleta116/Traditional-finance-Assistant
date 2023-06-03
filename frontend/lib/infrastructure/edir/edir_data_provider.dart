@@ -11,9 +11,9 @@ import 'package:traditional_financial_asistant/domain/edir/models/models.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir.Dto.dart';
 
 class EdirDataProvider {
-  static const String _baseUrl = "http://localhost:3000/edir";
+  static const String _baseUrl = "http://192.168.43.209:3000/edir";
 
-  Future<EdirDto> create(EdirDto edir, accessToken) async {
+  Future<bool> create(EdirDto edir, accessToken) async {
     print("edir provider");
     final http.Response response = await http.post(
         Uri.parse("$_baseUrl/create"),
@@ -25,7 +25,7 @@ class EdirDataProvider {
     print(response.statusCode);
     if (response.statusCode == 201) {
       print(response.body);
-      return EdirDto.fromJson(jsonDecode(response.body));
+      return true;
     }
     {
       print("it is failing");
@@ -61,7 +61,7 @@ class EdirDataProvider {
         "Authorization": "Bearer $accessToken"
       },
     );
-
+    print(response.statusCode);
     if (response.statusCode == 201) {
       return true;
     } else {

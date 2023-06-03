@@ -10,7 +10,7 @@ export declare class EddirController {
     constructor(edirService: EddirService);
     createEdir(data: EdirDTO, req: Request): Promise<import("./typeorm_entities/edir.entity").Edir[]>;
     joinEdir(dto: JoinEdirDTO, req: Request): Promise<import("./typeorm_entities/edir_members.entity").Edirmembers>;
-    deleteEdir(id: number): Promise<import("typeorm").DeleteResult>;
+    deleteEdir(edirName: String): Promise<import("typeorm").DeleteResult>;
     leaveEdir(id: number, req: Request): Promise<import("typeorm").DeleteResult>;
     updateEdir(id: number, dto: EdirDTO): Promise<import("typeorm").UpdateResult>;
     deleteMember(id: number, dto: DeleteEdirMemberDTO): Promise<import("typeorm").DeleteResult | "Edir doesn't exist">;
