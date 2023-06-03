@@ -13,7 +13,7 @@ class DbHelper {
   Future<Database> openDb() async {
     // if (db == null) {
       db = await openDatabase(
-        join(await getDatabasesPath(), 'localCache7'),
+        join(await getDatabasesPath(), 'localCache10'),
         onCreate: (database, version) {
           database.execute(
             "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fullName TEXT NULL,userName TEXT, email TEXT NULL, password TEXT, balance INTEGER NULL,accessToken TEXT NULL)",
@@ -26,7 +26,7 @@ class DbHelper {
             "CREATE TABLE member(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,won TEXT NULL, paid TEXT NULL,name TEXT NULL)",
           );
           database.execute(
-            "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL)",
+            "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL,creator INTEGER NULL)",
           );
           database.execute(
             "CREATE TABLE edirmember(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,penality TEXT NULL, paid TEXT NULL, name TEXT NULL)",

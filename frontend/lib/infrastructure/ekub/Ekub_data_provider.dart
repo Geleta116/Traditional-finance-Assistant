@@ -11,7 +11,7 @@ import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub.Dto.dart';
 
 class EkubDataProvider {
-  static const String _baseUrl = "http://192.168.251.221:3000/equb";
+  static const String _baseUrl = "http://10.4.101.40:3000/equb";
 
   Future<bool> create(EkubDto ekub, accessToken) async {
     try {

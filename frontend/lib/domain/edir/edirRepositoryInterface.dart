@@ -1,7 +1,7 @@
 import 'Edir.dart';
 
 abstract class EdirRepositoryInterface {
-  Future<Edir> create(Edir edir);
+  Future<bool> create(Edir edir);
   Future<Edir> update(int id, Edir edir);
   Future<List<Edir>> fetchAllEnrolled();
   Future<bool> deleteEdir(String name);

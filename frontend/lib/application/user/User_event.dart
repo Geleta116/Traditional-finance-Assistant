@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:traditional_financial_asistant/domain/auth/change_password.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 
 abstract class UserEvent extends Equatable {
@@ -124,5 +125,23 @@ class AllEkubMemebers extends UserEvent {
   @override
   List<Object> get props => [name];
 }
+class UserLogout extends UserEvent {
+ 
+
+  const UserLogout();
+
+  @override
+  List<Object> get props => [];
+}
+class ChangePassword extends UserEvent {
+ 
+  final ChangePasswordModel changePasswordModel;
+  const ChangePassword(this.changePasswordModel);
+
+  @override
+  List<Object> get props => [changePasswordModel];
+}
+
+
 
 

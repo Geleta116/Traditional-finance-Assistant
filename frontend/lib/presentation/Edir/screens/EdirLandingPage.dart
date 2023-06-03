@@ -211,13 +211,7 @@ class _EdirListState extends State<EdirList> {
                     ? MainAxisAlignment.spaceEvenly
                     : MainAxisAlignment.start,
                 children: [
-                  CurveButton(
-                    text: 'leave group',
-                    onPressed: () {
-                      showConfirmationDialog(context);
-                    },
-                    color: Colors.redAccent,
-                  ),
+                  
                   Visibility(
                       visible: true, // edirs[index].paid,
                       child: CurveButton(

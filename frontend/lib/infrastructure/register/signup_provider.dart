@@ -1,14 +1,14 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
-  
+
 import 'package:http/http.dart' as http;
 import 'package:traditional_financial_asistant/infrastructure/register/user.DTO.dart';
 
 import '../../domain/register/User.dart';
 
 class SignUpDataProvider {
-  static const String _baseUrl = "http://192.168.251.221:3000/user/signup";
+  static const String _baseUrl = "http://10.4.101.40:3000/user/signup";
 
   Future<UserDto> create(UserDto user) async {
     try {

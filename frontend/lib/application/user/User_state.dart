@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
+// import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
 import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
 import 'package:traditional_financial_asistant/domain/register/register_domain_barell.dart';
 import 'package:bloc/bloc.dart';
@@ -123,6 +123,12 @@ class depositeMoney extends UserState {
 }
 class LogoutSuccesfull extends UserState {
   const LogoutSuccesfull();
+
+  @override
+  List<Object?> get props => [];
+}
+class LogoutUnsuccesfull extends UserState {
+  const LogoutUnsuccesfull();
 
   @override
   List<Object?> get props => [];

@@ -7,13 +7,10 @@ import "../../infrastructure/auth/accessToken.Dto.dart";
 import 'package:http/http.dart' as http;
 
 class AuthenticationProvider {
-  
-
-  String _baseUrl = 'http://192.168.251.221:3000/auth/login';
+  String _baseUrl = 'http://10.4.101.40:3000/auth/login';
 
   Future<AccessTokenDto> logIn(User user) async {
     try {
-      
       print(user.toDto().toJson());
       final http.Response response = await http.post(Uri.parse(_baseUrl),
           headers: <String, String>{"Content-Type": "application/json"},
@@ -26,12 +23,11 @@ class AuthenticationProvider {
 
         return accessToken;
       } else {
-        
         throw Exception("Failed to authenticate");
       }
     } catch (error) {
       print(error);
-      
+
       throw Exception("Failed to authenticate");
       print('faild faild');
     }

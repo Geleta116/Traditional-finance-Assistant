@@ -33,24 +33,37 @@ class _MyAccountState extends State<MyAccount> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
-              onPressed: () {
-                context.goNamed('landing');
-              },
-            ),
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            context.goNamed('landing');
+          },
+        ),
         title: Text('My Account'),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              context.goNamed("notification");
+          BlocConsumer<UserBloc, UserState>(
+            listener: (context, state) {
+              // TODO: implement listener
+              if (state is LogoutSuccesfull) {
+                context.goNamed('login');
+              }
+              if (state is LogoutUnsuccesfull) {
+                _showDialog(context, "Unable to logout");
+              }
+            },
+            builder: (context, state) {
+              return IconButton(
+                icon: Icon(Icons.notifications),
+                onPressed: () {
+                  context.goNamed("notification");
+                },
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              showLogoutConfirmationDialog(context);
+              BlocProvider.of<UserBloc>(context).add(UserLogout());
             },
           ),
         ],
@@ -143,9 +156,9 @@ class _MyAccountState extends State<MyAccount> {
                                           text: 'Deposit',
                                           onPressed: () {
                                             Navigator.of(context).pop();
-                                            context.goNamed("welcome");
-                                            final UserEvent event =
-                                                MakePayement(int.parse(
+                                            // context.goNamed("landing");
+                                            final UserEvent event = deposite(
+                                                int.parse(
                                                     money.text as String));
                                             BlocProvider.of<UserBloc>(context)
                                                 .add(event);
@@ -168,7 +181,7 @@ class _MyAccountState extends State<MyAccount> {
                             );
                           },
                         );
-                        context.goNamed("welcome");
+                        // context.goNamed("landing");
                       },
                     ),
                     CurveButton(
@@ -317,18 +330,24 @@ class _ChangePasswordModalState extends State<ChangePasswordModal> {
       actions: [
         BlocConsumer<UserBloc, UserState>(
           listener: (context, state) {
+            print(state);
             if (state is LogoutSuccesfull) {
               context.goNamed('login');
-            } else if (state is ChangePasswordSuccess) {
+            }
+            if (state is ChangePasswordSuccess) {
+              print('change password success');
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('operation successfull')));
               BlocProvider.of<UserBloc>(context).add(UserLogout());
               // context.goNamed('login');
               // Navigator.of(context).pop();
-            } else {
+            }
+
+            if (state is ChangePasswordFaliure) {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Unable to change password')));
               Navigator.of(context).pop();
+              BlocProvider.of<UserBloc>(context).add(CurrentUserLoad());
             }
           },
           builder: (context, state) {

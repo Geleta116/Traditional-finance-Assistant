@@ -68,7 +68,7 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-           context.goNamed('landingPage');
+           context.goNamed('landing');
           },
         ),
         title: Text('Equb'),
@@ -239,7 +239,7 @@ class _EqubListState extends State<EqubList> {
                   normalText: '${widget.equbs[index].minMembers.toString()}'),
               Center(
                   child: Visibility(
-                      visible: equbs[index].canPay as bool,
+                      visible:equbs[index].canPay as bool,
                       child: CurveButton(
                 text: 'proceed payement',
                 onPressed: () => {showModal(context, index)},

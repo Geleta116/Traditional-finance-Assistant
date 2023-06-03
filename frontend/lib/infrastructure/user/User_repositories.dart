@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:traditional_financial_asistant/domain/auth/auth_domain_barell.dart';
+import 'package:traditional_financial_asistant/domain/auth/change_password.dart';
 import 'package:traditional_financial_asistant/domain/notification/Notification.dart';
 // import 'package:traditional_financial_asistant/domain/register/edirmember_model.dart';
 import 'package:traditional_financial_asistant/domain/register/memeber_model.dart';
@@ -120,9 +121,9 @@ class UserRepository {
     String accessToken = await helper.getAccessToken();
     return dataProvider.makeEdirPayment(name, accessToken);
   }
-  // Future<List<Notifications>> getNotification() async {
-  //   return dataProvider.getNotification();
-  // }
+  Future<List<Notifications>> getNotification() async {
+    return dataProvider.getNotification();
+  }
 
   Future<void> deleteNotification() async {
     return dataProvider.deleteNotification();
@@ -152,5 +153,26 @@ class UserRepository {
       print("error in user repo");
       throw (e);
     }
+  }
+
+  Future<Users> changePassword(ChangePasswordModel changePassword) async {
+    print('change pass repo');
+    try {
+      
+      String accessToken = await helper.getAccessToken();
+      print(accessToken);
+      UserDto users =
+          await dataProvider.changePassword(accessToken, changePassword);
+      print(users);
+      return users.toEntity();
+    } catch (e) {
+      print("error in user repo");
+      throw (e);
+    }
+  }
+  logout() async {
+    print('logout rep');
+
+    await helper.dropDatabase();
   }
 }

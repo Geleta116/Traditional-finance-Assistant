@@ -46,9 +46,9 @@ class _CreateEdirScreenState extends State<CreateEdirScreen> {
                                 TextButton(
                                   onPressed: () {
                                     
-                                    context.goNamed('edirLanding'); // Close the dialog
+                                    context.goNamed('landing'); // Close the dialog
                                   },
-                                  child: Text('Go to ekub landing'),
+                                  child: Text('Go back '),
                                 ),
                               ],
                             );
@@ -65,7 +65,9 @@ class _CreateEdirScreenState extends State<CreateEdirScreen> {
               leading: IconButton(
                 icon: Icon(Icons.arrow_back_ios_new),
                 onPressed: () {
-                  context.goNamed('edirLanding');
+                  BlocProvider.of<EdirBloc>(context)
+                                        .add(EdirLoad());
+                  context.goNamed('landing');
                 },
               ),
               title: Text('Create Edir'),

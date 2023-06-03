@@ -26,7 +26,9 @@ class _EdirCreatorScreenState extends State<EdirCreatorScreen> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios_new),
             onPressed: () {
-              context.goNamed('edirLanding');
+              BlocProvider.of<EdirBloc>(context)
+                                        .add(EdirLoad());
+              context.goNamed('landing');
             },
           ),
           title: Text('Edir Name'),
@@ -66,7 +68,7 @@ class _EdirCreatorScreenState extends State<EdirCreatorScreen> {
                     BlocConsumer<EdirBloc, EdirState>(
                         listener: (context, state) {
                           if(state is EdirOperationSuccess){
-                            context.goNamed('edirLanding');
+                            context.goNamed('landing');
                           }
                       // TODO: implement listener
                     }, builder: (context, state) {
