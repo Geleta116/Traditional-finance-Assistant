@@ -11,6 +11,10 @@ import 'package:traditional_financial_asistant/domain/auth/User.dart' as _i6;
 import 'package:traditional_financial_asistant/domain/edir/Edir.dart' as _i9;
 import 'package:traditional_financial_asistant/domain/ekub/ekub_barel.dart'
     as _i8;
+import 'package:traditional_financial_asistant/domain/register/edirmember.dart'
+    as _i11;
+import 'package:traditional_financial_asistant/domain/register/memeber_model.dart'
+    as _i10;
 import 'package:traditional_financial_asistant/infrastructure/auth/accessToken.Dto.dart'
     as _i2;
 import 'package:traditional_financial_asistant/infrastructure/auth/authentication_provider.dart'
@@ -153,24 +157,6 @@ class MockDbHelper extends _i1.Mock implements _i7.DbHelper {
         returnValue: _i5.Future<int>.value(0),
       ) as _i5.Future<int>);
   @override
-  _i5.Future<List<Map<String, dynamic>>> getEkub() => (super.noSuchMethod(
-        Invocation.method(
-          #getEkub,
-          [],
-        ),
-        returnValue: _i5.Future<List<Map<String, dynamic>>>.value(
-            <Map<String, dynamic>>[]),
-      ) as _i5.Future<List<Map<String, dynamic>>>);
-  @override
-  _i5.Future<List<Map<String, dynamic>>> getEdir() => (super.noSuchMethod(
-        Invocation.method(
-          #getEdir,
-          [],
-        ),
-        returnValue: _i5.Future<List<Map<String, dynamic>>>.value(
-            <Map<String, dynamic>>[]),
-      ) as _i5.Future<List<Map<String, dynamic>>>);
-  @override
   _i5.Future<int> updateEkub(Map<String, dynamic>? row) => (super.noSuchMethod(
         Invocation.method(
           #updateEkub,
@@ -178,6 +164,15 @@ class MockDbHelper extends _i1.Mock implements _i7.DbHelper {
         ),
         returnValue: _i5.Future<int>.value(0),
       ) as _i5.Future<int>);
+  @override
+  _i5.Future<void> updateEkubList(List<_i8.Ekub>? rows) => (super.noSuchMethod(
+        Invocation.method(
+          #updateEkubList,
+          [rows],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
   _i5.Future<int> updateEdir(Map<String, dynamic>? row) => (super.noSuchMethod(
         Invocation.method(
@@ -195,4 +190,34 @@ class MockDbHelper extends _i1.Mock implements _i7.DbHelper {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+  @override
+  _i5.Future<int> insertMember(
+    List<_i10.Member>? members,
+    dynamic name,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertMember,
+          [
+            members,
+            name,
+          ],
+        ),
+        returnValue: _i5.Future<int>.value(0),
+      ) as _i5.Future<int>);
+  @override
+  _i5.Future<int> insertEdirMember(
+    List<_i11.EdirMember>? members,
+    dynamic name,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #insertEdirMember,
+          [
+            members,
+            name,
+          ],
+        ),
+        returnValue: _i5.Future<int>.value(0),
+      ) as _i5.Future<int>);
 }

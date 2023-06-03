@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:traditional_financial_asistant/domain/auth/User.dart';
-import 'package:traditional_financial_asistant/domain/auth/password.dart';
+import 'package:traditional_financial_asistant/domain/auth/Password.dart';
 import 'package:traditional_financial_asistant/domain/auth/username.dart';
 import 'package:traditional_financial_asistant/infrastructure/auth/accessToken.Dto.dart';
 import 'package:traditional_financial_asistant/infrastructure/auth/authentication_provider.dart';

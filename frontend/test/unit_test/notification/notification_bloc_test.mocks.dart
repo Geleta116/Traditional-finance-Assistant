@@ -89,13 +89,4 @@ class MockNotificationRepository extends _i1.Mock
         returnValue:
             _i5.Future<List<_i6.Notifications>>.value(<_i6.Notifications>[]),
       ) as _i5.Future<List<_i6.Notifications>>);
-  @override
-  _i5.Future<void> deleteNotification() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteNotification,
-          [],
-        ),
-        returnValue: _i5.Future<void>.value(),
-        returnValueForMissingStub: _i5.Future<void>.value(),
-      ) as _i5.Future<void>);
 }

@@ -51,6 +51,7 @@ void main() {
       },
       act: (bloc) => bloc.add(EdirLoad()),
       expect: () => [
+        EdirInitial(),
         EdirOperationSuccess([edirModel]),
       ],
     );
