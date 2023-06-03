@@ -68,15 +68,14 @@ class Ekub {
 
   EkubDto toDto() {
     return EkubDto(
-      description: description.value.getOrElse(() => ""),
-      name: name.value.getOrElse(() => ""),
-      amount: int.parse(amount.value.getOrElse(() => '0')),
-      minMembers: int.parse(minMembers.value.getOrElse(() => '0')),
-      countdown: int.parse(countdown.value.getOrElse(() => '0')),
-      duration: int.parse(duration.value.getOrElse(() => '0')),
-      creator: creator,
-      canPay: canPay
-    );
+        description: description.value.getOrElse(() => ""),
+        name: name.value.getOrElse(() => ""),
+        amount: int.parse(amount.value.getOrElse(() => '0')),
+        minMembers: int.parse(minMembers.value.getOrElse(() => '0')),
+        countdown: int.parse(countdown.value.getOrElse(() => '0')),
+        duration: int.parse(duration.value.getOrElse(() => '0')),
+        creator: creator,
+        canPay: canPay);
   }
 
   Map<String, dynamic> toJson() => {
@@ -91,28 +90,33 @@ class Ekub {
       };
 
   factory Ekub.fromJson(Map<String, dynamic> json) {
-    return Ekub(
-        description: Description(json['description']),
-        name: EkubTitle(json['name']),
-        amount: ValidNumber(json['amount']),
-        minMembers: ValidNumber(json['minMembers']),
-        duration: ValidNumber(json['duration']),
-        countdown: ValidNumber(json['countdown']),
-        creator: json['creator'],
-        canPay: json['canPay']);
-        
+    print(json);
+
+    try {
+      return Ekub(
+          description: Description(json['description']),
+          name: EkubTitle(json['name']),
+          amount: ValidNumber(json['amount']),
+          minMembers: ValidNumber(json['minMembers']),
+          duration: ValidNumber(json['duration']),
+          countdown: ValidNumber(json['countdown']),
+          creator: json['creator'],
+          canPay: json['canPay']);
+    } catch (e) {
+      print(e);
+      throw Exception('error');
+    }
   }
 
   toEqubModel() {
     return EkubModel(
-      description: description.value.getOrElse(() => ""),
-      name: name.value.getOrElse(() => ""),
-      amount: amount.value.getOrElse(() => ""),
-      minMembers: minMembers.value.getOrElse(() => ""),
-      countdown: countdown.value.getOrElse(() => ""),
-      duration: duration.value.getOrElse(() => ""),
-      creator: creator,
-      canPay: canPay
-    );
+        description: description.value.getOrElse(() => ""),
+        name: name.value.getOrElse(() => ""),
+        amount: amount.value.getOrElse(() => ""),
+        minMembers: minMembers.value.getOrElse(() => ""),
+        countdown: countdown.value.getOrElse(() => ""),
+        duration: duration.value.getOrElse(() => ""),
+        creator: creator,
+        canPay: canPay);
   }
 }

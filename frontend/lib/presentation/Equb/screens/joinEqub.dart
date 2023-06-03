@@ -22,7 +22,7 @@ class JoinEqubScreen extends StatelessWidget {
         listener: (context, state) {
           // print(state);
           if (state is JoinOperationSuccess) {
-            context.goNamed("EkubLanding");
+            context.goNamed("landing");
           }
         },
         builder: (context, state) {
@@ -46,7 +46,7 @@ class JoinEqubScreen extends StatelessWidget {
                         SizedBox(height: 30.0),
                         SizedBox(height: 30.0),
                         Container(
-                          child: Image.asset('images/joinEqub.png'),
+                          child: Image.asset('lib/presentation/images/join.png'),
                           height: 185,
                           width: 250,
                         ),

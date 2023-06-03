@@ -50,7 +50,7 @@ class _CreateEdirScreenState extends State<CreateEdirScreen> {
                                 TextButton(
                                   onPressed: () {
                                     
-                                    context.goNamed('ekublanding'); // Close the dialog
+                                    context.goNamed('landing'); // Close the dialog
                                   },
                                   child: Text('Go back '),
                                 ),

@@ -13,7 +13,7 @@ class DbHelper {
   Future<Database> openDb() async {
     // if (db == null) {
     db = await openDatabase(
-      join(await getDatabasesPath(), 'localCache10'),
+      join(await getDatabasesPath(), 'localCache1011'),
       onCreate: (database, version) {
         database.execute(
           "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fullName TEXT NULL,userName TEXT, email TEXT NULL, password TEXT, balance INTEGER NULL,accessToken TEXT NULL)",
@@ -26,7 +26,7 @@ class DbHelper {
           "CREATE TABLE member(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,won TEXT NULL, paid TEXT NULL,name TEXT NULL)",
         );
         database.execute(
-          "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL,creator INTEGER NULL)",
+          "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL,creator INTEGER NULL, code TEXT NULL)",
         );
         database.execute(
           "CREATE TABLE edirmember(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,penality TEXT NULL, paid TEXT NULL, name TEXT NULL)",
@@ -137,13 +137,23 @@ class DbHelper {
 
     Database db = await openDb();
     final batch = db.batch();
-    for (var entity in edirList) {
-      batch.insert('edir', entity.toJson());
+    try {
+      for (var entity in edirList) {
+        print(entity.creator);
+        ;
+        entity.toJson()['creator'] = entity.toJson()['creator'] ? 1 : 0;
+        // entity.toJson()['canPay'] = entity.toJson()['canPay'] ? 1 : 0;
+        print(entity);
+        print('in local repo');
+        batch.insert('edir', entity.toJson());
+      }
+      await batch.commit();
+      return 1;
+    } catch (e) {
+      print('error');
+      print(e);
+      throw Exception('errore');
     }
-
-    await batch.commit();
-
-    return 1;
   }
 
   Future<List<Map<String, dynamic>>?>? getEkub() async {
@@ -151,30 +161,70 @@ class DbHelper {
     List<Map<String, dynamic>>? lis;
 
     try {
-      List<Map<String, dynamic>> lis = await db.query('ekub');
+      print('start of the equb get');
+      lis = await db.query('ekub');
     } catch (e) {
       print(e);
       throw Exception('no ekub');
     }
 
     // chanage creator and canpay to bool
-
+    List<Map<String, dynamic>> temp = [];
     if (lis == null) {
+      print('returned null');
       return null;
     }
     for (var entity in lis) {
+      print('before');
+      print('inside for loop');
       print(entity);
-      entity['creator'] = entity['creator'] == 1 ? true : false;
-      entity['canPay'] = entity['canPay'] == 1 ? true : false;
+      Map<String, dynamic> tempEntity = Map.from(entity);
+
+      tempEntity['creator'] = tempEntity['creator'] == 1 ? true : false;
+      tempEntity['canPay'] = tempEntity['canPay'] == 1 ? true : false;
+      temp.add(tempEntity);
       print(entity);
+      print('after');
     }
+
     print('local cache');
-    return lis;
+
+    return temp;
   }
 
-  Future<List<Map<String, dynamic>>> getEdir() async {
+  Future<List<Map<String, dynamic>>?>? getEdir() async {
     Database db = await openDb();
-    return await db.query('edir');
+    List<Map<String, dynamic>>? lis;
+
+    try {
+      print('start of the equb get');
+      lis = await db.query('edir');
+    } catch (e) {
+      print(e);
+      throw Exception('no edir');
+    }
+
+    List<Map<String, dynamic>> temp = [];
+    if (lis == null) {
+      print('returned null');
+      return null;
+    }
+    for (var entity in lis) {
+      print('before');
+      print('inside for loop');
+      print(entity);
+      Map<String, dynamic> tempEntity = Map.from(entity);
+
+      tempEntity['creator'] = tempEntity['creator'] == 1 ? true : false;
+      tempEntity['canPay'] = tempEntity['canPay'] == 1 ? true : false;
+      temp.add(tempEntity);
+      print(entity);
+      print('after');
+    }
+
+    print('local cache');
+
+    return temp;
   }
 
   Future<int> updateEkub(Map<String, dynamic> row) async {

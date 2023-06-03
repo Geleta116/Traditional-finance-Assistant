@@ -17,7 +17,8 @@ class EkubRepository implements EkubRepositoryInterface {
     print('ekub create repositroy');
     String accessToken = await helper.getAccessToken();
 
-    EkubCreateDto ekubDto = await dataProvider.create(ekub.toDto(), accessToken);
+    EkubCreateDto ekubDto =
+        await dataProvider.create(ekub.toDto(), accessToken);
     // await helper.insertEkub([createEkub.toEntity()]);
 
     return ekubDto;
@@ -53,33 +54,32 @@ class EkubRepository implements EkubRepositoryInterface {
     // }
 
     // return ekubListEntity;
-    
-  print("fetch all enrolled");
-  List<Ekub>? ekubListEntity;
-  List<Map<String, dynamic>>? ekubList = await helper.getEkub();
 
-  // print(ekubList);
-  print('after cache');
+    print("fetch all enrolled");
+    List<Ekub>? ekubListEntity;
+    List<Map<String, dynamic>>? ekubList = await helper.getEkub();
 
-  try {
-    List<EkubDto> ekubDtoList = await dataProvider.fetchAllEnrolled(accessToken);
-    ekubListEntity = ekubDtoList.map((e) => e.toEntity()).toList();
-    await helper.insertEkub(ekubListEntity);
-    return ekubListEntity;
-  } catch (error) {
-    print("Error while calling remote API: $error");
-    if (ekubList == null) {
-      throw Exception("No cached data available");
-    } else {
-      ekubListEntity = ekubList.map((e) => Ekub.fromJson(e)).toList();
+    // print(ekubList);
+    print('after cache');
+    print(ekubList);
+    try {
+      List<EkubDto> ekubDtoList =
+          await dataProvider.fetchAllEnrolled(accessToken);
+      ekubListEntity = ekubDtoList.map((e) => e.toEntity()).toList();
+      await helper.insertEkub(ekubListEntity);
       return ekubListEntity;
+    } catch (error) {
+      print("Error while calling remote API: $error");
+      if (ekubList == null) {
+        throw Exception("No cached data available");
+      } else {
+        List<EkubDto> dtoList  = ekubList.map((e) => EkubDto.fromLocalJson(e)).toList();
+        print('final local equb');
+        ekubListEntity = dtoList.map((e) => e.toEntity()).toList();
+        
+        return ekubListEntity;
+      }
     }
-  }
-
-
-
-
-    
   }
 
   @override

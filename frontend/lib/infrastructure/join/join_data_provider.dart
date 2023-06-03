@@ -6,7 +6,7 @@ import 'package:traditional_financial_asistant/infrastructure/join/join.Dto.dart
 import '../ekub/ekub.Dto.dart';
 
 class JoinDataProvider {
-  static const String _baseUrl = "http://10.4.101.40:3000/equb";
+  static const String _baseUrl = "http://192.168.78.126:3000/equb";
 
   Future<EkubDto> joined(JoinDto join, accessToken) async {
     print("reached join provider");
