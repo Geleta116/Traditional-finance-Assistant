@@ -55,24 +55,8 @@ class EdirUpdate extends EdirEvent {
   List<Object> get props => [id, edir];
 }
 
-// class EdirDelete extends EdirEvent {
-//   final int id;
 
-//   const EdirDelete(this.id);
 
-//   @override
-//   List<Object> get props => [id];
-
-// }
-
-class makePayement extends EdirEvent {
-  final int id;
-
-  const makePayement(this.id);
-
-  @override
-  List<Object> get props => [id];
-}
 
 class fetchWinner extends EdirEvent {
   final int id;

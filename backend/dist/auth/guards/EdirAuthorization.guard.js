@@ -25,7 +25,8 @@ let EdirAuthorize = class EdirAuthorize {
         const result = await this.authService.validateToken(token);
         const username = result.username;
         const id = request.params.id;
-        const edir = await this.edirService.getDataAboutEdir(id);
+        const edirName = request.params['edirName'];
+        const edir = await this.edirService.getDataAboutEdir(edirName);
         if (edir.creator == username) {
             return true;
         }

@@ -53,6 +53,13 @@ class makePayement extends UserEvent {
     @override
   List<Object> get props => [name];
 }
+class makeEdirPayement extends UserEvent {
+ 
+  final String name;
+  const makeEdirPayement(this.name);
+    @override
+  List<Object> get props => [name];
+}
 
 class fetchWinner extends UserEvent {
   final int id;

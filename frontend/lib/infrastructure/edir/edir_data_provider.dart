@@ -11,7 +11,7 @@ import 'package:traditional_financial_asistant/domain/edir/models/models.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir.Dto.dart';
 
 class EdirDataProvider {
-  static const String _baseUrl = "http://10.4.101.40:3000/edir";
+  static const String _baseUrl = "http://192.168.43.209:3000/edir";
 
   Future<bool> create(EdirDto edir, accessToken) async {
     print("edir provider");

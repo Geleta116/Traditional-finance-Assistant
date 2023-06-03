@@ -153,31 +153,36 @@ export class EqubService {
 
         const listOfEqubs = []
 
-        const created_equbs = await this.equbRepository.find({ where: { creator:username } })
-        for (let equb of created_equbs){
+        const joinde_ekub = await this.memebersRepository.find({ where: { username:username }, relations:['equb']})
+        for (let data of joinde_ekub){
+            // console.log(equb.id)
             listOfEqubs.push({
-                equb: equb,
-                creator: true,
-                no_members : (await this.getMembersOfEqub(equb.id)).length ,
-                canPay : await this.canPay(username, equb.id)
+                equb: data.equb,
+                creator: await (username == data.equb.creator),
+                no_members :  (await this.getMembersOfEqub(data.equb.name)).length,
+                canPay : await this.canPay(username, data.id)
             })
+
+
+            
         }
 
-        const joined_equbs = await this.memebersRepository.find({
-            where: {username : username},
-            relations: ['equb']
-        })
-        for (let data of joined_equbs){
-            if (!created_equbs.includes(data.equb)) {
-                listOfEqubs.push({
-                    equb : data.equb, 
-                    creator : false, 
-                    no_members : (await this.getMembersOfEqub(data.equb.id)).length,
-                    canPay : await this.canPay(username, data.equb.id)
+        // const joined_equbs = await this.memebersRepository.find({
+        //     where: {username : username},
+        //     relations: ['equb']
+        // })
+        // for (let data of joined_equbs){
+        //     // console.log(data.equb.id)
+        //     if (!created_equbs.includes(data.equb)) {
+        //         listOfEqubs.push({
+        //             equb : data.equb, 
+        //             creator : false, 
+        //             no_members : (await this.getMembersOfEqub(data.equb.id)).length,
+        //             canPay : await this.canPay(username, data.equb.id)
                 
-                })
-            }
-        }
+        //         })
+        //     }
+        // }
 
 
         return listOfEqubs
@@ -215,7 +220,7 @@ export class EqubService {
     // }
     async getMembersOfEqub(equbName) {
         // Find the equb using its name
-        console.log(equbName)
+        //console.log(equbName)
         const equb = await this.equbRepository.findOne({ where: { name: equbName['equbName'] } });
       
         if (!equb) {
@@ -276,7 +281,7 @@ export class EqubService {
         const user = await this.userRepository.findOneBy({username})
         const equb = await this.equbRepository.findOneBy({name})
 
-        if (user.balance + 5000 < equb.amount){
+        if (user.balance  < equb.amount){
             throw new HttpException('insufficient balance', HttpStatus.CONFLICT);
         }
         else {
@@ -296,20 +301,32 @@ export class EqubService {
             }
         })
         
-        const equb = await this.memebersRepository.findOne({
+        const equbs = await this.memebersRepository.find({
             where : {
                 username : username,
-                equb : equbId
-            }
+            },
+            relations: ['equb']
         })
 
-        if (! equb){
-            return true;
+        let isPaid = false;
+        for (let data of equbs){
+            if (data.equb.id == equbId){
+                if(data.paid == true){
+                    isPaid = true
+                    break
+                }
+            }
         }
         
-        const isPaid = equb.paid
+        
+        
+       
 
-        if (underBlacklist || isPaid){
+
+        if (underBlacklist != null){
+            return false
+        }
+        else if (isPaid == true) {
             return false
         }
         return true

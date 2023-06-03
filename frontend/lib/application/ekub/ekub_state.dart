@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 
 import 'package:traditional_financial_asistant/domain/ekub/models/models.dart';
+import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_crate.Dto.dart';
 
 import '../../domain/ekub/Ekub.dart'; 
 
@@ -38,4 +39,11 @@ class EkubOperationFailure extends EkubState {
   const EkubOperationFailure(this.error);
   @override
   List<Object> get props => [error];
+}
+class EkubCreateSuccess extends EkubState {
+  final EkubCreateDto ekubCreateDto;
+
+  const EkubCreateSuccess(this.ekubCreateDto);
+  @override
+  List<Object> get props => [ekubCreateDto];
 }

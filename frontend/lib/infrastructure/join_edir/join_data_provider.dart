@@ -6,7 +6,7 @@ import 'package:traditional_financial_asistant/infrastructure/join/join.Dto.dart
 import '../edir/edir.Dto.dart';
 
 class JoinEdirDataProvider {
-  static const String _baseUrl = "http://10.4.101.40:3000/edir";
+  static const String _baseUrl = "http://192.168.43.209:3000/edir";
 
   Future<EdirDto> joined(JoinDto join, accessToken) async {
     print("reached join provider");

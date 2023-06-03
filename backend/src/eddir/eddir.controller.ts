@@ -29,10 +29,11 @@ export class EddirController {
         return this.edirService.joinEdir(dto.name, dto.code ,username)
     }
 
-    @Post('delete/:id')
+    @Post('delete/:edirName')
     @UseGuards(Authenticate, EdirAuthorize)
-    async deleteEdir(@Param() id: number){
-        return this.edirService.deleteEdir(id)
+    async deleteEdir(@Param() edirName: String){
+        console.log(edirName)
+        return this.edirService.deleteEdir(edirName["edirName"])
     }
 
 

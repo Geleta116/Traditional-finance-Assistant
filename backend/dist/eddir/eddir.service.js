@@ -69,9 +69,9 @@ let EddirService = class EddirService {
         return await this.edirMembersRepository.delete({ id: member.id });
     }
     async deleteEdir(edirId) {
-        const edir = await this.edirRepository.findOne({ where: { id: edirId } });
+        const edir = await this.edirRepository.findOne({ where: { name: edirId } });
         if (edir) {
-            return await this.edirRepository.delete({ id: edirId });
+            return await this.edirRepository.delete({ name: edirId });
         }
         throw new Error("Edir doesn't exist");
     }
@@ -93,23 +93,22 @@ let EddirService = class EddirService {
     }
     async getAllEdirs(username) {
         const listOfEdirs = [];
-        const created_edirs = await this.edirRepository.find({ where: { creator: username } });
-        for (let edir of created_edirs) {
-            listOfEdirs.push({ edir: edir, creator: true, no_members: (await this.getMembersOfEdir(edir.id)).length });
-        }
         const joined_edirs = await this.edirMembersRepository.find({
             where: { username: username },
             relations: ['edir']
         });
         for (let data of joined_edirs) {
-            if (!created_edirs.includes(data.edir)) {
-                listOfEdirs.push({ edir: data.edir, creator: false, no_members: (await this.getMembersOfEdir(data.edir.id)).length });
-            }
+            listOfEdirs.push({
+                edir: data.edir,
+                creator: await (username == data.edir.creator),
+                no_members: (await this.getMembersOfEdir(data.edir.id)).length
+            });
         }
         return listOfEdirs;
     }
     async getDataAboutEdir(edirId) {
-        return await this.edirRepository.findOne({ where: { id: edirId } });
+        console.log(edirId);
+        return await this.edirRepository.findOne({ where: { name: edirId } });
     }
     async getMembersOfEdir(edirId) {
         const members = await this.edirMembersRepository.find({

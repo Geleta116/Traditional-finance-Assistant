@@ -77,6 +77,22 @@ class MakePayements extends UserState {
   @override
   List<Object?> get props => [];
 }
+class EdirPaymentSuccess extends UserState {
+  
+
+  const EdirPaymentSuccess();
+
+  @override
+  List<Object?> get props => [];
+}
+class EdirPaymentFaliure extends UserState {
+  
+
+  const EdirPaymentFaliure();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class BlackListMemberOperationSuccess extends UserState {
   final List<Member> members;

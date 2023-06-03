@@ -3,6 +3,7 @@ import 'package:traditional_financial_asistant/domain/ekub/Ekub.dart';
 import 'package:traditional_financial_asistant/domain/join/join.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/Ekub_data_provider.dart';
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub.Dto.dart';
+import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_crate.Dto.dart';
 import 'package:traditional_financial_asistant/local_storage/local_storage.dart';
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/Ekub.dart';
@@ -12,14 +13,14 @@ class EkubRepository implements EkubRepositoryInterface {
   EkubRepository(this.dataProvider);
   DbHelper helper = DbHelper();
   @override
-  Future<bool> create(Ekub ekub) async {
+  Future<EkubCreateDto> create(Ekub ekub) async {
     print('ekub create repositroy');
     String accessToken = await helper.getAccessToken();
 
-    bool valid = await dataProvider.create(ekub.toDto(), accessToken);
+    EkubCreateDto ekubDto = await dataProvider.create(ekub.toDto(), accessToken);
     // await helper.insertEkub([createEkub.toEntity()]);
 
-    return valid;
+    return ekubDto;
   }
 
   @override

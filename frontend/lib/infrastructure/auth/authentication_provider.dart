@@ -7,7 +7,7 @@ import "../../infrastructure/auth/accessToken.Dto.dart";
 import 'package:http/http.dart' as http;
 
 class AuthenticationProvider {
-  String _baseUrl = 'http://10.4.101.40:3000/auth/login';
+  String _baseUrl = 'http://192.168.43.209:3000/auth/login';
 
   Future<AccessTokenDto> logIn(User user) async {
     try {

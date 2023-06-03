@@ -18,6 +18,7 @@ export class AuthController {
     // @HttpCode(HttpStatus.OK)
     @Post('login')
     async logIn(@Body() userdto:logInDTO ){
+        console.log(userdto)
         const res_value = await this.authService.logIn(userdto.username, userdto.password)
         console.log("get's to the login controller");
         return res_value
