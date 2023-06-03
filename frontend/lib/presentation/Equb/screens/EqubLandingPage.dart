@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:traditional_financial_asistant/application/ekub/ekub_bloc.dart';
 import 'package:traditional_financial_asistant/application/ekub/ekub_event.dart';
 import 'package:traditional_financial_asistant/application/ekub/ekub_state.dart';
+import 'package:traditional_financial_asistant/application/user/User_state.dart';
 // import 'package:traditional_finance_assistant__app/application/ekub/blocs.dart';
 // import 'package:traditional_finance_assistant__app/domain/ekub/models/Ekub.dart';
 import 'package:traditional_financial_asistant/domain/ekub/models/Ekub.dart';
@@ -68,7 +69,7 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-           context.goNamed('landing');
+            context.goNamed('landing');
           },
         ),
         title: Text('Equb'),
@@ -83,7 +84,6 @@ class _EqubLangingPageState extends State<EqubLandingPage> {
           }
         },
         builder: (context, state) {
-          
           if (state is EkubOperationSuccess) {
             // for (var ekub in state.ekubs) {
             //   if (!equbs.contains(ekub)) {
@@ -192,7 +192,6 @@ class _EqubListState extends State<EqubList> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            
             BlocProvider.of<EkubBloc>(context)
                 .add(EkubDetail(equbs[index].toEqubEntity()));
             context.goNamed('ekubDetailEqubCreator');
@@ -239,12 +238,12 @@ class _EqubListState extends State<EqubList> {
                   normalText: '${widget.equbs[index].minMembers.toString()}'),
               Center(
                   child: Visibility(
-                      visible:equbs[index].canPay as bool,
+                      visible: equbs[index].canPay as bool,
                       child: CurveButton(
-                text: 'proceed payement',
-                onPressed: () => {showModal(context, index)},
-                color: Colors.indigoAccent,
-              )))
+                        text: 'proceed payement',
+                        onPressed: () => {showModal(context, index)},
+                        color: Colors.indigoAccent,
+                      )))
             ]),
           ),
         );
@@ -338,13 +337,23 @@ void showModal(BuildContext context, index) {
                   ),
                 ),
                 SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<UserBloc>(context)
-                        .add(makePayement(equbs[index].name as String));
-                    Navigator.of(context).pop(); // Close the modal
+                BlocConsumer<UserBloc, UserState>(
+                  listener: (context, state) {
+                    if (state is PayOperationSuccess) {
+                      context.goNamed('landing');
+                      // BlocProvider.of<EkubBloc>(context).add(EkubLoad());
+                    }
                   },
-                  child: Text('Pay'),
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<UserBloc>(context)
+                            .add(makePayement(equbs[index].name as String));
+                        Navigator.of(context).pop(); // Close the modal
+                      },
+                      child: Text('Pay'),
+                    );
+                  },
                 ),
               ],
             ),

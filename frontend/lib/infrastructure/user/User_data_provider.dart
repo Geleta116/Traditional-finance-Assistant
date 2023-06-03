@@ -15,7 +15,7 @@ import '../../domain/notification/Notification.dart';
 // import '../domain/register/User.dart';
 
 class UserDataProvider {
-  static const String _baseUrl = "http://192.168.43.209:3000";
+  static const String _baseUrl = "http://10.4.101.40:3000";
 
   Future<List<MemberDto>> fetchAllMembers(String name, accessToken) async {
     print('user provider');
@@ -148,15 +148,19 @@ class UserDataProvider {
 
   Future<void> makePayment(String name, accessToken) async {
     print('gets to the provider');
-    final response = await http.get(Uri.parse("$_baseUrl/equb/pay/$name"),
-        headers: <String, String>{
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $accessToken"
-        });
-    // print(response.statusCode);
-    if (response.statusCode == 201) {
-    } else {
-      throw Exception("Could not fetch Ekubs");
+    try {
+      final response = await http.get(Uri.parse("$_baseUrl/equb/pay/$name"),
+          headers: <String, String>{
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $accessToken"
+          });
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception("Could not fetch Ekubs");
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

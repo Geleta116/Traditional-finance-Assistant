@@ -26,5 +26,5 @@ class JoinOperationFailure extends JoinState {
 
   const JoinOperationFailure(this.error);
   @override
-  List<Object> get props => [error.toString()];
+  List<Object> get props => [error];
 }

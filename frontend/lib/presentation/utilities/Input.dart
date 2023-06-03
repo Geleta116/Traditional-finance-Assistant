@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 class InputFields extends StatelessWidget {
   final String? placeholder;
   final TextEditingController? controller;
-  final Key? keyParam;
   TextInputType textInputType;
-  InputFields({super.key, required this.placeholder,  required this.controller, required this.textInputType, this.keyParam});
+  InputFields({super.key, required this.placeholder,  required this.controller, required this.textInputType});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      key: keyParam,
       keyboardType: textInputType,
       controller: controller, 
       decoration: InputDecoration(

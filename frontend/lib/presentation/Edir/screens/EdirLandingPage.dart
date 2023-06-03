@@ -7,6 +7,7 @@ import 'package:traditional_financial_asistant/application/edir/edir_state.dart'
 import 'package:traditional_financial_asistant/application/edir/edit_event.dart';
 import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
 import 'package:traditional_financial_asistant/application/user/User_event.dart';
+import 'package:traditional_financial_asistant/application/user/User_state.dart';
 import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/curve_button.dart';
@@ -57,11 +58,11 @@ class _EdirLandingPageState extends State<EdirLandingPage> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios_new),
-              onPressed: () {
-                context.goNamed('landing');
-              },
-            ),
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              context.goNamed('landing');
+            },
+          ),
           title: Text('Edir'),
         ),
         body: BlocConsumer<EdirBloc, EdirState>(listener: (context, state) {
@@ -213,13 +214,13 @@ class _EdirListState extends State<EdirList> {
                     ? MainAxisAlignment.spaceEvenly
                     : MainAxisAlignment.start,
                 children: [
-                  
                   Visibility(
                       visible: true, // edirs[index].paid,
                       child: CurveButton(
                         text: 'pay',
                         onPressed: () => {
-                          showModal(context, edirs[index].amount,edirs[index].name),
+                          showModal(
+                              context, edirs[index].amount, edirs[index].name),
                         },
                         color: Colors.indigoAccent,
                       )),
@@ -311,7 +312,7 @@ String calculateStartDate(int numberOfDays) {
   return formattedStartDate;
 }
 
-void showModal(BuildContext context, amount,name) {
+void showModal(BuildContext context, amount, name) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -344,13 +345,28 @@ void showModal(BuildContext context, amount,name) {
                   ),
                 ),
                 SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                      final UserEvent event = makeEdirPayement(name);
-                      BlocProvider.of<UserBloc>(context).add(event);
-                    Navigator.of(context).pop(); // Close the modal
+                BlocConsumer<UserBloc, UserState>(
+                  listener: (context, state) {
+                    if (state is EdirPaymentSuccess){
+                      BlocProvider.of<EdirBloc>(context).add(EdirLoad());
+                       Navigator.of(context).pop(); // Close the modal
+                    }
+
+                    if (state is EdirPaymentFaliure){
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("unable to perform pay operation")));
+
+                    }
                   },
-                  child: Text('Pay'),
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        final UserEvent event = makeEdirPayement(name);
+                        BlocProvider.of<UserBloc>(context).add(event);
+                       
+                      },
+                      child: Text('Pay'),
+                    );
+                  },
                 ),
               ],
             ),
