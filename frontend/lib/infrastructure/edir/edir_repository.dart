@@ -48,22 +48,34 @@ class EdirRepository implements EdirRepositoryInterface {
     print("edir repo reached");
     String accessToken = await helper.getAccessToken();
     print(accessToken);
-    // List<Map<String, dynamic>> edirList = await helper.getEdir();
-    // edirListEntity = edirList.map((e) => Edir.fromJson(e)).toList();
-    // print(accessToken);
-    if (edirListEntity.isEmpty) {
+    List<Map<String, dynamic>>? edirList = await helper.getEdir();
+
+    try {
+      // edirListEntity = edirList.map((e) => Edir.fromJson(e)).toList();
+      // print(accessToken);
+      // if (edirListEntity.isEmpty) {
       List<EdirDto> edirList = await dataProvider.fetchAllEnrolled(accessToken);
       // print(edirList.length);
       // for (int i = 0; i < edirList.length; i++) {
       //   print(edirList[i].name);
       // }
-      List<Edir> edirListEntity = edirList.map((e) => e.toEntity()).toList();
+      edirListEntity = edirList.map((e) => e.toEntity()).toList();
       // print(edirListEntity);
-      // await helper.insertEdir(edirListEntity);
+      await helper.insertEdir(edirListEntity);
       print(edirListEntity);
       return edirListEntity;
-    } else {
-      return edirListEntity;
+    } catch (error) {
+      print("Error while calling remote API: $error");
+      if (edirList == null) {
+        throw Exception("No cached data available");
+      } else {
+        List<EdirDto> dtoList =
+            edirList.map((e) => EdirDto.fromLocalJson(e)).toList();
+        print('final local equb');
+        edirListEntity = dtoList.map((e) => e.toEntity()).toList();
+        print(edirList);
+        return edirListEntity;
+      }
     }
     //we need to persist this data to local storage
   }

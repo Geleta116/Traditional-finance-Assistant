@@ -38,6 +38,18 @@ class EdirDto {
     );
   }
 
+  factory EdirDto.fromLocalJson(Map<String, dynamic> json) {
+     
+    return EdirDto(
+      countdown: json['countdown'],
+      name: json['name'],
+      amount: json['amount'],
+      duration: json['duration'],
+      creator: json['creator'],
+      code: json['code']
+    );
+  }
+
 
 
 

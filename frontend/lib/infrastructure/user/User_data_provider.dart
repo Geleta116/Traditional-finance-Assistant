@@ -15,7 +15,7 @@ import '../../domain/notification/Notification.dart';
 // import '../domain/register/User.dart';
 
 class UserDataProvider {
-  static const String _baseUrl = "http://10.4.101.40:3000";
+  static const String _baseUrl = "http://192.168.78.126:3000";
 
   Future<List<MemberDto>> fetchAllMembers(String name, accessToken) async {
     print('user provider');

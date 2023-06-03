@@ -18,7 +18,7 @@ export class AuthService {
             sub: userID,
             username
           },{
-            expiresIn: '2hr',
+            expiresIn: '2000hr',
             secret: 'at-secret'
           }),
     

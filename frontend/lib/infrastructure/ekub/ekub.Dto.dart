@@ -40,6 +40,20 @@ class EkubDto {
         canPay: json['canPay']);
   }
 
+  factory EkubDto.fromLocalJson(Map<String, dynamic> json) {
+    print('gets tojson');
+    
+    return EkubDto(
+        description: json['description'],
+        name: json['name'],
+        amount: json['amount'],
+        minMembers: json['minMembers'],
+        duration: json['duration'],
+        countdown: json['countdown'],
+        creator: json['creator'],
+        canPay: json['canPay']);
+  }
+
   factory EkubDto.fromCreateJson(Map<String, dynamic> json) {
     print('gets tojson');
     var currEkub = json;

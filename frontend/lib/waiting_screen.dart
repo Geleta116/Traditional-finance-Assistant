@@ -34,19 +34,16 @@ class _WaitingScreenState extends State<WaitingScreen> {
         print('it works');
       } else {
         // go to the login page
-       context.goNamed('signup');
+        context.goNamed('signup');
         print('not working');
       }
     });
 
     return Scaffold(
-        appBar: AppBar(title: Text('cool')),
-        body: ElevatedButton(
-          onPressed: () {
-            // context.go('/login');
-          
-          },
-          child: Text('touch'),
-        ));
+      body: Center(
+        child: Image.asset(
+            'lib/presentation/images/logo.jpg'), // Replace with your image asset path
+      ),
+    );
   }
 }

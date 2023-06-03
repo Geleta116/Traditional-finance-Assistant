@@ -32,7 +32,7 @@ class JoinEdirScreen extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios_new),
               onPressed: () {
-                context.goNamed('edirLanding');
+                context.goNamed('landing');
               },
             ),
             title: Text('Join Edir'),
