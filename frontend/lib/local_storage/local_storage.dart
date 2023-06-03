@@ -12,29 +12,29 @@ class DbHelper {
   Database? db;
   Future<Database> openDb() async {
     // if (db == null) {
-      db = await openDatabase(
-        join(await getDatabasesPath(), 'localCache10'),
-        onCreate: (database, version) {
-          database.execute(
-            "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fullName TEXT NULL,userName TEXT, email TEXT NULL, password TEXT, balance INTEGER NULL,accessToken TEXT NULL)",
-          );
+    db = await openDatabase(
+      join(await getDatabasesPath(), 'localCache10'),
+      onCreate: (database, version) {
+        database.execute(
+          "CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, fullName TEXT NULL,userName TEXT, email TEXT NULL, password TEXT, balance INTEGER NULL,accessToken TEXT NULL)",
+        );
 
-          database.execute(
-            "CREATE TABLE ekub(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT NULL,name TEXT, amount INTEGER NULL, countdown INTEGER, minMembers INTEGER NULL,duration INTEGER NULL,creator INTEGER NULL,canPay INTEGER NULL)",
-          );
-          database.execute(
-            "CREATE TABLE member(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,won TEXT NULL, paid TEXT NULL,name TEXT NULL)",
-          );
-          database.execute(
-            "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL,creator INTEGER NULL)",
-          );
-          database.execute(
-            "CREATE TABLE edirmember(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,penality TEXT NULL, paid TEXT NULL, name TEXT NULL)",
-          );
-        },
-        version: version,
-      );
-   
+        database.execute(
+          "CREATE TABLE ekub(id INTEGER PRIMARY KEY AUTOINCREMENT, description TEXT NULL,name TEXT, amount INTEGER NULL, countdown INTEGER, minMembers INTEGER NULL,duration INTEGER NULL,creator INTEGER NULL,canPay INTEGER NULL)",
+        );
+        database.execute(
+          "CREATE TABLE member(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,won TEXT NULL, paid TEXT NULL,name TEXT NULL)",
+        );
+        database.execute(
+          "CREATE TABLE edir(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, amount INTEGER NULL, countdown INTEGER, duration INTEGER NULL,creator INTEGER NULL)",
+        );
+        database.execute(
+          "CREATE TABLE edirmember(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NULL,penality TEXT NULL, paid TEXT NULL, name TEXT NULL)",
+        );
+      },
+      version: version,
+    );
+
     return db!;
   }
 
@@ -115,13 +115,21 @@ class DbHelper {
 
     Database db = await openDb();
     final batch = db.batch();
-    for (var entity in ekubList) {
-      entity.toJson()['creator'] = entity.toJson()['creator'] ? 1 : 0;
-      entity.toJson()['canPay'] = entity.toJson()['canPay'] ? 1 : 0;
-      batch.insert('ekub', entity.toJson());
+    try {
+      for (var entity in ekubList) {
+        entity.toJson()['creator'] = entity.toJson()['creator'] ? 1 : 0;
+        entity.toJson()['canPay'] = entity.toJson()['canPay'] ? 1 : 0;
+        print(entity);
+        print('in local repo');
+        batch.insert('ekub', entity.toJson());
+      }
+      await batch.commit();
+      return 1;
+    } catch (e) {
+      print('error');
+      print(e);
+      throw Exception('errore');
     }
-    await batch.commit();
-    return 1;
   }
 
   Future<int> insertEdir(List<Edir> edirList) async {
@@ -228,7 +236,6 @@ class DbHelper {
     //     await db.execute("DROP TABLE IF EXISTS $tableName");
     //   }
     // });
-    
   }
 
   Future<int> insertMember(List<Member> members, name) async {

@@ -12,7 +12,7 @@ import 'package:traditional_financial_asistant/infrastructure/ekub/ekub.Dto.dart
 import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_crate.Dto.dart';
 
 class EkubDataProvider {
-  static const String _baseUrl = "http://192.168.43.209:3000/equb";
+  static const String _baseUrl = "http://10.4.101.40:3000/equb";
 
   Future<EkubCreateDto> create(EkubDto ekub, accessToken) async {
     try {
@@ -52,7 +52,7 @@ class EkubDataProvider {
         print("FETCHED");
         var ekubs = jsonDecode(response.body);
 
-        print(response.body);
+        // print(response.body);
         // List<EkubDto> ekubsList = EkubDto.fromJson(jsonDRecode(response.body));
 
         //      List<EkubDto> ekubsList = ekubs

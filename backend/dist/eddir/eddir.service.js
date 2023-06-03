@@ -127,13 +127,17 @@ let EddirService = class EddirService {
         const edir = await this.edirRepository.findOne({ where: { name: edirName } });
         const edirId = edir.id;
         const penality = await (await this.getSingleMemberOfEdir(edirId, username)).penality;
-        if (user.balance + 500 < edir.amount + penality) {
+        if (user.balance < edir.amount + penality) {
             throw new common_1.HttpException('Your balance is insufficient', common_1.HttpStatus.CONFLICT);
         }
         else {
-            const payment_money = user.balance - edir.amount - penality;
+            console.log(user.balance, 'usr balance');
+            console.log(edir.amount, 'edir amount');
+            console.log(penality, 'amoutn');
+            const payment_money = edir.amount + penality;
             user.balance -= payment_money;
             edir.balance += payment_money;
+            console.log(user.balance, 'usr balance after');
             await this.userRepository.save(user);
             await this.edirRepository.save(edir);
             await this.edirMembersRepository.update({ edir: { id: edirId }, username: username }, { paid: true });

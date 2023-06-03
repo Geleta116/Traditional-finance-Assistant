@@ -169,14 +169,19 @@ export class EddirService {
         const edirId = edir.id
         const penality = await (await this.getSingleMemberOfEdir(edirId, username)).penality
         
-        if (user.balance + 500 < edir.amount + penality){
+        if (user.balance < edir.amount + penality){
             throw new HttpException('Your balance is insufficient', HttpStatus.CONFLICT);
         }
         else{
-            const payment_money = user.balance - edir.amount - penality
+            console.log(user.balance,'usr balance')
+            console.log(edir.amount,'edir amount')
+            console.log(penality,'amoutn')
+            const payment_money =   edir.amount + penality
     
             user.balance -= payment_money
             edir.balance += payment_money
+
+            console.log(user.balance,'usr balance after')
             await this.userRepository.save(user)
             await this.edirRepository.save(edir)
     

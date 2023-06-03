@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'AuthFailure.dart';
 
-class FullName extends Equatable {
+class FullName {
   final Either<AuthFailure, String> value;
 
   factory FullName(String input) {
@@ -21,6 +20,4 @@ class FullName extends Equatable {
       return right(input);
     }
   }
-  @override
-  List<Object> get props => [value];
 }

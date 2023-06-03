@@ -70,7 +70,6 @@ class CreateEqubScreen extends StatelessWidget {
                         Text(
                           'Create new Equb',
                           style: TextStyle(
-                            
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -83,7 +82,6 @@ class CreateEqubScreen extends StatelessWidget {
                             height: 40.0,
                             width: 300.0,
                             child: InputFields(
-                              key: Key('equbNameInput'),
                                 placeholder: 'Equb Name',
                                 controller: ekubName, textInputType: TextInputType.text)),
                         SizedBox(
@@ -94,7 +92,6 @@ class CreateEqubScreen extends StatelessWidget {
                             height: 40.0,
                             width: 300.0,
                             child: InputFields(
-                              key: Key('amountInput'),
                                 placeholder: 'amount', controller: amount, textInputType: TextInputType.text)),
                         SizedBox(
                           height: 10.0,
@@ -103,7 +100,6 @@ class CreateEqubScreen extends StatelessWidget {
                             height: 40.0,
                             width: 300.0,
                             child: InputFields(
-                              key:Key('durationInput'),
                                 placeholder: 'duration', controller: duration, textInputType: TextInputType.text,)),
                         SizedBox(
                           height: 10.0,
@@ -112,7 +108,6 @@ class CreateEqubScreen extends StatelessWidget {
                             height: 40.0,
                             width: 300.0,
                             child: InputFields(
-                                key: Key('countdownInput'),
                                 placeholder: 'countdown',
                                 controller: countdown,textInputType: TextInputType.text )),
                         SizedBox(
@@ -121,7 +116,6 @@ class CreateEqubScreen extends StatelessWidget {
                         SizedBox(
                             width: 300.0,
                             child: TextField(
-                                key:Key('descriptionInput') ,
                                 controller: description,
                                 maxLines:
                                     null, // or specify the maximum number of lines desired
@@ -137,7 +131,6 @@ class CreateEqubScreen extends StatelessWidget {
                           height: 40.0,
                           width: 300.0,
                           child: TextField(
-                            key: Key('minMembersInput'),
                             controller: minMembers,
                             decoration: InputDecoration(
                                 labelText: 'minMembers',
@@ -162,7 +155,6 @@ class CreateEqubScreen extends StatelessWidget {
                         ),
 
                         BlockButton(
-                          key: Key('create_ekub_button'),
                           text: 'Create',
                           onPressed: () {
                             EkubModel ekub = EkubModel(

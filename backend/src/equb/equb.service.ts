@@ -11,6 +11,7 @@ import { UserService } from '../user/user.service'
 import { Equbchatroom } from '../typeorm/entities/equb.chatroom.entity';
 // import { join } from 'path';
 import { HttpException } from '@nestjs/common';
+import { use } from 'passport';
 
 @Injectable()
 export class EqubService {
@@ -160,7 +161,7 @@ export class EqubService {
                 equb: data.equb,
                 creator: await (username == data.equb.creator),
                 no_members :  (await this.getMembersOfEqub(data.equb.name)).length,
-                canPay : await this.canPay(username, data.id)
+                canPay : await this.canPay(username, data.equb.id)
             })
 
 
@@ -277,11 +278,15 @@ export class EqubService {
 
 
     async payEqub(username, name){
-        console.log(name)
+        console.log("name")
         const user = await this.userRepository.findOneBy({username})
         const equb = await this.equbRepository.findOneBy({name})
+        console.log(user,'user')
+        console.log(equb,'equb')
 
         if (user.balance  < equb.amount){
+            console.log(user.balance);
+            console.log(equb.amount)
             throw new HttpException('insufficient balance', HttpStatus.CONFLICT);
         }
         else {
@@ -294,6 +299,9 @@ export class EqubService {
     }
 
     async canPay(username, equbId){
+        console.log('can pay ')
+        console.log(username)
+        console.log(equbId)
         const underBlacklist = await this.blacklistRepository.findOne({
             where : {
                 username : username,

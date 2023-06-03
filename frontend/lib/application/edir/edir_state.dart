@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 
-import 'package:traditional_financial_asistant/domain/edir/models/models.dart'; 
+import 'package:traditional_financial_asistant/domain/edir/models/models.dart';
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_create.Dto.dart'; 
 
 abstract class EdirState extends Equatable {
-  
   const EdirState();
 
   @override
@@ -29,7 +29,6 @@ class EdirOperationFailure extends EdirState {
 
   const EdirOperationFailure(this.error);
   @override
-
   List<Object> get props => [error];
 }
 
@@ -41,6 +40,18 @@ class EdirDetailState extends EdirState{
 
   @override
   List<Object> get props => [edir];
+}
+class EdirCreateSuccess extends EdirState{
+  final CreateEdirDto edirDto;
 
+  const EdirCreateSuccess(this.edirDto);
 
+  @override
+  List<Object> get props => [edirDto];
+}
+class EdirCreateFailure extends EdirState{
+  const EdirCreateFailure();
+
+  @override
+  List<Object> get props => [];
 }

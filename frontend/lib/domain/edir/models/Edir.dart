@@ -1,11 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:equatable/equatable.dart';
 import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/EdirTitle.dart';
 import 'package:traditional_financial_asistant/domain/edir/ValidNumber.dart';
 
-class EdirModel extends Equatable{
+class EdirModel {
   final String name;
   final String amount;
   final String duration;
@@ -44,10 +43,6 @@ class EdirModel extends Equatable{
         code: code);
         
   }
-
- @override
-List<Object> get props => [name, amount, duration, countdown];
-
   
 
 

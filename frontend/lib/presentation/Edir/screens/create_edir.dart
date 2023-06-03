@@ -34,19 +34,23 @@ class _CreateEdirScreenState extends State<CreateEdirScreen> {
     return BlocConsumer<EdirBloc, EdirState>(
         bloc: BlocProvider.of<EdirBloc>(context),
         listener: (context, state) {
-          if (state is EdirOperationSuccess){
+          if (state is EdirCreateFailure){
+            ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Unable to create edir')));
+          }
+          if (state is EdirCreateSuccess){
              showDialog(
               
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('created Edir succesfully'),
-                              content: Text('Created Edir successfully'),
+                              content: Text('code: ${state.edirDto.code}'),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     
-                                    context.goNamed('landing'); // Close the dialog
+                                    context.goNamed('ekublanding'); // Close the dialog
                                   },
                                   child: Text('Go back '),
                                 ),

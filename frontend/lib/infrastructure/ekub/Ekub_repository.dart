@@ -58,7 +58,7 @@ class EkubRepository implements EkubRepositoryInterface {
   List<Ekub>? ekubListEntity;
   List<Map<String, dynamic>>? ekubList = await helper.getEkub();
 
-  print(ekubList);
+  // print(ekubList);
   print('after cache');
 
   try {

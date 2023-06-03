@@ -117,7 +117,7 @@ let EqubService = EqubService_1 = class EqubService {
                 equb: data.equb,
                 creator: await (username == data.equb.creator),
                 no_members: (await this.getMembersOfEqub(data.equb.name)).length,
-                canPay: await this.canPay(username, data.id)
+                canPay: await this.canPay(username, data.equb.id)
             });
         }
         return listOfEqubs;
@@ -173,10 +173,14 @@ let EqubService = EqubService_1 = class EqubService {
         throw new common_2.HttpException('there is no winner in this month', common_1.HttpStatus.CONFLICT);
     }
     async payEqub(username, name) {
-        console.log(name);
+        console.log("name");
         const user = await this.userRepository.findOneBy({ username });
         const equb = await this.equbRepository.findOneBy({ name });
+        console.log(user, 'user');
+        console.log(equb, 'equb');
         if (user.balance < equb.amount) {
+            console.log(user.balance);
+            console.log(equb.amount);
             throw new common_2.HttpException('insufficient balance', common_1.HttpStatus.CONFLICT);
         }
         else {
@@ -186,6 +190,9 @@ let EqubService = EqubService_1 = class EqubService {
         }
     }
     async canPay(username, equbId) {
+        console.log('can pay ');
+        console.log(username);
+        console.log(equbId);
         const underBlacklist = await this.blacklistRepository.findOne({
             where: {
                 username: username,

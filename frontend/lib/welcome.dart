@@ -7,6 +7,7 @@ import 'package:traditional_financial_asistant/application/user/User_bloc.dart';
 import 'package:traditional_financial_asistant/application/user/User_event.dart';
 import 'package:traditional_financial_asistant/presentation/utilities/block_button.dart';
 
+import '';
 
 class Welcome extends StatelessWidget {
   const Welcome({super.key});
@@ -63,16 +64,13 @@ class Welcome extends StatelessWidget {
                 SizedBox(height: 50.0),
                 Column(children: [
                   BlockButton(
-                      key: Key('ekub'),
                       text: 'Equb',
                       onPressed: () {
                         context.goNamed('ekubLanding');
                       }),
-
                   BlockButton(text: 'Edir',  onPressed: () {
                       BlocProvider.of<EdirBloc>(context)
                                         .add(EdirLoad());
-
                         context.goNamed('edirLanding');
                       }),
                   BlockButton(text: 'My Profile', onPressed: () {

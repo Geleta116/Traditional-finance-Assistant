@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:dartz/dartz.dart';
 import 'package:traditional_financial_asistant/domain/register/blance.dart';
@@ -13,7 +12,7 @@ import 'email.dart';
 
 
 
-class Users extends Equatable{
+class Users {
   final Username username;
   final Password password;
   final FullName fullName;
@@ -79,8 +78,5 @@ UserDto toDto() {
         fullName: json['fullName'],
         balance: json['balance']);
   }
-
-  @override
-  List<Object> get props => [username, password, fullName, email, balance];
 
 }

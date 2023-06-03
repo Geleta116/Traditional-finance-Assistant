@@ -9,9 +9,8 @@ import 'package:traditional_financial_asistant/domain/edir/ValidNumber.dart';
 import 'package:traditional_financial_asistant/domain/edir/edirRepositoryInterface.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/Edir.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir.Dto.dart';
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_create.Dto.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir_repository.dart';
-
-
 
 class EdirBloc extends Bloc<EdirEvent, EdirState> {
   final EdirRepositoryInterface edirRepository;
@@ -27,7 +26,6 @@ class EdirBloc extends Bloc<EdirEvent, EdirState> {
             List<EdirModel>.from(edir.map((e) => e.toEdirModel()));
         emit(EdirInitial());
         emit(EdirOperationSuccess(edirsList));
-        
       } catch (error) {
         emit(EdirOperationFailure(error));
       }
@@ -67,15 +65,16 @@ class EdirBloc extends Bloc<EdirEvent, EdirState> {
         emit(EdirInitial());
       }, (_) async {
         try {
-          await edirRepository.create(edir);
+          CreateEdirDto edirDto = await edirRepository.create(edir);
           print("repo has created");
-          final edirs = await edirRepository.fetchAllEnrolled();
-          List<EdirModel> edirsList =
-              List<EdirModel>.from(edirs.map((e) => e.toEdirModel()));
+          // final edirs = await edirRepository.fetchAllEnrolled();
+          // List<EdirModel> edirsList =
+          //     List<EdirModel>.from(edirs.map((e) => e.toEdirModel()));
 
-          emit(EdirOperationSuccess(edirsList));
+          // emit(EdirOperationSuccess(edirsList));
+          emit(EdirCreateSuccess(edirDto));
         } catch (error) {
-          emit(EdirOperationFailure(error));
+          emit(EdirCreateFailure());
         }
       });
     });

@@ -32,5 +32,5 @@ class NotificationOperationFailure extends NotificationState {
   const NotificationOperationFailure(this.error);
 
   @override
-  List<Object> get props => [error.toString()];
+  List<Object> get props => [error];
 }

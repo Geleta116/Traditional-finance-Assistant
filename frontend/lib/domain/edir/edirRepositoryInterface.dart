@@ -1,7 +1,9 @@
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_create.Dto.dart';
+
 import 'Edir.dart';
 
 abstract class EdirRepositoryInterface {
-  Future<bool> create(Edir edir);
+  Future<CreateEdirDto> create(Edir edir);
   Future<Edir> update(int id, Edir edir);
   Future<List<Edir>> fetchAllEnrolled();
   Future<bool> deleteEdir(String name);

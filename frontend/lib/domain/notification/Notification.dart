@@ -1,12 +1,10 @@
-import 'package:equatable/equatable.dart';
-
 import 'NotificationFailure.dart';
 import 'Username.dart';
 import 'Message.dart';
 
 import 'package:dartz/dartz.dart';
 
-class Notifications  extends Equatable{
+class Notifications {
   final Username username;
   final Message message;
 
@@ -33,7 +31,4 @@ class Notifications  extends Equatable{
         message: Message(json['message']));
 
   }
-
-  @override
-  List<Object> get props => [username, message];
 }

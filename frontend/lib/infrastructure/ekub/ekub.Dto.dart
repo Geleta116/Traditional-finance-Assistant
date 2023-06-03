@@ -26,8 +26,8 @@ class EkubDto {
   factory EkubDto.fromJson(Map<String, dynamic> json) {
     print('gets tojson');
     var currEkub = json['equb'];
-    print(currEkub);
-    print(json);
+    // print(currEkub);
+    // print(json);
 
     return EkubDto(
         description: currEkub['description'],

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:traditional_financial_asistant/domain/auth/accessToken.dart';
 import 'package:traditional_financial_asistant/domain/join/join.dart';
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_create.Dto.dart';
 import 'package:traditional_financial_asistant/infrastructure/edir/edir_data_provider.dart';
 
 import '../../domain/edir/Edir.dart';
@@ -18,15 +19,17 @@ class EdirRepository implements EdirRepositoryInterface {
   EdirRepository(this.dataProvider);
   DbHelper helper = DbHelper();
 
-  Future<bool> create(Edir edir) async {
+  Future<CreateEdirDto> create(Edir edir) async {
     print("edir repo");
     String accessToken = await helper.getAccessToken();
-    bool temp = await dataProvider.create(edir.toDto(), accessToken);
+    CreateEdirDto edirDto =
+        await dataProvider.create(edir.toDto(), accessToken);
     print(accessToken);
+    return edirDto;
     try {
       // await helper.insertEdir([createEdir.toEntity()]);
 
-      return temp;
+      return edirDto;
     } catch (e) {
       print(e);
       throw (e);
