@@ -1,10 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
+import 'package:equatable/equatable.dart';
+
 import '../Description.dart';
 import '../EkubTitle.dart';
 import '../validNumber.dart';
 import '../Ekub.dart';
 
-class EkubModel {
+class EkubModel  extends Equatable{
   String name;
   String amount;
   String minMembers;
@@ -48,4 +50,7 @@ class EkubModel {
         creator: creator,
         canPay: canPay);
   }
+
+  @override
+  List<Object?> get props => [name, amount, minMembers, duration, description, countdown, creator, canPay];
 }

@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:traditional_financial_asistant/application/auth/authentication_bloc.dart';
 import 'package:traditional_financial_asistant/domain/auth/User.dart';
 import 'package:traditional_financial_asistant/domain/auth/authenticationRepositoryInterface.dart';
-import 'package:traditional_financial_asistant/domain/auth/password.dart';
+import 'package:traditional_financial_asistant/domain/auth/Password.dart';
 import 'package:traditional_financial_asistant/domain/auth/username.dart';
 
 import 'authentication_bloc_test.mocks.dart';

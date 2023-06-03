@@ -3,12 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:traditional_financial_asistant/domain/edir/Edir.dart' as _i2;
+import 'package:traditional_financial_asistant/domain/edir/Edir.dart' as _i3;
 import 'package:traditional_financial_asistant/domain/edir/edirRepositoryInterface.dart'
-    as _i3;
+    as _i4;
+import 'package:traditional_financial_asistant/infrastructure/edir/edir_create.Dto.dart'
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -21,8 +23,18 @@ import 'package:traditional_financial_asistant/domain/edir/edirRepositoryInterfa
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEdir_0 extends _i1.SmartFake implements _i2.Edir {
-  _FakeEdir_0(
+class _FakeCreateEdirDto_0 extends _i1.SmartFake implements _i2.CreateEdirDto {
+  _FakeCreateEdirDto_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeEdir_1 extends _i1.SmartFake implements _i3.Edir {
+  _FakeEdir_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -35,29 +47,29 @@ class _FakeEdir_0 extends _i1.SmartFake implements _i2.Edir {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockEdirRepositoryInterface extends _i1.Mock
-    implements _i3.EdirRepositoryInterface {
+    implements _i4.EdirRepositoryInterface {
   MockEdirRepositoryInterface() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Edir> create(_i2.Edir? edir) => (super.noSuchMethod(
+  _i5.Future<_i2.CreateEdirDto> create(_i3.Edir? edir) => (super.noSuchMethod(
         Invocation.method(
           #create,
           [edir],
         ),
-        returnValue: _i4.Future<_i2.Edir>.value(_FakeEdir_0(
+        returnValue: _i5.Future<_i2.CreateEdirDto>.value(_FakeCreateEdirDto_0(
           this,
           Invocation.method(
             #create,
             [edir],
           ),
         )),
-      ) as _i4.Future<_i2.Edir>);
+      ) as _i5.Future<_i2.CreateEdirDto>);
   @override
-  _i4.Future<_i2.Edir> update(
+  _i5.Future<_i3.Edir> update(
     int? id,
-    _i2.Edir? edir,
+    _i3.Edir? edir,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -67,7 +79,7 @@ class MockEdirRepositoryInterface extends _i1.Mock
             edir,
           ],
         ),
-        returnValue: _i4.Future<_i2.Edir>.value(_FakeEdir_0(
+        returnValue: _i5.Future<_i3.Edir>.value(_FakeEdir_1(
           this,
           Invocation.method(
             #update,
@@ -77,17 +89,25 @@ class MockEdirRepositoryInterface extends _i1.Mock
             ],
           ),
         )),
-      ) as _i4.Future<_i2.Edir>);
+      ) as _i5.Future<_i3.Edir>);
   @override
-  _i4.Future<List<_i2.Edir>> fetchAllEnrolled() => (super.noSuchMethod(
+  _i5.Future<List<_i3.Edir>> fetchAllEnrolled() => (super.noSuchMethod(
         Invocation.method(
           #fetchAllEnrolled,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Edir>>.value(<_i2.Edir>[]),
-      ) as _i4.Future<List<_i2.Edir>>);
+        returnValue: _i5.Future<List<_i3.Edir>>.value(<_i3.Edir>[]),
+      ) as _i5.Future<List<_i3.Edir>>);
   @override
-  _i4.Future<_i2.Edir> join(
+  _i5.Future<bool> deleteEdir(String? name) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteEdir,
+          [name],
+        ),
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+  @override
+  _i5.Future<_i3.Edir> join(
     String? name,
     String? code,
   ) =>
@@ -99,7 +119,7 @@ class MockEdirRepositoryInterface extends _i1.Mock
             code,
           ],
         ),
-        returnValue: _i4.Future<_i2.Edir>.value(_FakeEdir_0(
+        returnValue: _i5.Future<_i3.Edir>.value(_FakeEdir_1(
           this,
           Invocation.method(
             #join,
@@ -109,5 +129,5 @@ class MockEdirRepositoryInterface extends _i1.Mock
             ],
           ),
         )),
-      ) as _i4.Future<_i2.Edir>);
+      ) as _i5.Future<_i3.Edir>);
 }

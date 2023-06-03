@@ -26,5 +26,5 @@ class JoinOperationFailure extends JoinEdirState {
 
   const JoinOperationFailure(this.error);
   @override
-  List<Object> get props => [error];
+  List<Object> get props => [error.toString()];
 }

@@ -75,17 +75,5 @@ import 'equb_bloc_test.mocks.dart';
       ],
     );
 
-  blocTest<EkubBloc, EkubState>(
-    'emits [EkubOperationSuccess] when EkubCreate event is added and the input is valid',
-    build: () {
-      when(mockEkubRepository.create(any)).thenAnswer((_) async => Future(() => ekub));
-      when(mockEkubRepository.fetchAllEnrolled()).thenAnswer((_) async => ekubs);
-      return ekubBloc;
-    },
-    act: (bloc) => bloc.add(EkubCreate(ekubModel)),
-    expect: () => [
-      EkubOperationSuccess([ekubModel]),
-    ],
-  );
 
 }

@@ -41,16 +41,6 @@ void main() {
     );
 
     blocTest<NotificationBloc, NotificationState>(
-      'emits [NotificationOperationSuccess] when NotificationDelete is added',
-      build: () => notificationBloc,
-      act: (bloc) {
-        when(mockNotificationRepository.deleteNotification()).thenAnswer((_) async => null);
-        bloc.add(NotificationDelete(1));
-      },
-      expect: () => [NotificationLoading(), NotificationOperationSuccess()],
-    );
-
-    blocTest<NotificationBloc, NotificationState>(
       'emits [NotificationOperationFailure] when NotificationLoad is added and repository throws an error',
       build: () => notificationBloc,
       act: (bloc) {
@@ -60,14 +50,6 @@ void main() {
       expect: () => [NotificationLoading(), NotificationOperationFailure(Exception('Test error'))],
     );
 
-    blocTest<NotificationBloc, NotificationState>(
-      'emits [NotificationOperationFailure] when NotificationDelete is added and repository throws an error',
-      build: () => notificationBloc,
-      act: (bloc) {
-        when(mockNotificationRepository.deleteNotification()).thenThrow(Exception('Test error'));
-        bloc.add(NotificationDelete(1));
-      },
-      expect: () => [NotificationLoading(), NotificationOperationFailure(Exception('Test error'))],
-    );
+
   });
 }

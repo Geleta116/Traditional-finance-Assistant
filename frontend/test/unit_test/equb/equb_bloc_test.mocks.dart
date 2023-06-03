@@ -3,12 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:traditional_financial_asistant/domain/ekub/Ekub.dart' as _i2;
+import 'package:traditional_financial_asistant/domain/ekub/Ekub.dart' as _i3;
 import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterface.dart'
-    as _i3;
+    as _i4;
+import 'package:traditional_financial_asistant/infrastructure/ekub/ekub_crate.Dto.dart'
+    as _i2;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -21,8 +23,18 @@ import 'package:traditional_financial_asistant/domain/ekub/ekubRepositoryInterfa
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEkub_0 extends _i1.SmartFake implements _i2.Ekub {
-  _FakeEkub_0(
+class _FakeEkubCreateDto_0 extends _i1.SmartFake implements _i2.EkubCreateDto {
+  _FakeEkubCreateDto_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeEkub_1 extends _i1.SmartFake implements _i3.Ekub {
+  _FakeEkub_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -35,29 +47,29 @@ class _FakeEkub_0 extends _i1.SmartFake implements _i2.Ekub {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockEkubRepositoryInterface extends _i1.Mock
-    implements _i3.EkubRepositoryInterface {
+    implements _i4.EkubRepositoryInterface {
   MockEkubRepositoryInterface() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.Ekub> create(_i2.Ekub? ekub) => (super.noSuchMethod(
+  _i5.Future<_i2.EkubCreateDto> create(_i3.Ekub? ekub) => (super.noSuchMethod(
         Invocation.method(
           #create,
           [ekub],
         ),
-        returnValue: _i4.Future<_i2.Ekub>.value(_FakeEkub_0(
+        returnValue: _i5.Future<_i2.EkubCreateDto>.value(_FakeEkubCreateDto_0(
           this,
           Invocation.method(
             #create,
             [ekub],
           ),
         )),
-      ) as _i4.Future<_i2.Ekub>);
+      ) as _i5.Future<_i2.EkubCreateDto>);
   @override
-  _i4.Future<_i2.Ekub> update(
+  _i5.Future<_i3.Ekub> update(
     int? id,
-    _i2.Ekub? ekub,
+    _i3.Ekub? ekub,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -67,7 +79,7 @@ class MockEkubRepositoryInterface extends _i1.Mock
             ekub,
           ],
         ),
-        returnValue: _i4.Future<_i2.Ekub>.value(_FakeEkub_0(
+        returnValue: _i5.Future<_i3.Ekub>.value(_FakeEkub_1(
           this,
           Invocation.method(
             #update,
@@ -77,17 +89,17 @@ class MockEkubRepositoryInterface extends _i1.Mock
             ],
           ),
         )),
-      ) as _i4.Future<_i2.Ekub>);
+      ) as _i5.Future<_i3.Ekub>);
   @override
-  _i4.Future<List<_i2.Ekub>> fetchAllEnrolled() => (super.noSuchMethod(
+  _i5.Future<List<_i3.Ekub>> fetchAllEnrolled() => (super.noSuchMethod(
         Invocation.method(
           #fetchAllEnrolled,
           [],
         ),
-        returnValue: _i4.Future<List<_i2.Ekub>>.value(<_i2.Ekub>[]),
-      ) as _i4.Future<List<_i2.Ekub>>);
+        returnValue: _i5.Future<List<_i3.Ekub>>.value(<_i3.Ekub>[]),
+      ) as _i5.Future<List<_i3.Ekub>>);
   @override
-  _i4.Future<_i2.Ekub> join(
+  _i5.Future<_i3.Ekub> join(
     String? name,
     String? code,
   ) =>
@@ -99,7 +111,7 @@ class MockEkubRepositoryInterface extends _i1.Mock
             code,
           ],
         ),
-        returnValue: _i4.Future<_i2.Ekub>.value(_FakeEkub_0(
+        returnValue: _i5.Future<_i3.Ekub>.value(_FakeEkub_1(
           this,
           Invocation.method(
             #join,
@@ -109,5 +121,5 @@ class MockEkubRepositoryInterface extends _i1.Mock
             ],
           ),
         )),
-      ) as _i4.Future<_i2.Ekub>);
+      ) as _i5.Future<_i3.Ekub>);
 }
