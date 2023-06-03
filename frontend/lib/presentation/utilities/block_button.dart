@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class BlockButton extends StatelessWidget{
   String text;
   VoidCallback onPressed;
-  BlockButton({ required this.text, required this.onPressed});
+  final Key? key;
+  BlockButton({ required this.text, required this.onPressed, this.key});
   Widget build(BuildContext context){
     return SizedBox(
               width: 200.0,

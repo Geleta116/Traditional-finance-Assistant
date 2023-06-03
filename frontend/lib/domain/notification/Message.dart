@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'NotificationFailure.dart';
 
-class Message {
+class Message extends Equatable{
   final Either<NotificationFailure, String> value;
 
   factory Message(String input) {
@@ -24,4 +25,6 @@ class Message {
       return right(input);
     }
   }
+  @override
+  List<Object> get props => [value];
 }

@@ -6,6 +6,7 @@ import 'package:traditional_financial_asistant/domain/edir/Edir.dart';
 import 'package:traditional_financial_asistant/domain/edir/models/models.dart'; 
 
 abstract class EdirState extends Equatable {
+  
   const EdirState();
 
   @override
@@ -28,6 +29,7 @@ class EdirOperationFailure extends EdirState {
 
   const EdirOperationFailure(this.error);
   @override
+
   List<Object> get props => [error];
 }
 
@@ -39,4 +41,6 @@ class EdirDetailState extends EdirState{
 
   @override
   List<Object> get props => [edir];
+
+
 }

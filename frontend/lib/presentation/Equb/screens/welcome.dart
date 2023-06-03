@@ -11,6 +11,7 @@ class Welcome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
+          key:Key('welcome'),
           'Traditional Financial Assistant',
           style: TextStyle(
             fontSize: 22.0,

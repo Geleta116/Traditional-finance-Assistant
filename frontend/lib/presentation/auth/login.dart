@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../application/auth/authentication_bloc.dart';
-import '../../domain/auth/Password.dart';
+import '../../domain/auth/password.dart';
 import '../../domain/auth/User.dart';
 import '../../domain/auth/username.dart';
 import '../../infrastructure/auth/authentication_repository.dart';
@@ -104,12 +104,14 @@ class Login extends StatelessWidget {
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
+                                      key: Key('username'),
                                       controller: _usernameController,
                                       decoration: InputDecoration(
                                           labelText: 'username'),
                                     ),
                                     SizedBox(height: 20),
                                     TextField(
+                                      key: Key('password'),
                                       controller: _passwordController,
                                       decoration: InputDecoration(
                                           labelText: 'Password'),
@@ -117,6 +119,7 @@ class Login extends StatelessWidget {
                                     ),
                                     SizedBox(height: 20),
                                     ElevatedButton(
+                                      key: Key('login_user'),
                                       onPressed: () {
                                         final username =
                                             _usernameController.text;

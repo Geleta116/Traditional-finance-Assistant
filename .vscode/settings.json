@@ -1,3 +1,4 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "cmake.sourceDirectory": "C:/Users/hp/Documents/Geleta/testing correct/Traditional-finance-Assistant/frontend/linux"
 }

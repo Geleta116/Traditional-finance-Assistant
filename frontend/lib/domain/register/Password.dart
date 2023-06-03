@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'AuthFailure.dart';
 
 
-class Password {
+class Password extends Equatable{
   final Either<AuthFailure, String> value;
 
   factory Password(String input) {
@@ -22,4 +23,7 @@ class Password {
       return right(input);
     }
   }
+
+  @override
+  List<Object> get props => [value];
 }
